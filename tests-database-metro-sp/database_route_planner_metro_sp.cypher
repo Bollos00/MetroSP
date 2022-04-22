@@ -125,6 +125,6 @@ CREATE (b0)-[:TRAIN {time:120}]->(b1)
 
 
 // Chamando o planejador de rotas
-// MATCH (start:Station {name: 'São Joaquim'}), (end:Station {name: 'Saúde'})
-// CALL apoc.algo.dijkstra(start, end, null, 'time', 200, 1) YIELD path, weight
-// RETURN path, weight
+MATCH (start:Station {name: 'São Joaquim'}), (end:Station {name: 'Saúde'})
+CALL apoc.algo.dijkstra(start, end, null, 'time', 200, 1) YIELD path, weight
+RETURN path, weight

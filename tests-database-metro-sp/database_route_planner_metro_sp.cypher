@@ -1,5 +1,6 @@
 // Cria estações
 CREATE
+    // Linha azul (L1) e transferências
     (jabaquara:Station {name:"Jabaquara"}),
     (L01_N23_V1:Boarding {station:"Jabaquara", l:1, n:23, v:1}),
     (L01_N23_V2:Boarding {station:"Jabaquara", l:1, n:23, v:2}),
@@ -25,7 +26,6 @@ CREATE
     (L01_N18_V2:Boarding {station:"Santa Cruz", l:1, n:18, v:2}),
     (L05_N18_V1:Boarding {station:"Santa Cruz", l:5, n:15, v:1}),
     (L05_N18_V2:Boarding {station:"Santa Cruz", l:5, n:15, v:2}),
-
 
     (vila_mariana:Station {name:"Vila Mariana"}),
     (L01_N17_V1:Boarding {station:"Vila Mariana", l:1, n:17, v:1}),
@@ -101,7 +101,67 @@ CREATE
 
     (tucuruvi:Station {name:"Tucuruvi"}),
     (L01_N01_V1:Boarding {station:"Tucuruvi", l:1, n:1,  v:1}),
-    (L01_N01_V2:Boarding {station:"Tucuruvi", l:1, n:1,  v:2})
+    (L01_N01_V2:Boarding {station:"Tucuruvi", l:1, n:1,  v:2}),
+
+    // Linha verde (L2)
+    (vila_madalena:Station {name:"Vila Madalena"}),
+    (L02_N01_V1:Boarding {station:"Vila Madalena", l:2, n:1,  v:1}),
+    (L02_N01_V2:Boarding {station:"Vila Madalena", l:2, n:1,  v:2}),
+
+    (:Station {name:"Sumaré"}),
+    (:Boarding {station:"Sumaré", l:2, n:2,  v:1}),
+    (:Boarding {station:"Sumaré", l:2, n:2,  v:2}),
+
+    (:Station  {name:   "Clínicas"}),
+    (:Boarding {station:"Clínicas", l:2, n:3,  v:1}),
+    (:Boarding {station:"Clínicas", l:2, n:3,  v:2}),
+
+    (:Station  {name:   "Paulista"}),
+    (:Boarding {station:"Paulista", l:2, n:3,  v:1}),
+    (:Boarding {station:"Paulista", l:2, n:3,  v:2}),
+    (:Boarding {station:"Paulista", l:4, n:6,  v:1}),
+    (:Boarding {station:"Paulista", l:4, n:6,  v:2}),
+
+    (:Station  {name:   "Trianon"}),
+    (:Boarding {station:"Trianon", l:2, n:4,  v:1}),
+    (:Boarding {station:"Trianon", l:2, n:4,  v:2}),
+
+    (:Station  {name:   "Brigadeiro"}),
+    (:Boarding {station:"Brigadeiro", l:2, n:5,  v:1}),
+    (:Boarding {station:"Brigadeiro", l:2, n:5,  v:2}),
+
+    // Ana Rosa (já definido)
+    // Paraíso  (já definido)
+
+    (:Station  {name:   "Chácara Klabin"}),
+    (:Boarding {station:"Chácara Klabin", l:2, n:9,  v:1}),
+    (:Boarding {station:"Chácara Klabin", l:2, n:9,  v:2}),
+    (:Boarding {station:"Chácara Klabin", l:5, n:16,  v:1}),
+    (:Boarding {station:"Chácara Klabin", l:5, n:16,  v:2}),
+
+    (:Station  {name:   "Santos Imigrantes"}),
+    (:Boarding {station:"Santos Imigrantes", l:2, n:10,  v:1}),
+    (:Boarding {station:"Santos Imigrantes", l:2, n:10,  v:2}),
+
+    (:Station  {name:   "Alto do Ipiranga"}),
+    (:Boarding {station:"Alto do Ipiranga", l:2, n:11,  v:1}),
+    (:Boarding {station:"Alto do Ipiranga", l:2, n:11,  v:2}),
+
+    (:Station  {name:   "Sacomã"}),
+    (:Boarding {station:"Sacomã", l:2, n:12,  v:1}),
+    (:Boarding {station:"Sacomã", l:2, n:12,  v:2}),
+
+    (:Station  {name:   "Tamanduateí"}),
+    (:Boarding {station:"Tamanduateí", l:2, n:13,  v:1}),
+    (:Boarding {station:"Tamanduateí", l:2, n:13,  v:2}),
+
+    (:Station  {name:   "Vila Prudente"}),
+    (:Boarding {station:"Vila Prudente", l:2, n:14,  v:1}),
+    (:Boarding {station:"Vila Prudente", l:2, n:14,  v:2}),
+    (:Boarding {station:"Vila Prudente", l:15, n:1,  v:1}),
+    (:Boarding {station:"Vila Prudente", l:15, n:1,  v:2})
+
+    // Linha vermelha (L3)
 
 // Cria ligações
 MATCH (s:Station), (b:Boarding)
@@ -113,12 +173,12 @@ MATCH (b0:Boarding), (b1:Boarding)
 WHERE b0.station = b1.station AND b0 <> b1
 CREATE (b0)-[:FOOT {time:120}]->(b1)
 
-// Via 1
+// Ligações da Via 1 (Decrescente)
 MATCH (b0:Boarding), (b1:Boarding)
 WHERE b0.l = b1.l AND b0.v = 1 and b1.v = 1 and (b0.n - b1.n = 1)
 CREATE (b0)-[:TRAIN {time:120}]->(b1)
 
-// Via 2
+// Ligações da Via 2 (Crescente)
 MATCH (b0:Boarding), (b1:Boarding)
 WHERE b0.l = b1.l AND b0.v = 2 and b1.v = 2 and (b1.n - b0.n = 1)
 CREATE (b0)-[:TRAIN {time:120}]->(b1)

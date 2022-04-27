@@ -117,18 +117,18 @@ CREATE
     (:Boarding {station:"Clínicas", l:2, n:3,  v:2}),
 
     (:Station  {name:   "Paulista"}),
-    (:Boarding {station:"Paulista", l:2, n:3,  v:1}),
-    (:Boarding {station:"Paulista", l:2, n:3,  v:2}),
+    (:Boarding {station:"Paulista", l:2, n:4,  v:1}),
+    (:Boarding {station:"Paulista", l:2, n:4,  v:2}),
     (:Boarding {station:"Paulista", l:4, n:6,  v:1}),
     (:Boarding {station:"Paulista", l:4, n:6,  v:2}),
 
     (:Station  {name:   "Trianon"}),
-    (:Boarding {station:"Trianon", l:2, n:4,  v:1}),
-    (:Boarding {station:"Trianon", l:2, n:4,  v:2}),
+    (:Boarding {station:"Trianon", l:2, n:5,  v:1}),
+    (:Boarding {station:"Trianon", l:2, n:5,  v:2}),
 
     (:Station  {name:   "Brigadeiro"}),
-    (:Boarding {station:"Brigadeiro", l:2, n:5,  v:1}),
-    (:Boarding {station:"Brigadeiro", l:2, n:5,  v:2}),
+    (:Boarding {station:"Brigadeiro", l:2, n:6,  v:1}),
+    (:Boarding {station:"Brigadeiro", l:2, n:6,  v:2}),
 
     // Ana Rosa (já definido)
     // Paraíso  (já definido)
@@ -160,31 +160,3 @@ CREATE
     (:Boarding {station:"Vila Prudente", l:2, n:14,  v:2}),
     (:Boarding {station:"Vila Prudente", l:15, n:1,  v:1}),
     (:Boarding {station:"Vila Prudente", l:15, n:1,  v:2})
-
-    // Linha vermelha (L3)
-
-// Cria ligações inter-estações
-MATCH (s:Station), (b:Boarding)
-WHERE s.name = b.station
-CREATE (s)-[:FOOT {time:120}]->(b)
-CREATE (b)-[:FOOT {time:120}]->(s)
-
-MATCH (b0:Boarding), (b1:Boarding)
-WHERE b0.station = b1.station AND b0 <> b1
-CREATE (b0)-[:FOOT {time:120}]->(b1)
-
-// Ligações da Via 1 (Decrescente)
-MATCH (b0:Boarding), (b1:Boarding)
-WHERE b0.l = b1.l AND b0.v = 1 and b1.v = 1 and (b0.n - b1.n = 1)
-CREATE (b0)-[:TRAIN {time:120}]->(b1)
-
-// Ligações da Via 2 (Crescente)
-MATCH (b0:Boarding), (b1:Boarding)
-WHERE b0.l = b1.l AND b0.v = 2 and b1.v = 2 and (b1.n - b0.n = 1)
-CREATE (b0)-[:TRAIN {time:120}]->(b1)
-
-
-// Chamando o planejador de rotas
-MATCH (start:Station {name: 'São Joaquim'}), (end:Station {name: 'Saúde'})
-CALL apoc.algo.dijkstra(start, end, null, 'time', 200, 1) YIELD path, weight
-RETURN path, weight

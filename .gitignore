@@ -2,3 +2,5 @@ conf
 data
 logs
 plugins
+main_server/get_credentials.sh
+**/__pycache__

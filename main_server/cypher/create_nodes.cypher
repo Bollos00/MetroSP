@@ -68,8 +68,8 @@ CREATE
     (luz:Station {name:"Luz"}),
     (L01_N09_V1:Boarding {station:"Luz", l:1, n:9,  v:1}),
     (L01_N09_V2:Boarding {station:"Luz", l:1, n:9,  v:2}),
-    (L04_N09_V1:Boarding {station:"Luz", l:4, n:9,  v:1}),
-    (L04_N09_V2:Boarding {station:"Luz", l:4, n:9,  v:2}),
+    (L04_N09_V1:Boarding {station:"Luz", l:4, n:11,  v:1}),
+    (L04_N09_V2:Boarding {station:"Luz", l:4, n:11,  v:2}),
 
     (tiradentes:Station {name:"Tiradentes"}),
     (L01_N08_V1:Boarding {station:"Tiradentes", l:1, n:8,  v:1}),
@@ -119,8 +119,8 @@ CREATE
     (:Station  {name:   "Paulista"}),
     (:Boarding {station:"Paulista", l:2, n:4,  v:1}),
     (:Boarding {station:"Paulista", l:2, n:4,  v:2}),
-    (:Boarding {station:"Paulista", l:4, n:6,  v:1}),
-    (:Boarding {station:"Paulista", l:4, n:6,  v:2}),
+    (:Boarding {station:"Paulista", l:4, n:8,  v:1}),
+    (:Boarding {station:"Paulista", l:4, n:8,  v:2}),
 
     (:Station  {name:   "Trianon"}),
     (:Boarding {station:"Trianon", l:2, n:5,  v:1}),
@@ -159,4 +159,219 @@ CREATE
     (:Boarding {station:"Vila Prudente", l:2, n:14,  v:1}),
     (:Boarding {station:"Vila Prudente", l:2, n:14,  v:2}),
     (:Boarding {station:"Vila Prudente", l:15, n:1,  v:1}),
-    (:Boarding {station:"Vila Prudente", l:15, n:1,  v:2})
+    (:Boarding {station:"Vila Prudente", l:15, n:1,  v:2}),
+
+    // Linha vermelha (L3)
+    (:Station  {name:   "Barra Funda"}),
+    (:Boarding {station:"Barra Funda", l:3, n:1,  v:1}),
+    (:Boarding {station:"Barra Funda", l:3, n:1,  v:2}),
+
+    (:Station  {name:   "Mal. Deodoro"}),
+    (:Boarding {station:"Mal. Deodoro", l:3, n:2,  v:1}),
+    (:Boarding {station:"Mal. Deodoro", l:3, n:2,  v:2}),
+
+    (:Station  {name:   "Santa Cecília"}),
+    (:Boarding {station:"Santa Cecília", l:3, n:3,  v:1}),
+    (:Boarding {station:"Santa Cecília", l:3, n:3,  v:2}),
+
+    (:Station  {name:   "República"}),
+    (:Boarding {station:"República", l:3, n:4,  v:1}),
+    (:Boarding {station:"República", l:3, n:4,  v:2}),
+    (:Boarding {station:"República", l:4, n:10,  v:1}),
+    (:Boarding {station:"República", l:4, n:10,  v:2}),
+
+    (:Station  {name:   "Anhangabaú"}),
+    (:Boarding {station:"Anhangabaú", l:3, n:5,  v:1}),
+    (:Boarding {station:"Anhangabaú", l:3, n:5,  v:2}),
+
+    // Sé (já definido)
+
+    (:Station  {name:   "Pedro II"}),
+    (:Boarding {station:"Pedro II", l:3, n:7,  v:1}),
+    (:Boarding {station:"Pedro II", l:3, n:7,  v:2}),
+
+    (:Station  {name:   "Brás"}),
+    (:Boarding {station:"Brás", l:3, n:8,  v:1}),
+    (:Boarding {station:"Brás", l:3, n:8,  v:2}),
+
+    (:Station  {name:   "Mooca"}),
+    (:Boarding {station:"Mooca", l:3, n:9,  v:1}),
+    (:Boarding {station:"Mooca", l:3, n:9,  v:2}),
+
+    (:Station  {name:   "Belém"}),
+    (:Boarding {station:"Belém", l:3, n:10,  v:1}),
+    (:Boarding {station:"Belém", l:3, n:10,  v:2}),
+
+    (:Station  {name:   "Tatuapé"}),
+    (:Boarding {station:"Tatuapé", l:3, n:11,  v:1}),
+    (:Boarding {station:"Tatuapé", l:3, n:11,  v:2}),
+
+    (:Station  {name:   "Carrão"}),
+    (:Boarding {station:"Carrão", l:3, n:12,  v:1}),
+    (:Boarding {station:"Carrão", l:3, n:12,  v:2}),
+
+    (:Station  {name:   "Penha"}),
+    (:Boarding {station:"Penha", l:3, n:13,  v:1}),
+    (:Boarding {station:"Penha", l:3, n:13,  v:2}),
+
+    (:Station  {name:   "Vila Matilde"}),
+    (:Boarding {station:"Vila Matilde", l:3, n:14,  v:1}),
+    (:Boarding {station:"Vila Matilde", l:3, n:14,  v:2}),
+
+    (:Station  {name:   "Esperança"}),
+    (:Boarding {station:"Esperança", l:3, n:15,  v:1}),
+    (:Boarding {station:"Esperança", l:3, n:15,  v:2}),
+
+    (:Station  {name:   "Patriarca"}),
+    (:Boarding {station:"Patriarca", l:3, n:16,  v:1}),
+    (:Boarding {station:"Patriarca", l:3, n:16,  v:2}),
+
+    (:Station  {name:   "Artur Alvim"}),
+    (:Boarding {station:"Artur Alvim", l:3, n:17,  v:1}),
+    (:Boarding {station:"Artur Alvim", l:3, n:17,  v:2}),
+
+    (:Station  {name:   "Itaquera"}),
+    (:Boarding {station:"Itaquera", l:3, n:18,  v:1}),
+    (:Boarding {station:"Itaquera", l:3, n:18,  v:2}),
+
+    // Linha amarela (L4)
+    (:Station  {name:   "Vila Sônia"}),
+    (:Boarding {station:"Vila Sônia", l:4, n:1,  v:1}),
+    (:Boarding {station:"Vila Sônia", l:4, n:1,  v:2}),
+
+    (:Station  {name:   "Morumbi"}),
+    (:Boarding {station:"Morumbi", l:4, n:2,  v:1}),
+    (:Boarding {station:"Morumbi", l:4, n:2,  v:2}),
+
+    (:Station  {name:   "Butantã"}),
+    (:Boarding {station:"Butantã", l:4, n:3,  v:1}),
+    (:Boarding {station:"Butantã", l:4, n:3,  v:2}),
+
+    (:Station  {name:   "Pinheiros"}),
+    (:Boarding {station:"Pinheiros", l:4, n:4,  v:1}),
+    (:Boarding {station:"Pinheiros", l:4, n:4,  v:2}),
+
+    (:Station  {name:   "Faria Lima"}),
+    (:Boarding {station:"Faria Lima", l:4, n:5,  v:1}),
+    (:Boarding {station:"Faria Lima", l:4, n:5,  v:2}),
+
+    (:Station  {name:   "Fradique Coutinho"}),
+    (:Boarding {station:"Fradique Coutinho", l:4, n:6,  v:1}),
+    (:Boarding {station:"Fradique Coutinho", l:4, n:6,  v:2}),
+
+    (:Station  {name:   "Oscar Freire"}),
+    (:Boarding {station:"Oscar Freire", l:4, n:7,  v:1}),
+    (:Boarding {station:"Oscar Freire", l:4, n:7,  v:2}),
+
+    // Consolação*Paulista (já definido)
+
+    (:Station  {name:   "Higienópolis"}),
+    (:Boarding {station:"Higienópolis", l:4, n:9,  v:1}),
+    (:Boarding {station:"Higienópolis", l:4, n:9,  v:2}),
+
+    // República (já definido)
+    // Luz (já definido)
+
+    // Linha lilás (L5)
+    (:Station  {name:   "Capão Redondo"}),
+    (:Boarding {station:"Capão Redondo", l:5, n:1,  v:1}),
+    (:Boarding {station:"Capão Redondo", l:5, n:1,  v:2}),
+
+    (:Station  {name:   "Campo Limpo"}),
+    (:Boarding {station:"Campo Limpo", l:5, n:2,  v:1}),
+    (:Boarding {station:"Campo Limpo", l:5, n:2,  v:2}),
+
+    (:Station  {name:   "Vila das Belezas"}),
+    (:Boarding {station:"Vila das Belezas", l:5, n:3,  v:1}),
+    (:Boarding {station:"Vila das Belezas", l:5, n:3,  v:2}),
+
+    (:Station  {name:   "Giovanni Gronchi"}),
+    (:Boarding {station:"Giovanni Gronchi", l:5, n:4,  v:1}),
+    (:Boarding {station:"Giovanni Gronchi", l:5, n:4,  v:2}),
+
+    (:Station  {name:   "Santo Amaro"}),
+    (:Boarding {station:"Santo Amaro", l:5, n:5,  v:1}),
+    (:Boarding {station:"Santo Amaro", l:5, n:5,  v:2}),
+
+    (:Station  {name:   "Largo Treze"}),
+    (:Boarding {station:"Largo Treze", l:5, n:6,  v:1}),
+    (:Boarding {station:"Largo Treze", l:5, n:6,  v:2}),
+
+    (:Station  {name:   "Adolfo Pinheiro"}),
+    (:Boarding {station:"Adolfo Pinheiro", l:5, n:7,  v:1}),
+    (:Boarding {station:"Adolfo Pinheiro", l:5, n:7,  v:2}),
+
+    (:Station  {name:   "Alto da Boa Vista"}),
+    (:Boarding {station:"Alto da Boa Vista", l:5, n:8,  v:1}),
+    (:Boarding {station:"Alto da Boa Vista", l:5, n:8,  v:2}),
+
+    (:Station  {name:   "Borba Gato"}),
+    (:Boarding {station:"Borba Gato", l:5, n:9,  v:1}),
+    (:Boarding {station:"Borba Gato", l:5, n:9,  v:2}),
+
+    (:Station  {name:   "Brooklin"}),
+    (:Boarding {station:"Brooklin", l:5, n:10,  v:1}),
+    (:Boarding {station:"Brooklin", l:5, n:10,  v:2}),
+
+    (:Station  {name:   "Eucaliptos"}),
+    (:Boarding {station:"Eucaliptos", l:5, n:11,  v:1}),
+    (:Boarding {station:"Eucaliptos", l:5, n:11,  v:2}),
+
+    (:Station  {name:   "Moema"}),
+    (:Boarding {station:"Moema", l:5, n:12,  v:1}),
+    (:Boarding {station:"Moema", l:5, n:12,  v:2}),
+
+    (:Station  {name:   "AACD-Servidor"}),
+    (:Boarding {station:"AACD-Servidor", l:5, n:13,  v:1}),
+    (:Boarding {station:"AACD-Servidor", l:5, n:13,  v:2}),
+
+    (:Station  {name:   "Hospital São Paulo"}),
+    (:Boarding {station:"Hospital São Paulo", l:5, n:14,  v:1}),
+    (:Boarding {station:"Hospital São Paulo", l:5, n:14,  v:2}),
+
+    // Santa Cruz (já definido)
+    // Chácara Klabin (já definido)
+
+    // Linha Prata (L15)
+    
+    // Vila Prudente (já definido)
+
+    (:Station  {name:   "Oratório"}),
+    (:Boarding {station:"Oratório", l:15, n:2,  v:1}),
+    (:Boarding {station:"Oratório", l:15, n:2,  v:2}),
+
+    (:Station  {name:   "São Lucas"}),
+    (:Boarding {station:"São Lucas", l:15, n:3,  v:1}),
+    (:Boarding {station:"São Lucas", l:15, n:3,  v:2}),
+    
+    (:Station  {name:   "Camilo Haddad"}),
+    (:Boarding {station:"Camilo Haddad", l:15, n:4,  v:1}),
+    (:Boarding {station:"Camilo Haddad", l:15, n:4,  v:2}),
+    
+    (:Station  {name:   "Vila Tolstói"}),
+    (:Boarding {station:"Vila Tolstói", l:15, n:5,  v:1}),
+    (:Boarding {station:"Vila Tolstói", l:15, n:5,  v:2}),
+    
+    (:Station  {name:   "Vila União"}),
+    (:Boarding {station:"Vila União", l:15, n:6,  v:1}),
+    (:Boarding {station:"Vila União", l:15, n:6,  v:2}),
+    
+    (:Station  {name:   "Jd. Planalto"}),
+    (:Boarding {station:"Jd. Planalto", l:15, n:7,  v:1}),
+    (:Boarding {station:"Jd. Planalto", l:15, n:7,  v:2}),
+    
+    (:Station  {name:   "Sapopemba"}),
+    (:Boarding {station:"Sapopemba", l:15, n:8,  v:1}),
+    (:Boarding {station:"Sapopemba", l:15, n:8,  v:2}),
+    
+    (:Station  {name:   "Fazenda da Juta"}),
+    (:Boarding {station:"Fazenda da Juta", l:15, n:9,  v:1}),
+    (:Boarding {station:"Fazenda da Juta", l:15, n:9,  v:2}),
+    
+    (:Station  {name:   "São Mateus"}),
+    (:Boarding {station:"São Mateus", l:15, n:10,  v:1}),
+    (:Boarding {station:"São Mateus", l:15, n:10,  v:2}),
+    
+    (:Station  {name:   "Jardim Colonial"}),
+    (:Boarding {station:"Jardim Colonial", l:15, n:11,  v:1}),
+    (:Boarding {station:"Jardim Colonial", l:15, n:11,  v:2})

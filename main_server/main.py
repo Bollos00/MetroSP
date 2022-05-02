@@ -41,6 +41,9 @@ class MetroDatabase:
         self.query(helper.create_rl_v1)
         self.query(helper.create_rl_v2)
 
+    def dijkstra(self, helper, start, destiny, default_weight=1000, paths=1):
+        return self.query(helper.get_dijkstra(start, destiny, default_weight, paths))
+
 def init_driver():
     uri = os.getenv("NEO4J_URI", None)
     user = os.getenv("NEO4J_USER", None)
@@ -61,8 +64,11 @@ if __name__ == "__main__":
 
     helper = CypherHelper(60)
     
-    driver.reset(helper)
+    # driver.reset(helper)
     
-    print(driver.query("MATCH (n:Station{name:'Jabaquara'}) RETURN n"))
+    a = driver.dijkstra(helper, "Butantã", "Itaquera", paths=10)
+    
+    for i in a:
+        print(a, end='\n\n')
 
     driver.close()

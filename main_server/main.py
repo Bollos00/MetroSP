@@ -64,11 +64,11 @@ if __name__ == "__main__":
 
     helper = CypherHelper(60)
     
-    # driver.reset(helper)
+    driver.reset(helper)
     
-    a = driver.dijkstra(helper, "Butantã", "Itaquera", paths=10)
+    # a = driver.dijkstra(helper, "Butantã", "Itaquera", paths=10)
     
-    for i in a:
-        print(a, end='\n\n')
+    # for i in a:
+    #     print(a, end='\n\n')
 
     driver.close()

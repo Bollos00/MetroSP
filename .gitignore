@@ -4,3 +4,4 @@ logs
 plugins
 main_server/get_credentials.sh
 **/__pycache__
+main_server/credentials/credentials.py

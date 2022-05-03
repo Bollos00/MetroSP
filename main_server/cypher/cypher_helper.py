@@ -19,7 +19,11 @@ class CypherHelper:
             self.update_ft_transf = CypherHelper.cypher_optimized(f.read())
         with open(f'{abs_dir_path}/update_train_time.cypher', 'r') as f:
             self.update_tr = CypherHelper.cypher_optimized(f.read())
-
+        with open(f'{abs_dir_path}/update_foot_boarding_to_plataform.cypher', 'r') as f:
+            self.update_ft_bd_plat = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/update_foot_plataform_to_boarding.cypher', 'r') as f:
+            self.update_ft_plat_bd = CypherHelper.cypher_optimized(f.read())
+    
 
         self.create_rl_board = self.create_rl_board.replace(
             "$$defaulttime$$", str(default_travel_time)
@@ -64,6 +68,43 @@ class CypherHelper:
             "$$v$$", str(v)
         ).replace(
             "$$n$$", str(n)
+        ).replace(
+            "$$time$$", str(int(time))
+        )
+
+    def get_update_ft_transf_time(self, station, fl, fv, tl, tv, time):
+        return self.update_ft_transf.replace(
+            "$$station$$", str(station)
+        ).replace(
+            "$$fl$$", str(fl)
+        ).replace(
+            "$$fv$$", str(fv)
+        ).replace(
+            "$$tl$$", str(tl)
+        ).replace(
+            "$$tv$$", str(tv)
+        ).replace(
+            "$$time$$", str(int(time))
+        )
+
+    def get_update_ft_bd_plat_time(self, station, fl, fv, time):
+        return self.update_ft_bd_plat.replace(
+            "$$station$$", str(station)
+        ).replace(
+            "$$fl$$", str(fl)
+        ).replace(
+            "$$fv$$", str(fv)
+        ).replace(
+            "$$time$$", str(int(time))
+        )
+
+    def get_update_ft_plat_bd_time(self, station, tl, tv, time):
+        return self.update_ft_plat_bd.replace(
+            "$$station$$", str(station)
+        ).replace(
+            "$$tl$$", str(tl)
+        ).replace(
+            "$$tv$$", str(tv)
         ).replace(
             "$$time$$", str(int(time))
         )

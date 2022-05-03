@@ -15,6 +15,11 @@ class CypherHelper:
             self.create_rl_v2 = CypherHelper.cypher_optimized(f.read())
         with open(f'{abs_dir_path}/dijkstra.cypher', 'r') as f:
             self.dijkstra = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/update_foot_transfer_time.cypher', 'r') as f:
+            self.update_ft_transf = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/update_train_time.cypher', 'r') as f:
+            self.update_tr = CypherHelper.cypher_optimized(f.read())
+
 
         self.create_rl_board = self.create_rl_board.replace(
             "$$defaulttime$$", str(default_travel_time)
@@ -51,6 +56,18 @@ class CypherHelper:
         ).replace(
             "$$start$$", start
         )
+    
+    def get_update_tr_time(self, l, v, n, time):
+        return self.update_tr.replace(
+            "$$l$$", str(l)
+        ).replace(
+            "$$v$$", str(v)
+        ).replace(
+            "$$n$$", str(n)
+        ).replace(
+            "$$time$$", str(int(time))
+        )
+
     
 if __name__ == "__main__":
     ch = CypherHelper()

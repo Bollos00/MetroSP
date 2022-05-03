@@ -1,6 +1,8 @@
 import neo4j
 import os
+
 from cypher.cypher_helper import CypherHelper
+from credentials import credentials
 
 class MetroDatabase:
 
@@ -58,15 +60,9 @@ class MetroDatabase:
 
 
 def init_driver():
-    uri = os.getenv("NEO4J_URI", None)
-    user = os.getenv("NEO4J_USER", None)
-    password = os.getenv("NEO4J_PASSWORD", None)
-
-    if None in [uri, user, password]:
-        print("""Error! Environment variables "NEO4J_URI", "NEO4J_USER" and "NEO4J_PASSWORD"
-        need to be set.
-        """)
-        exit(1)
+    uri = credentials.NEO4J_URI
+    user = credentials.NEO4J_USER
+    password = credentials.NEO4J_PASSWORD
 
     return MetroDatabase(uri, user, password)
 

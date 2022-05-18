@@ -13,20 +13,14 @@ class MetroDatabaseDriver:
         # Don't forget to close the driver connection when you are finished with it
         self.driver.close()
 
-    def query(self, query, db=None):
+    def query(self, query):
         assert self.driver is not None, "Driver not initialized!"
         
-        session = None
         response = None
-        
-        try: 
-            session = self.driver.session() if db is None else self.driver.session(database=db)
+
+        with self.driver.session() as session:        
             response = list(session.run(query))
-        except Exception as e:
-            print("Query failed:", e)
-        finally:
-            if session is not None:
-                session.close()
+        
         return response
     
     def delete_detach(self):

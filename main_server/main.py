@@ -17,11 +17,18 @@ if __name__ == "__main__":
 
     helper = CypherHelper(60)
     
-    # driver.reset(helper)
+    # # driver.reset(helper)
 
-    print(driver.update_tr_time(helper, l=2, v=1, n=1, time=39))
-    print(driver.update_ft_transf_time(helper, "Ana Rosa", fl=1, fv=1, tl=2, tv=2, time=40))
-    print(driver.update_ft_plat_bd_time(helper, "Ana Rosa", tl=2, tv=2, time=40))
-    print(driver.update_ft_bd_plat_time(helper, "Ana Rosa", fl=1, fv=1, time=40))
+    paths = driver.dijkstra(helper, "Ana Rosa", "São Bento", paths=5)
+
+    for p in paths:
+        print(p)
+        print(type(p))
+
+
+    # print(driver.update_tr_time(helper, l=2, v=1, n=1, time=39))
+    # print(driver.update_ft_transf_time(helper, "Ana Rosa", fl=1, fv=1, tl=2, tv=2, time=40))
+    # print(driver.update_ft_plat_bd_time(helper, "Ana Rosa", tl=2, tv=2, time=40))
+    # print(driver.update_ft_bd_plat_time(helper, "Ana Rosa", fl=1, fv=1, time=40))
 
     driver.close()

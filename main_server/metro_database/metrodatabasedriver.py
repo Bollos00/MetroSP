@@ -28,12 +28,16 @@ class MetroDatabaseDriver:
 
     def reset(self, helper):
         self.delete_detach()
+        
         self.query(helper.create_nodes)
-        self.query(helper.create_rl_board)
-        self.query(helper.create_rl_station)
-        self.query(helper.create_rl_v1)
-        self.query(helper.create_rl_v2)
-
+        self.query(helper.create_bd_names)
+        
+        self.query(helper.create_rl_entry)
+        self.query(helper.create_rl_exit)
+        self.query(helper.create_rl_train_way_minus)
+        self.query(helper.create_rl_train_way_plus)
+        self.query(helper.create_rl_transfer)
+        
     def dijkstra(self, helper, start, destiny, default_weight=1000, paths=1):
         return self.query(helper.get_dijkstra(start, destiny, default_weight, paths))
     

@@ -1,6 +1,6 @@
 from cypher.cypher_helper import CypherHelper
 from credentials import credentials
-from driver.metrodatabasedriver import MetroDatabaseDriver
+from metro_database.metrodatabasedriver import MetroDatabaseDriver
 
 
 def init_driver():
@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     helper = CypherHelper(60)
     
-    # # driver.reset(helper)
+    driver.reset(helper)
 
     paths = driver.dijkstra(helper, "Ana Rosa", "São Bento", paths=5)
 

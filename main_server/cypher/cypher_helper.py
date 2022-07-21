@@ -1,20 +1,27 @@
 import os
 
 class CypherHelper:
-    def __init__(self, default_travel_time = 120):
+    def __init__(self, t_train_trip=150, t_boarding=10, t_wait_train=300, v_ped=1.0, d_diloc=100):
         abs_dir_path = os.path.dirname(os.path.abspath(__file__))
         with open(f'{abs_dir_path}/create_nodes.cypher', 'r') as f:
             self.create_nodes = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/create_relationships_between_boardings.cypher', 'r') as f:
-            self.create_rl_board = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/create_relationships_between_stations.cypher', 'r') as f:
-            self.create_rl_station = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/create_relationships_via1.cypher', 'r') as f:
-            self.create_rl_v1 = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/create_relationships_via2.cypher', 'r') as f:
-            self.create_rl_v2 = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/create_boarding_names.cypher', 'r') as f:
+            self.create_bd_names = CypherHelper.cypher_optimized(f.read())
+        
+        with open(f'{abs_dir_path}/create_relationships_entry.cypher', 'r') as f:
+            self.create_rl_entry = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/create_relationships_exit.cypher', 'r') as f:
+            self.create_rl_exit = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/create_relationships_train_way_minus.cypher', 'r') as f:
+            self.create_rl_train_way_minus = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/create_relationships_train_way_plus.cypher', 'r') as f:
+            self.create_rl_train_way_plus = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/create_relationships_transfer.cypher', 'r') as f:
+            self.create_rl_transfer = CypherHelper.cypher_optimized(f.read())
+        
         with open(f'{abs_dir_path}/dijkstra.cypher', 'r') as f:
             self.dijkstra = CypherHelper.cypher_optimized(f.read())
+        
         with open(f'{abs_dir_path}/update_foot_transfer_time.cypher', 'r') as f:
             self.update_ft_transf = CypherHelper.cypher_optimized(f.read())
         with open(f'{abs_dir_path}/update_train_time.cypher', 'r') as f:
@@ -24,19 +31,26 @@ class CypherHelper:
         with open(f'{abs_dir_path}/update_foot_plataform_to_boarding.cypher', 'r') as f:
             self.update_ft_plat_bd = CypherHelper.cypher_optimized(f.read())
     
+        t_disloc_train  = int(t_train_trip + t_boarding)
+        t_disloc_transf = int(v_ped*d_diloc + t_wait_train/2 + t_boarding)
+        t_disloc_exit   = int(v_ped*d_diloc)
+        t_disloc_entry  = int(v_ped*d_diloc + t_wait_train/2 + t_boarding)
 
-        self.create_rl_board = self.create_rl_board.replace(
-            "$$defaulttime$$", str(default_travel_time)
+        self.create_rl_entry = self.create_rl_entry.replace(
+            "$$defaulttime$$", str(t_disloc_entry)
         )
-        self.create_rl_station = self.create_rl_station.replace(
-            "$$defaulttime$$", str(default_travel_time)
+        self.create_rl_exit = self.create_rl_exit.replace(
+            "$$defaulttime$$", str(t_disloc_exit)
         )
-        self.create_rl_v1 = self.create_rl_v1.replace(
-            "$$defaulttime$$", str(default_travel_time)
+        self.create_rl_train_way_minus = self.create_rl_train_way_minus.replace(
+            "$$defaulttime$$", str(t_disloc_train)
         )
-        self.create_rl_v2 = self.create_rl_v2.replace(
-            "$$defaulttime$$", str(default_travel_time)
-        )   
+        self.create_rl_train_way_plus = self.create_rl_train_way_plus.replace(
+            "$$defaulttime$$", str(t_disloc_train)
+        )
+        self.create_rl_transfer = self.create_rl_transfer.replace(
+            "$$defaulttime$$", str(t_disloc_transf)
+        )
 
     @staticmethod
     def cypher_optimized(cypher_code):

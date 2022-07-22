@@ -18,3 +18,7 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+@app.get("/planner")
+async def planner(origin: str, destination: str, options: int = 1):
+    return {"paths": f"{origin}-{destination}"}

@@ -1,0 +1,3 @@
+NEO4J_URI = "bolt://localhost:7687"
+NEO4J_USER = "neo4j"
+NEO4J_PASSWORD = "3MdyW_fcB2CvU0AtZE5KGOAbUHH1CP8-OplkQ0uG3UU"

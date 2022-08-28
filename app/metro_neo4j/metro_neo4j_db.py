@@ -1,9 +1,23 @@
 import neo4j
 import os
+from .credentials import credentials
 
-class MetroDatabaseDriver:
+class MetroNeo4jDatabase(object):
+    _instance = None
 
-    def __init__(self, uri, user, password):
+    def __new__(cls):
+        if cls._instance is None:
+            uri = credentials.NEO4J_URI
+            user = credentials.NEO4J_USER
+            password = credentials.NEO4J_PASSWORD
+            cls._instance = super(MetroNeo4jDatabase, cls).__new__(cls)
+            cls._init(cls)
+        return cls._instance
+
+    def _init(self):
+        uri = credentials.NEO4J_URI
+        user = credentials.NEO4J_USER
+        password = credentials.NEO4J_PASSWORD
         try:
             self.driver = neo4j.GraphDatabase.driver(uri, auth=(user, password))
         except Exception as e:

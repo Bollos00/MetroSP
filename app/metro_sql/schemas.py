@@ -1,35 +1,35 @@
 from pydantic import BaseModel
+import datetime
+import uuid
 
 
-class ItemBase(BaseModel):
-    title: str
-    description: str | None = None
+class UserBase(BaseModel):
+    id: uuid.UUID
 
+class UserCreate(UserBase):
+    password: str
 
-class ItemCreate(ItemBase):
+class UserAuth(UserCreate):
     pass
 
-
-class Item(ItemBase):
-    id: int
-    owner_id: int
+class User(UserBase):
+    last_activity: datetime.datetime = datetime.datetime(year=1, month=1, day=1)
 
     class Config:
         orm_mode = True
 
 
-class UserBase(BaseModel):
-    email: str
+class NodeBase(BaseModel):
+    node_id: int
+    date_time: datetime.datetime
+    owner_id: uuid.UUID
 
 
-class UserCreate(UserBase):
-    password: str
+class NodeCreate(NodeBase):
+    pass
 
-
-class User(UserBase):
+class Node(NodeBase):
     id: int
-    is_active: bool
-    items: list[Item] = []
 
     class Config:
         orm_mode = True

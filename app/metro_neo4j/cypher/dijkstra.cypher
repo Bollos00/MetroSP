@@ -1,6 +1,6 @@
-MATCH (s:Station {name:'$$start$$'} ), (d:Station{name:'$$destiny$$'})
+MATCH (s:Blocking {name:'$$start$$'} ), (e:Blocking{name:'$$end$$'})
 CALL apoc.algo.dijkstra(
-    s,   d,   'FOOT|TRAIN',   'time',   $$defaultweight$$, $$paths$$
+    s,   e,   'WALK>|RIDE>',   'time',   $$defaultweight$$, $$paths_count$$
 )
-yield path as path, weight as weight
+YIELD path AS path, weight AS weight
 RETURN path, weight

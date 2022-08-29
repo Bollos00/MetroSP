@@ -6,6 +6,7 @@ from metro_neo4j.cypher.cypher_helper import CypherHelper
 from metro_sql import metro_sql_db, models, schemas, sql_helper
 import atexit
 from fastapi.middleware.cors import CORSMiddleware
+from route_planner import route_planner
 
 metro_neo4j = MetroNeo4jDatabase()
 metro_sql = metro_sql_db.get_db
@@ -17,14 +18,11 @@ app = FastAPI()
 def main():
     return RedirectResponse(url="/docs/")
 
-@app.get("/reset_test")
-def reset_test():
-    helper = CypherHelper(60)
-    metro_neo4j.reset(helper)
 
 @app.get("/planner")
-def planner(origin: str, destination: str, options: int = 1):
-    return {"paths": f"{origin}-{destination}"}
+def planner(start: str, end: str, options: int = 1):
+    return route_planner.route_planner(start, end, options)
+
 
 @app.post("/create_user", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql_db.get_db)):
@@ -32,6 +30,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql_db.get
     if db_user:
         raise HTTPException(status_code=400, detail="UUID already registered")
     return sql_helper.create_user(db, user)
+
     
 @app.post("/create_node", response_model=schemas.Node)
 def create_node(node: schemas.NodeCreate, 
@@ -43,7 +42,8 @@ def create_node(node: schemas.NodeCreate,
     if not auth_result:
         raise HTTPException(status_code=400, detail="Authentification failed")
     return sql_helper.create_node(db, node)
-    
+
+
 # Debugging
 if __name__ == "__main__":
     import uvicorn

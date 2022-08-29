@@ -56,23 +56,15 @@ class CypherHelper:
     def cypher_optimized(cypher_code):
         return cypher_code
     
-    def get_dijkstra(self, start, destiny, default_weight, paths):
-        # return self.dijkstra.translate({
-        #     "$$start$$": start,
-        #     "$$destiny$$": destiny,
-        #     "$$defaultweight$$": str(default_weight),
-        #     "$$paths$$": str(paths)
-        # })
+    def get_dijkstra(self, start, end, paths_count, default_weight):
         return self.dijkstra.replace(
             "$$start$$", start
         ).replace(
-            "$$destiny$$", destiny
+            "$$end$$", end
         ).replace(
             "$$defaultweight$$", str(default_weight)
         ).replace(
-            "$$paths$$", str(paths)
-        ).replace(
-            "$$start$$", start
+            "$$paths_count$$", str(paths_count)
         )
     
     def get_update_tr_time(self, l, v, n, time):

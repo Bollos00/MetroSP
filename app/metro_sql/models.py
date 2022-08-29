@@ -1,11 +1,11 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import UUIDType
 import uuid
 from sqlalchemy.sql import func
 
 from .metro_sql_db import Base
-
+from .enums import MetroFleet, MetroLine, MetroWay
 
 class User(Base):
     __tablename__ = "users"
@@ -15,6 +15,7 @@ class User(Base):
     last_activity = Column(DateTime(timezone=True), server_default=func.now())
 
 
+# Route planner
 class Node(Base):
     __tablename__ = "nodes"
 
@@ -39,3 +40,23 @@ class NodeLink(Base):
     
     owner_id = Column(UUIDType(), ForeignKey("users.id"))
     # owner = relationship("User", back_populates="node_links")
+    
+
+# Beacons
+class Station(Base):
+    __tablename__ = "stations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    beacon_id_major = Column(Integer)
+    subenvironments = Column(Integer)
+    lines = Column(Enum(MetroLine))
+    
+class Train(Base):
+    __tablename__ = "trains"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    fleet = Column(String) # Frota
+    beacon_id_major_begin = Column(Integer)
+    beacon_id_major_end = Column(Integer)
+    

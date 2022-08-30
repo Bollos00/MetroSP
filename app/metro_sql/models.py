@@ -35,28 +35,25 @@ class NodeLink(Base):
     
     node_link_id = Column(Integer)
     
-    from_date_time = Column(DateTime(timezone=True))
-    to_date_time = Column(DateTime(timezone=True), ForeignKey("nodes.date_time"))
-    
-    owner_id = Column(UUIDType(), ForeignKey("users.id"))
-    # owner = relationship("User", back_populates="node_links")
-    
+    start_date_time = Column(DateTime(timezone=True))
+    end_date_time = Column(DateTime(timezone=True), ForeignKey("nodes.date_time"))
+    displacement_time_s = Column(Integer)
 
 # Beacons
-class Station(Base):
-    __tablename__ = "stations"
+# class Station(Base):
+#     __tablename__ = "stations"
     
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    beacon_id_major = Column(Integer)
-    subenvironments = Column(Integer)
-    lines = Column(Enum(MetroLine))
+#     id = Column(Integer, primary_key=True, index=True)
+#     name = Column(String)
+#     beacon_id_major = Column(Integer)
+#     subenvironments = Column(Integer)
+#     lines = Column(Enum(MetroLine))
     
-class Train(Base):
-    __tablename__ = "trains"
+# class Train(Base):
+#     __tablename__ = "trains"
     
-    id = Column(Integer, primary_key=True, index=True)
-    fleet = Column(String) # Frota
-    beacon_id_major_begin = Column(Integer)
-    beacon_id_major_end = Column(Integer)
+#     id = Column(Integer, primary_key=True, index=True)
+#     fleet = Column(String) # Frota
+#     beacon_id_major_begin = Column(Integer)
+#     beacon_id_major_end = Column(Integer)
     

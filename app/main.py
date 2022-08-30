@@ -14,6 +14,7 @@ metro_sql = metro_sql_db.get_db
 models.Base.metadata.create_all(bind=metro_sql_db.engine)
 app = FastAPI()
 
+
 @app.get("/")
 def main():
     return RedirectResponse(url="/docs/")
@@ -42,6 +43,11 @@ def create_node(node: schemas.NodeCreate,
     if not auth_result:
         raise HTTPException(status_code=400, detail="Authentification failed")
     return sql_helper.create_node(db, node)
+
+
+@app.get("/test")
+def test(db: Session = Depends(metro_sql)):
+    return route_planner.update_node_links_table(db)
 
 
 # Debugging

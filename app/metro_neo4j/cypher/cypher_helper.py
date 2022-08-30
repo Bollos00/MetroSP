@@ -21,7 +21,10 @@ class CypherHelper:
         
         with open(f'{abs_dir_path}/dijkstra.cypher', 'r') as f:
             self.dijkstra = CypherHelper.cypher_optimized(f.read())
-        
+
+        with open(f'{abs_dir_path}/get_relationship_id_from_nodes_ids.cypher', 'r') as f:
+            self.relationship_id_from_nodes_ids = CypherHelper.cypher_optimized(f.read())
+
         with open(f'{abs_dir_path}/update_foot_transfer_time.cypher', 'r') as f:
             self.update_ft_transf = CypherHelper.cypher_optimized(f.read())
         with open(f'{abs_dir_path}/update_train_time.cypher', 'r') as f:
@@ -65,6 +68,13 @@ class CypherHelper:
             "$$defaultweight$$", str(default_weight)
         ).replace(
             "$$paths_count$$", str(paths_count)
+        )
+    
+    def get_relationship_id_from_nodes_ids(self, start_id, end_id):
+        return self.relationship_id_from_nodes_ids.replace(
+            "$$start_id$$", str(start_id)
+        ).replace(
+            "$$end_id$$", str(end_id)
         )
     
     def get_update_tr_time(self, l, v, n, time):

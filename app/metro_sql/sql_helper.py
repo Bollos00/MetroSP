@@ -29,3 +29,31 @@ def auth_user(db: Session, user: schemas.UserAuth):
 def create_node(db: Session, node: schemas.NodeCreate):
     db_node = models.Node(node_id=node.node_id, date_time=node.date_time, owner_id=node.owner_id)
     return add_commit_refresh(db, db_node)
+
+
+def delete_nodes(db:Session, nodes: list[models.Node]):
+    for n in nodes:
+        db.delete(n)
+    db.commit()
+
+def create_node_link(db: Session, node_link: schemas.NodeLinkCreate):
+    disp_time = (node_link.end_date_time - node_link.start_date_time).total_seconds()
+
+    db_node_link = models.NodeLink(
+        node_link_id=node_link.node_link_id, 
+        start_date_time=node_link.start_date_time,
+        end_date_time=node_link.end_date_time,
+        displacement_time_s=disp_time
+    )
+    return add_commit_refresh(db, db_node_link)
+
+def get_users_with_nodes(db: Session):
+    users = db.query(models.Node.owner_id).distinct()
+    users = [u.owner_id for u in users]
+    nodes = dict()
+    for u in users:
+        user_nodes = db.query(models.Node).filter(
+            models.Node.owner_id == u
+        ).all()
+        nodes[u] = sorted(user_nodes, key=lambda n: n.date_time)
+    return nodes

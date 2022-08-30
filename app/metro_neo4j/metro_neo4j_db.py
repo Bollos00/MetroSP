@@ -57,6 +57,11 @@ class MetroNeo4jDatabase(object):
     def dijkstra(self, start, end, paths=1, default_weight=1000):
         return self.query(self.helper.get_dijkstra(start, end, paths, default_weight))
     
+    def get_relationship_id_from_nodes_ids(self, start_id, end_id):
+        return self.query(self.helper.get_relationship_id_from_nodes_ids(
+            start_id, end_id
+        ))
+
     def update_tr_time(self, l, v, n, time):
         return self.query(self.helper.get_update_tr_time(l, v, n, time))
 

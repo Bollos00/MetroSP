@@ -33,3 +33,19 @@ class Node(NodeBase):
 
     class Config:
         orm_mode = True
+
+
+class NodeLinkBase(BaseModel):
+    node_link_id: int
+    start_date_time: datetime.datetime
+    end_date_time: datetime.datetime
+
+class NodeLinkCreate(NodeLinkBase):
+    pass
+
+class NodeLink(NodeLinkBase):
+    id: int
+    displacement_time_s: int
+    
+    class Config:
+        orm_mode = True

@@ -1,6 +1,7 @@
 import enum
 
-class MetroLine(enum.Flag):
+class MetroLine(enum.IntFlag):
+    L_INVALID = 0x0000
     L_01 =  0x0002
     L_02 =  0x0004
     L_03 =  0x0008
@@ -8,7 +9,7 @@ class MetroLine(enum.Flag):
     L_05 =  0x0020
     # ...
     L_15 =  0x8000
-    
+
     
 class MetroFleet(enum.Enum):
     FLEET_E = 1
@@ -26,3 +27,20 @@ class MetroWay(enum.IntEnum):
     WAY_PLUS  = +1
     WAY_ONE   = WAY_MINUS
     WAY_TWO   = WAY_PLUS
+    
+    
+def metro_line_from_value(v):
+    if v == 1:
+        return MetroLine.L_01
+    if v == 2:
+        return MetroLine.L_02
+    if v == 3:
+        return MetroLine.L_03
+    if v == 4:
+        return MetroLine.L_04
+    if v == 5:
+        return MetroLine.L_05
+    if v == 15:
+        return MetroLine.L_15
+    return MetroLine.L_INVALID
+    

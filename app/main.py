@@ -7,12 +7,33 @@ from metro_sql import metro_sql_db, models, schemas, sql_helper
 import atexit
 from fastapi.middleware.cors import CORSMiddleware
 from route_planner import route_planner
+from fastapi_utils.tasks import repeat_every
+from helper import helper
 
 metro_neo4j = MetroNeo4jDatabase()
 metro_sql = metro_sql_db.get_db
 
 models.Base.metadata.create_all(bind=metro_sql_db.engine)
 app = FastAPI()
+
+
+@app.on_event("startup")
+def startup_event():
+    db = metro_sql_db.SessionLocal()
+    helper.initialize_stations_table(db)
+    helper.initialize_trains_table(db)
+    db.close()
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    pass
+
+# @app.on_event("startup")
+# @repeat_every(seconds=2) # 30 minutes
+# def periodic_db_updates(db: Session = Depends(metro_sql)):
+#     route_planner.update_node_links_table(db)
+#     print("Hello")
 
 
 @app.get("/")
@@ -26,7 +47,7 @@ def planner(start: str, end: str, options: int = 1):
 
 
 @app.post("/create_user", response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql_db.get_db)):
+def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql)):
     db_user = sql_helper.get_user(db, user.id)
     if db_user:
         raise HTTPException(status_code=400, detail="UUID already registered")

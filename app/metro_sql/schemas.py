@@ -49,3 +49,19 @@ class NodeLink(NodeLinkBase):
     
     class Config:
         orm_mode = True
+        
+        
+class StationBase(BaseModel):
+    id: int
+    beacon_id_major: int
+    name: str
+    subenvironments: int
+    lines: int
+    
+class StationCreate(StationBase):
+    pass
+
+class Station(StationBase):
+    class Config:
+        orm_mode = True
+

@@ -62,14 +62,11 @@ class MetroNeo4jDatabase(object):
             start_id, end_id
         ))
 
-    def update_tr_time(self, l, v, n, time):
-        return self.query(self.helper.get_update_tr_time(l, v, n, time))
-
-    def update_ft_transf_time(self, station, fl, fv, tl, tv, time):
-        return self.query(self.helper.get_update_ft_transf_time(station, fl, fv, tl, tv, time))
-
-    def update_ft_bd_plat_time(self, station, fl, fv, time):
-        return self.query(self.helper.get_update_ft_bd_plat_time(station, fl, fv, time))
-
-    def update_ft_plat_bd_time(self, station, tl, tv, time):
-        return self.query(self.helper.get_update_ft_plat_bd_time(station, tl, tv, time))
+    def get_stations(self):
+        return self.query(self.helper.get_stations())
+    
+    def get_station_lines(self, station):
+        return self.query(self.helper.get_station_lines(station))
+    
+    def update_rl_time_from_id(self, rl_id, rl_time):
+        return self.query(self.helper.update_rl_time_from_id(rl_id, rl_time))

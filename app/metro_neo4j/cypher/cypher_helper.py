@@ -24,16 +24,15 @@ class CypherHelper:
 
         with open(f'{abs_dir_path}/get_relationship_id_from_nodes_ids.cypher', 'r') as f:
             self.relationship_id_from_nodes_ids = CypherHelper.cypher_optimized(f.read())
-
-        with open(f'{abs_dir_path}/update_foot_transfer_time.cypher', 'r') as f:
-            self.update_ft_transf = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/update_train_time.cypher', 'r') as f:
-            self.update_tr = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/update_foot_boarding_to_plataform.cypher', 'r') as f:
-            self.update_ft_bd_plat = CypherHelper.cypher_optimized(f.read())
-        with open(f'{abs_dir_path}/update_foot_plataform_to_boarding.cypher', 'r') as f:
-            self.update_ft_plat_bd = CypherHelper.cypher_optimized(f.read())
     
+        with open(f'{abs_dir_path}/get_stations.cypher', 'r') as f:
+            self.stations = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/get_station_lines.cypher', 'r') as f:
+            self.station_lines = CypherHelper.cypher_optimized(f.read())
+
+        with open(f'{abs_dir_path}/update_rl_time_from_id.cypher', 'r') as f:
+            self.update_rl_time_from_id = CypherHelper.cypher_optimized(f.read())
+
         t_disloc_train  = int(t_train_trip + t_boarding)
         t_disloc_transf = int(v_ped*d_diloc + t_wait_train/2 + t_boarding)
         t_disloc_exit   = int(v_ped*d_diloc)
@@ -77,54 +76,20 @@ class CypherHelper:
             "$$end_id$$", str(end_id)
         )
     
-    def get_update_tr_time(self, l, v, n, time):
-        return self.update_tr.replace(
-            "$$l$$", str(l)
-        ).replace(
-            "$$v$$", str(v)
-        ).replace(
-            "$$n$$", str(n)
-        ).replace(
-            "$$time$$", str(int(time))
-        )
-
-    def get_update_ft_transf_time(self, station, fl, fv, tl, tv, time):
-        return self.update_ft_transf.replace(
-            "$$station$$", str(station)
-        ).replace(
-            "$$fl$$", str(fl)
-        ).replace(
-            "$$fv$$", str(fv)
-        ).replace(
-            "$$tl$$", str(tl)
-        ).replace(
-            "$$tv$$", str(tv)
-        ).replace(
-            "$$time$$", str(int(time))
-        )
-
-    def get_update_ft_bd_plat_time(self, station, fl, fv, time):
-        return self.update_ft_bd_plat.replace(
-            "$$station$$", str(station)
-        ).replace(
-            "$$fl$$", str(fl)
-        ).replace(
-            "$$fv$$", str(fv)
-        ).replace(
-            "$$time$$", str(int(time))
-        )
-
-    def get_update_ft_plat_bd_time(self, station, tl, tv, time):
-        return self.update_ft_plat_bd.replace(
-            "$$station$$", str(station)
-        ).replace(
-            "$$tl$$", str(tl)
-        ).replace(
-            "$$tv$$", str(tv)
-        ).replace(
-            "$$time$$", str(int(time))
-        )
-
+    def get_stations(self):
+        return self.stations
     
+    def get_station_lines(self, station):
+        return self.station_lines.replace(
+            "$$station$$", station
+        )
+
+    def get_update_rl_time_from_id(self, rl_id, rl_time):
+        return self.update_rl_time_from_id.replace(
+            "$$id$$", str(rl_id),
+            "$$time$$", str(rl_time)
+        )
+        
+        
 if __name__ == "__main__":
     ch = CypherHelper()

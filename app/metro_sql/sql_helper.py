@@ -47,6 +47,7 @@ def create_node_link(db: Session, node_link: schemas.NodeLinkCreate):
     )
     return add_commit_refresh(db, db_node_link)
 
+
 def get_users_with_nodes(db: Session):
     users = db.query(models.Node.owner_id).distinct()
     users = [u.owner_id for u in users]
@@ -57,3 +58,22 @@ def get_users_with_nodes(db: Session):
         ).all()
         nodes[u] = sorted(user_nodes, key=lambda n: n.date_time)
     return nodes
+
+
+def check_station_registered(db: Session, station_name: str):
+    station_qr = db.query(models.Station).filter(
+        models.Station.name == station_name
+    ).one_or_none()
+    return station_qr is not None
+
+def create_stations(db: Session, stations: list[schemas.StationCreate]):
+    for s in stations:
+        db_s = models.Station(
+            id = s.id,
+            beacon_id_major = s.beacon_id_major,
+            name = s.name,
+            subenvironments = s.subenvironments,
+            lines = s.lines
+        )
+        db.add(db_s)
+    db.commit()

@@ -12,12 +12,18 @@ def add_commit_refresh(db: Session, db_item):
 
 
 def get_user(db: Session, user_id: uuid.UUID):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+    return db.query(models.User).filter(models.User.id == user_id).one_or_none()
 
 
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(id=user.id, password=user.password)
     return add_commit_refresh(db, db_user)
+
+
+def delete_user(db: Session, user_id: uuid.UUID):
+    user = get_user(db, user_id)
+    if user is not None:
+        db.delete(user)
 
 
 def auth_user(db: Session, user: schemas.UserAuth):

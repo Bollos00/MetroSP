@@ -54,6 +54,14 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql)):
         raise HTTPException(status_code=400, detail="UUID already registered")
     return sql_helper.create_user(db, user)
 
+
+@app.post("/delete_user")
+def delete_user(user: schemas.UserAuth, db: Session = Depends(metro_sql)):
+    auth_result = sql_helper.auth_user(db, user)
+    if not auth_result:
+        raise HTTPException(status_code=400, detail="Authentification failed")
+    sql_helper.delete_user(db, user)
+
     
 @app.post("/create_nodes")
 def create_nodes(nodes: list[schemas.NodeCreate], 

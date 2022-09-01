@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 import uuid
 
-from . import models, schemas
+from . import models, schemas, enums
+
 
 def add_commit_refresh(db: Session, db_item):
     db.add(db_item)
@@ -26,15 +27,20 @@ def auth_user(db: Session, user: schemas.UserAuth):
     return query_result.password == user.password
 
 
-def create_node(db: Session, node: schemas.NodeCreate):
-    db_node = models.Node(node_id=node.node_id, date_time=node.date_time, owner_id=node.owner_id)
-    return add_commit_refresh(db, db_node)
+def create_nodes(db: Session, nodes: list[schemas.NodeCreate], user_id: uuid.UUID):
+    for n in nodes:
+        db_node = models.Node(
+            node_id=n.node_id, date_time=n.date_time, owner_id=user_id
+        )
+        db.add(db_node)
+    db.commit()
 
 
 def delete_nodes(db:Session, nodes: list[models.Node]):
     for n in nodes:
         db.delete(n)
     db.commit()
+
 
 def create_node_link(db: Session, node_link: schemas.NodeLinkCreate):
     disp_time = (node_link.end_date_time - node_link.start_date_time).total_seconds()
@@ -66,6 +72,14 @@ def check_station_registered(db: Session, station_name: str):
     ).one_or_none()
     return station_qr is not None
 
+
+def check_train_registered(db: Session, fleet: enums.MetroFleet):
+    fleet_qr = db.query(models.Train).filter(
+        models.Train.fleet == fleet
+    ).one_or_none()
+    return fleet_qr is not None
+
+
 def create_stations(db: Session, stations: list[schemas.StationCreate]):
     for s in stations:
         db_s = models.Station(
@@ -76,4 +90,10 @@ def create_stations(db: Session, stations: list[schemas.StationCreate]):
             lines = s.lines
         )
         db.add(db_s)
+    db.commit()
+    
+    
+def create_trains(db: Session, trains: list[models.Train]):
+    for t in trains:
+        db.add(t)
     db.commit()

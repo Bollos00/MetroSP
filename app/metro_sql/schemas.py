@@ -22,14 +22,13 @@ class User(UserBase):
 class NodeBase(BaseModel):
     node_id: int
     date_time: datetime.datetime
-    owner_id: uuid.UUID
-
 
 class NodeCreate(NodeBase):
     pass
 
 class Node(NodeBase):
     id: int
+    owner_id: uuid.UUID
 
     class Config:
         orm_mode = True

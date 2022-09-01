@@ -44,3 +44,6 @@ def update_node_links_table(db):
                 )
             )
     sql_helper.delete_nodes(db, nodes_to_delete)
+    
+def update_node_links_graph(db):
+    pass

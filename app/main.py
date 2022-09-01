@@ -29,11 +29,12 @@ def startup_event():
 def shutdown_event():
     pass
 
-# @app.on_event("startup")
-# @repeat_every(seconds=2) # 30 minutes
-# def periodic_db_updates(db: Session = Depends(metro_sql)):
-#     route_planner.update_node_links_table(db)
-#     print("Hello")
+@app.on_event("startup")
+@repeat_every(seconds=30*60) # 30 minutes
+def periodic_db_updates():
+    db = metro_sql_db.SessionLocal()
+    route_planner.update_node_links_table(db)
+    db.close()
 
 
 @app.get("/")
@@ -54,16 +55,14 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql)):
     return sql_helper.create_user(db, user)
 
     
-@app.post("/create_node", response_model=schemas.Node)
-def create_node(node: schemas.NodeCreate, 
-                user_password: str,
-                db: Session = Depends(metro_sql)):
-    auth_result = sql_helper.auth_user(
-        db, schemas.UserAuth(id=node.owner_id, password=user_password)
-    )
+@app.post("/create_nodes")
+def create_nodes(nodes: list[schemas.NodeCreate], 
+                 user: schemas.UserAuth,
+                 db: Session = Depends(metro_sql)):
+    auth_result = sql_helper.auth_user(db, user)
     if not auth_result:
         raise HTTPException(status_code=400, detail="Authentification failed")
-    return sql_helper.create_node(db, node)
+    sql_helper.create_nodes(db, nodes, user.id)
 
 
 @app.get("/test")

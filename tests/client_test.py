@@ -15,17 +15,31 @@ class UserClient:
         self.password = random_password()
         
     def register(self):
-        pass
-    
-    def unregister():
-        pass
+        url = ADDRES + "/create_user"
+        payload = {
+            'id': str(self.id),
+            'password': self.password
+        }
         
-    def route_sacoma_sao_lucas():
+        r = requests.post(url, json=payload)
+        print(r.text)
+    
+    def unregister(self):
+        url = ADDRES + "/delete_user"
+        payload = {
+            'id': str(self.id),
+            'password': self.password
+        }
+        
+        r = requests.post(url, json=payload)
+        print(r.text)
+        
+    def route_sacoma_sao_lucas(self):
         nodes = [110, 112, 115, 118, 120, 242, 245, 243]
         
         
 if __name__ == "__main__":
-    for i in range(8):
+    for i in range(1):
         u = UserClient()
-        print(u.id)
-        print(u.password)
+        u.register()
+        u.unregister()

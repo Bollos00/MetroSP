@@ -24,13 +24,14 @@ def delete_user(db: Session, user_id: uuid.UUID):
     user = get_user(db, user_id)
     if user is not None:
         db.delete(user)
+    db.commit()
 
 
 def auth_user(db: Session, user: schemas.UserAuth):
-    query_result = db.query(models.User).filter(models.User.id == user.id).one_or_none()
-    if query_result is None:
+    db_user = get_user(db, user.id)
+    if db_user is None:
         return False
-    return query_result.password == user.password
+    return db_user.password == user.password
 
 
 def create_nodes(db: Session, nodes: list[schemas.NodeCreate], user_id: uuid.UUID):

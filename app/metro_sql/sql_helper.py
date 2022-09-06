@@ -22,8 +22,14 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def delete_user(db: Session, user_id: uuid.UUID):
     user = get_user(db, user_id)
-    if user is not None:
-        db.delete(user)
+    if user is None:
+        return
+    
+    user_nodes = db.query(models.Node).filter(
+        models.Node.owner_id == user_id
+    ).all()
+    delete_nodes(db, user_nodes)
+    db.delete(user)
     db.commit()
 
 
@@ -50,7 +56,9 @@ def delete_nodes(db:Session, nodes: list[models.Node]):
 
 
 def create_node_link(db: Session, node_link: schemas.NodeLinkCreate):
-    disp_time = (node_link.end_date_time - node_link.start_date_time).total_seconds()
+    disp_time = int((
+        node_link.end_date_time - node_link.start_date_time
+    ).total_seconds())
 
     db_node_link = models.NodeLink(
         node_link_id=node_link.node_link_id, 

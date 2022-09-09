@@ -1,6 +1,10 @@
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, schemas
 
+def get_graph():
+    return
+
+
 def route_planner(start, end, paths_count):
     db = MetroNeo4jDatabase()
     paths = db.dijkstra(start, end, paths_count)
@@ -19,6 +23,7 @@ def route_planner(start, end, paths_count):
         response.append({"path": path, "time": paths[i][1]})
     
     return response
+
 
 def update_node_links_table(db):
     nodes = sql_helper.get_users_with_nodes(db)
@@ -44,6 +49,7 @@ def update_node_links_table(db):
                 )
             )
     sql_helper.delete_nodes(db, nodes_to_delete)
+    
     
 def update_node_links_graph(db):
     pass

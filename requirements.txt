@@ -1,0 +1,7 @@
+fastapi
+fastapi_utils
+neo4j
+pydantic
+sqlalchemy
+sqlalchemy_utils
+uvicorn

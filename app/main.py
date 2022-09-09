@@ -47,6 +47,11 @@ def planner(start: str, end: str, options: int = 1):
     return route_planner.route_planner(start, end, options)
 
 
+@app.get("/get_planner_graph")
+def planner_graph():
+    return route_planner.get_graph()
+
+
 @app.post("/create_user", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(metro_sql)):
     db_user = sql_helper.get_user(db, user.id)

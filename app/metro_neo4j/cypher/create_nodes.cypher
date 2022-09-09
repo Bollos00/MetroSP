@@ -25,7 +25,7 @@ CREATE
     (:Boarding {station:"Praça da árvore", l:1, n:19, w:'-'}),
     (:Boarding {station:"Praça da árvore", l:1, n:19, w:'+'}),
 
-    (santa_cruz:Blocking {name:"Santa Cruz"}),
+    (:Blocking {name:"Santa Cruz"}),
     (:Boarding {station:"Santa Cruz", l:1, n:18, w:'-'}),
     (:Boarding {station:"Santa Cruz", l:1, n:18, w:'+'}),
     (:Boarding {station:"Santa Cruz", l:5, n:15, w:'-'}),

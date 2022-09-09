@@ -63,4 +63,3 @@ class StationCreate(StationBase):
 class Station(StationBase):
     class Config:
         orm_mode = True
-

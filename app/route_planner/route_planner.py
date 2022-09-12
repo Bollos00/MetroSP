@@ -2,7 +2,39 @@ from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, schemas
 
 def get_graph():
-    return
+    nodes = MetroNeo4jDatabase().get_graph_nodes()
+    for i, n in enumerate(nodes):
+        node = n[0]
+        labels = list(node.labels)
+        if "Blocking" in labels:
+            nodes[i] = {
+                "type": "Blocking",
+                "id": node.id,
+                "name": node.get("name", "")
+            }
+        elif "Boarding" in labels:
+            nodes[i] = {
+                "type": "Boarding",
+                "id": node.id,
+                "station": node.get("station", ""),
+                "w": node.get("w", ""),
+                "l": node.get("l", ""),
+                "n": node.get("n", ""),
+            }
+
+    relationships = MetroNeo4jDatabase().get_graph_relationships()
+    for i, r in enumerate(relationships):
+        relationship = r[0]
+        relationships[i] = {
+            "type": relationship.type,
+            "start": relationship.start_node.id,
+            "end": relationship.end_node.id
+        }
+
+    return {
+        "nodes": nodes,
+        "relationships": relationships
+    }
 
 
 def route_planner(start, end, paths_count):

@@ -25,13 +25,13 @@ class MetroNeo4jDatabase(object):
         while True:
             try:
                 cls.driver = neo4j.GraphDatabase.driver(uri, auth=(user, password))
-                cls.query(cls, "MATCH (n) RETURN n")
+                cls.query(cls, cls.helper.get_node_id_0())
             except Exception as e:
-                print("Failed to create the driver:", e)
-                print("Trying again in 1 second.")
+                # print("Failed to create the driver:", e)
+                # print("Trying again in 1 second.")
                 time.sleep(1)
             else:
-                print("Ok!")
+                # print("Ok!")
                 break
 
     def close(self):
@@ -51,16 +51,19 @@ class MetroNeo4jDatabase(object):
         self.query("MATCH (n) DETACH DELETE n")
 
     def reset(self):
-        self.delete_detach()
-        
-        self.query(self.helper.create_nodes)
-        self.query(self.helper.create_bd_names)
-        
-        self.query(self.helper.create_rl_entry)
-        self.query(self.helper.create_rl_exit)
-        self.query(self.helper.create_rl_train_way_minus)
-        self.query(self.helper.create_rl_train_way_plus)
-        self.query(self.helper.create_rl_transfer)
+        ok = None
+        while not ok:
+            self.delete_detach()
+            
+            self.query(self.helper.create_nodes)
+            self.query(self.helper.create_bd_names)
+            
+            self.query(self.helper.create_rl_entry)
+            self.query(self.helper.create_rl_exit)
+            self.query(self.helper.create_rl_train_way_minus)
+            self.query(self.helper.create_rl_train_way_plus)
+            self.query(self.helper.create_rl_transfer)
+            ok = self.query(self.helper.get_node_id_0())
         
     def dijkstra(self, start, end, paths=1, default_weight=1000):
         return self.query(self.helper.get_dijkstra(start, end, paths, default_weight))
@@ -78,3 +81,10 @@ class MetroNeo4jDatabase(object):
     
     def update_rl_time_from_id(self, rl_id, rl_time):
         return self.query(self.helper.update_rl_time_from_id(rl_id, rl_time))
+    
+    def get_graph_nodes(self):
+        return self.query("MATCH (n) RETURN n")
+    
+    def get_graph_relationships(self):
+        return self.query("MATCH ()-[r]->() RETURN r")
+    

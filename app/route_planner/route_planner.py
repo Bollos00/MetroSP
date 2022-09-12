@@ -48,10 +48,16 @@ def route_planner(start, end, paths_count):
         path = list()
         for j, n in enumerate(paths[i][0].nodes):
             if j==0:
-                path.append((n.get("name", ""), 0))
+                path.append({
+                    "id": n.id,
+                    "time": 0
+                })
             else:
                 time = paths[i][0].relationships[j-1].get("time", 0)
-                path.append((n.get("name", ""), time))
+                path.append({
+                    "id": n.id,
+                    "time": time
+                })
         response.append({"path": path, "time": paths[i][1]})
     
     return response

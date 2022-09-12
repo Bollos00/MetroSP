@@ -10,15 +10,14 @@ from route_planner import route_planner
 from fastapi_utils.tasks import repeat_every
 from helper import helper
 
-metro_neo4j = MetroNeo4jDatabase()
 metro_sql = metro_sql_db.get_db
 
 models.Base.metadata.create_all(bind=metro_sql_db.engine)
 app = FastAPI()
 
-
 @app.on_event("startup")
 def startup_event():
+    MetroNeo4jDatabase().reset()
     db = metro_sql_db.SessionLocal()
     helper.initialize_stations_table(db)
     helper.initialize_trains_table(db)

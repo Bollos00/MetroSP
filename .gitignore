@@ -5,3 +5,4 @@ plugins
 **/__pycache__
 app/metro_neo4j/credentials/credentials.py
 *.db
+.vscode

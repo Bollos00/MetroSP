@@ -13,7 +13,7 @@ def initialize_stations_table(db):
         lines = enums.MetroLine.L_INVALID
         for r in lines_record:
             lines |= enums.metro_line_from_value(r.get("b.l"))
-        major = s.id if s.id != 0 else 1000
+        major = s.id
         stations[i] = schemas.StationCreate(
             id=s.id,
             beacon_id_major=major,

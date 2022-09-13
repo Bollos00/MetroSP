@@ -91,10 +91,7 @@ class CypherHelper:
         )
     
     def get_node_id_0(self):
-        return """MATCH(n) 
-WHERE id(n)=0
-RETURN n
-    """
+        return "MATCH(n) WHERE id(n)=0 RETURN n"
         
 if __name__ == "__main__":
     ch = CypherHelper()

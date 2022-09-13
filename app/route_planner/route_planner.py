@@ -1,8 +1,8 @@
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, schemas
 
-def get_graph():
-    nodes = MetroNeo4jDatabase().get_graph_nodes()
+def get_graph(neo4jdb):
+    nodes = MetroNeo4jDatabase().get_graph_nodes(neo4jdb)
     for i, n in enumerate(nodes):
         node = n[0]
         labels = list(node.labels)
@@ -22,7 +22,7 @@ def get_graph():
                 "n": node.get("n", ""),
             }
 
-    relationships = MetroNeo4jDatabase().get_graph_relationships()
+    relationships = MetroNeo4jDatabase().get_graph_relationships(neo4jdb)
     for i, r in enumerate(relationships):
         relationship = r[0]
         relationships[i] = {
@@ -37,9 +37,11 @@ def get_graph():
     }
 
 
-def route_planner(start, end, paths_count):
-    db = MetroNeo4jDatabase()
-    paths = db.dijkstra(start, end, paths_count)
+def route_planner(neo4jdb, start, end, paths_count):
+    paths = MetroNeo4jDatabase().dijkstra(
+        neo4jdb, start, end, paths_count
+    )
+    
     if len(paths) != paths_count:
         return None
 
@@ -63,8 +65,8 @@ def route_planner(start, end, paths_count):
     return response
 
 
-def update_node_links_table(db):
-    nodes = sql_helper.get_users_with_nodes(db)
+def update_node_links_table(neo4jdb, sqldb):
+    nodes = sql_helper.get_users_with_nodes(sqldb)
     nodes_to_delete = list()
     for u in nodes.keys():
         user_nodes = nodes[u]
@@ -73,20 +75,20 @@ def update_node_links_table(db):
             nodes_to_delete.append(start_node)
             end_node = user_nodes[i+1]
             rl = MetroNeo4jDatabase().get_relationship_id_from_nodes_ids(
-                start_node.node_id, end_node.node_id
+                neo4jdb, start_node.node_id, end_node.node_id
             )
             if len(rl) != 1:
                 continue
             rl_id = rl[0][0].id
             sql_helper.create_node_link(
-                db,
+                sqldb,
                 schemas.NodeLinkCreate(
                     node_link_id=rl_id,
                     start_date_time=start_node.date_time,
                     end_date_time=end_node.date_time,
                 )
             )
-    sql_helper.delete_nodes(db, nodes_to_delete)
+    sql_helper.delete_nodes(sqldb, nodes_to_delete)
     
     
 def update_node_links_graph(db):

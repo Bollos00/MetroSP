@@ -27,6 +27,7 @@ def get_graph(neo4jdb):
         relationship = r[0]
         relationships[i] = {
             "type": relationship.type,
+            "id": relationship.id,
             "start": relationship.start_node.id,
             "end": relationship.end_node.id
         }
@@ -91,5 +92,5 @@ def update_node_links_table(neo4jdb, sqldb):
     sql_helper.delete_nodes(sqldb, nodes_to_delete)
     
     
-def update_node_links_graph(db):
+def update_node_links_graph(neo4jdb, sqldb):
     pass

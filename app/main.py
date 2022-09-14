@@ -34,12 +34,23 @@ def startup_event():
 def shutdown_event():
     pass
 
+
 @app.on_event("startup")
-@repeat_every(seconds=30*60) # 30 minutes
+@repeat_every(seconds=1*60) # 1 minute
 def periodic_db_updates():
     sqldb = metro_sql_db.SessionLocal()
     route_planner.update_node_links_table(sqldb)
     sqldb.close()
+
+
+@app.on_event("startup")
+@repeat_every(seconds=4*60) # 4 minutes
+def periodic_db_updates():
+    sqldb = metro_sql_db.SessionLocal()
+    neo4jdb = MetroNeo4jDatabase().driver.session()
+    route_planner.update_node_links_graph(neo4jdb, sqldb)
+    sqldb.close()
+    neo4jdb.close()
 
 
 @app.get("/")

@@ -29,7 +29,7 @@ if __name__ == "__main__":
     N_SAMPLES = 200
     TIME_NOISE = 100
     VALUE_NOISE = 100
-    DISPLACEMENT_VALUE0 = -200
+    DISPLACEMENT_VALUE0 = -100
     value0 = (500, 800) # (time, value)
     t_end = 1000
     expcted_value_end = 700
@@ -41,9 +41,9 @@ if __name__ == "__main__":
     fake_values = linear_regression_predict(lr, time)
     fake_time = time + (numpy.random.rand(len(time)) - .5)*TIME_NOISE
     fake_values += (numpy.random.rand(len(fake_values)) - .5)*VALUE_NOISE
-    pyplot.plot(value0[0], value0[1], 'ro')
     pyplot.plot(fake_time, fake_values, 'bo')
     a, b = solve(value0, fake_time, fake_values, t_end)
     pyplot.plot(time, _linear_regression_predict(a, b, time), 'go')
+    pyplot.plot(value0[0], value0[1], 'ro')
     
     pyplot.show()

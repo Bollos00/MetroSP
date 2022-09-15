@@ -75,3 +75,7 @@ class Train(Base):
     cars = Column(Integer)
     doors = Column(Integer)
 
+
+class ValidUUID(Base):
+    __tablename__ = "valid_uuids"
+    uuid = Column(UUIDType(), primary_key=True)

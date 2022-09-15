@@ -112,3 +112,18 @@ def create_trains(db: Session, trains: list[models.Train]):
     for t in trains:
         db.add(t)
     db.commit()
+    
+
+def get_valid_uuids(db: Session):
+    uuids = db.query(models.ValidUUID.uuid).distinct().all()
+    return [u.uuid for u in uuids]
+
+
+def initialize_valid_uuids_table(db: Session):
+    valid_uuids_db = get_valid_uuids(db)
+    uuids = ["bc3411a4-3198-45c0-aefe-3f4985a0400f"]
+    uuids = [uuid.UUID(u) for u in uuids]
+    for u in uuids:
+        if u not in valid_uuids_db:
+            db.add(models.ValidUUID(uuid=u))
+    db.commit()

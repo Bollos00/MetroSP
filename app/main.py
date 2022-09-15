@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from route_planner import route_planner
 from fastapi_utils.tasks import repeat_every
 from helper import helper
+import uuid
 
 metro_sql = metro_sql_db.get_session
 metro_neo4j = MetroNeo4jDatabase.get_session
@@ -25,6 +26,7 @@ def startup_event():
     
     helper.initialize_stations_table(neo4jdb, sqldb)
     helper.initialize_trains_table(sqldb)
+    sql_helper.initialize_valid_uuids_table(sqldb)
     
     sqldb.close()
     neo4jdb.close()
@@ -93,6 +95,10 @@ def create_nodes(nodes: list[schemas.NodeCreate],
         raise HTTPException(status_code=400, detail="Authentification failed")
     sql_helper.create_nodes(sqldb, nodes, user.id)
 
+
+@app.get("/valid_uuids", response_model=list[uuid.UUID])
+def valid_uuids(sqldb: Session = Depends(metro_sql)):
+    return sql_helper.get_valid_uuids(sqldb)
 
 @app.get("/test")
 def test(db: Session = Depends(metro_sql)):

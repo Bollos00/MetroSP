@@ -6,3 +6,4 @@ plugins
 app/metro_neo4j/credentials/credentials.py
 *.db
 .vscode
+Metrô.session.sql

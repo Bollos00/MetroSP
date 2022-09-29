@@ -29,7 +29,7 @@ if __name__ == "__main__":
     N_SAMPLES = 200
     TIME_NOISE = 100
     VALUE_NOISE = 100
-    DISPLACEMENT_VALUE0 = -100
+    DISPLACEMENT_VALUE0 = 0
     value0 = (500, 800) # (time, value)
     t_end = 1000
     expcted_value_end = 700

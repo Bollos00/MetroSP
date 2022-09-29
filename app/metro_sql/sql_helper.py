@@ -31,6 +31,8 @@ def delete_user(db: Session, user_id: uuid.UUID):
     delete_nodes(db, user_nodes)
     db.delete(user)
     db.commit()
+    
+    return {"result": "ok"}
 
 
 def auth_user(db: Session, user: schemas.UserAuth):
@@ -47,6 +49,8 @@ def create_nodes(db: Session, nodes: list[schemas.NodeCreate], user_id: uuid.UUI
         )
         db.add(db_node)
     db.commit()
+    
+    return {"result": "ok"}
 
 
 def delete_nodes(db:Session, nodes: list[models.Node]):
@@ -127,3 +131,100 @@ def initialize_valid_uuids_table(db: Session):
         if u not in valid_uuids_db:
             db.add(models.ValidUUID(uuid=u))
     db.commit()
+  
+  
+def _get_station_subenvironments(db: Session, station_id):
+    subenvs = db.query(models.IndoorNavStationSubenvironment).filter(
+        models.IndoorNavStationSubenvironment.station_id == station_id
+    )
+    
+    return [{
+        'subenvironment': a.subenvironment_id,
+        'points': a.points
+    } for a in subenvs]
+
+
+def _get_station_polygon_obstacles(db: Session, station_id):
+    obstacles = db.query(models.IndoorNavStationPolygonObstacle).filter(
+        models.IndoorNavStationPolygonObstacle.station_id == station_id
+    )
+    
+    return [{
+        'subenvironment': a.subenvironment,
+        'points': a.points
+    } for a in obstacles]
+
+    
+def _get_station_circle_obstacles(db: Session, station_id):
+    obstacles = db.query(models.IndoorNavStationCircleObstacle).filter(
+        models.IndoorNavStationCircleObstacle.station_id == station_id
+    )
+    
+    return [{
+        'subenvironment': a.subenvironment,
+        'points': a.points,
+        'c_x': a.c_x,
+        'c_y': a.c_y,
+        'r': a.r
+    } for a in obstacles]
+
+
+def _get_station_transitions(db: Session, station_id):
+    transitions = db.query(models.IndoorNavStationTransition).filter(
+        models.IndoorNavStationTransition.station_id == station_id
+    )
+    
+    return [{
+        'directional': a.directional,
+        'transition_type': a.transition_type,
+        'subenvironment_start': a.subenvironment_start,
+        'subenvironment_end': a.subenvironment_end,
+        'start_x': a.start_x,
+        'start_y': a.start_y,
+        'end_x': a.end_x,
+        'end_y': a.end_y
+    } for a in transitions]
+
+    
+def _get_station_pois(db: Session, station_id):
+    pois = db.query(models.IndoorNavPoi).filter(
+        models.IndoorNavPoi.station_id == station_id
+    )
+    
+    return [{
+        'subenvironment': a.subenvironment,
+        'poi_type': a.poy_type,
+        'line_way': a.line_way,
+        'x': a.x,
+        'y': a.y
+    } for a in pois]
+
+
+def _get_station_beacons(db: Session, station_id):
+    beacons = db.query(models.IndoorNavBeacon).filter(
+        models.IndoorNavBeacon.station_id == station_id
+    )
+    
+    return [{
+        'subenvironment': a.subenvironment,
+        'beacon_id_minor': a.beacon_id_major,
+        'x': a.x,
+        'y': a.y,
+        'z': a.z
+    } for a in beacons]
+
+    
+def get_indoor_nav_info(db: Session, station_ids: list[int]):
+    info = station_ids.copy()
+    for i, station_id in enumerate(station_ids):
+        station_info = dict()
+        station_info['station_id'] = station_id
+        station_info['subenvironments'] = _get_station_subenvironments(db, station_id)
+        station_info['polygon_obstacles'] = _get_station_polygon_obstacles(db, station_id)
+        station_info['circle_obstacles'] = _get_station_circle_obstacles(db, station_id)
+        station_info['transitions'] = _get_station_transitions(db, station_id)
+        station_info['pois'] = _get_station_pois(db, station_id)
+        station_info['beacons'] = _get_station_beacons(db, station_id)
+        
+        info[i] = station_info
+    return info

@@ -44,3 +44,14 @@ def metro_line_from_value(v):
         return MetroLine.L_15
     return MetroLine.L_INVALID
     
+    
+class IndoorNavStationTransitionType(enum.Enum):
+    LIFT = 1
+    AUTOMATIC_STAIR = 2
+    COMMON_STAIR = 3
+    
+    
+class Poi(enum.Enum):
+    BLOCKING = 1
+    BOARDING = 2
+    TRAIN = 3

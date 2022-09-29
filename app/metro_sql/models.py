@@ -1,11 +1,12 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float
+from sqlalchemy.types import ARRAY
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import UUIDType
 import uuid
 from sqlalchemy.sql import func
 
 from .metro_sql_db import Base
-from .enums import MetroFleet, MetroLine, MetroWay
+from .enums import *
 
 class User(Base):
     __tablename__ = "users"
@@ -45,15 +46,83 @@ class IndoorNavBeacon(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     
-    station_id = Column(Integer, ForeignKey("stations.id"))
+    station_id = Column(Integer)
+    # station_id = Column(Integer, ForeignKey("stations.id"))
     subenvironment = Column(Integer)
     beacon_id_minor = Column(Integer)
     
     x = Column(Float, default=0)
     y = Column(Float, default=0)
     z = Column(Float, default=0)
-    
 
+
+class IndoorNavStationSubenvironment(Base):
+    __tablename__ = "indoor_nav_station_subenvironments"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    station_id = Column(Integer)
+    # There should be something preventing two subenvironments of the same
+    #  station being created with the same id.
+    subenvironment_id = Column(Integer)
+
+    limit_points = Column(ARRAY(Float, dimensions=2))
+
+    
+class IndoorNavStationPolygonObstacle(Base):
+    __tablename__ = "indoor_nav_station_polygon_obstacles"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    station_id = Column(Integer)
+    subenvironment = Column(Integer)
+    
+    points = Column(ARRAY(Float, dimensions=2))
+
+    
+class IndoorNavStationCircleObstacle(Base):
+    __tablename__ = "indoor_nav_station_circle_obstacles"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    station_id = Column(Integer)
+    subenvironment = Column(Integer)
+    
+    c_x = Column(Float)
+    c_y = Column(Float)
+    r = Column(Float)
+    
+  
+class IndoorNavStationTransition(Base):
+    __tablename__ = "indoor_nav_station_transitions"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    station_id = Column(Integer)
+    directional = Column(Boolean)
+    transition_type = Column(Enum(IndoorNavStationTransitionType))
+    subenvironment_start = Column(Integer)
+    subenvironment_end = Column(Integer)
+    
+    start_x = Column(Float)
+    start_y = Column(Float)
+    end_x = Column(Float)
+    end_y = Column(Float)
+    
+    
+class IndoorNavPoi(Base):
+    __tablename__ = "indoor_nav_pois"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    poi_type = Column(Enum(Poi))
+    station_id = Column(Integer)
+    subenvironment = Column(Integer)
+    line_way = Column(Integer)
+    x = Column(Float)
+    y = Column(Float)
+
+    
 class Station(Base):
     __tablename__ = "stations"
     

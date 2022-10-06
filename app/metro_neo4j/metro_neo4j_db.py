@@ -81,6 +81,12 @@ class MetroNeo4jDatabase(object):
     def get_stations(self, session):
         return self.query(session, self.helper.get_stations())
     
+    def get_station_id(self, session, station):
+        id = self.query(session, self.helper.get_station_id(station))
+        if len(id) != 1:
+            return None
+        return id[0].get('id(n)')
+
     def get_station_lines(self, session, station):
         return self.query(session, self.helper.get_station_lines(station))
     

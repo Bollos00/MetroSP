@@ -2,7 +2,6 @@ from sqlite3 import dbapi2
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, schemas, enums, models
 
-
 def initialize_stations_table(neo4jdb, sqldb):
     sql_helper.clear_stations_table(sqldb)
     stations = MetroNeo4jDatabase().get_stations(neo4jdb)

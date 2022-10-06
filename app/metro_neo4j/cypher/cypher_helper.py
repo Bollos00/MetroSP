@@ -27,6 +27,8 @@ class CypherHelper:
     
         with open(f'{abs_dir_path}/get_stations.cypher', 'r') as f:
             self.stations = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/get_station_id.cypher', 'r') as f:
+            self.station_id = CypherHelper.cypher_optimized(f.read())
         with open(f'{abs_dir_path}/get_station_lines.cypher', 'r') as f:
             self.station_lines = CypherHelper.cypher_optimized(f.read())
 
@@ -60,9 +62,9 @@ class CypherHelper:
     
     def get_dijkstra(self, start, end, paths_count, default_weight):
         return self.dijkstra.replace(
-            "$$start$$", start
+            "$$start$$", str(start)
         ).replace(
-            "$$end$$", end
+            "$$end$$", str(end)
         ).replace(
             "$$defaultweight$$", str(default_weight)
         ).replace(
@@ -78,6 +80,11 @@ class CypherHelper:
     
     def get_stations(self):
         return self.stations
+    
+    def get_station_id(self, station):
+        return self.station_id.replace(
+            "$$station$$", station
+        )
     
     def get_station_lines(self, station):
         return self.station_lines.replace(

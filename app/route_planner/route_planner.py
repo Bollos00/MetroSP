@@ -1,5 +1,7 @@
+from tkinter import N
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, models
+
 
 def get_graph(neo4jdb):
     nodes = MetroNeo4jDatabase().get_graph_nodes(neo4jdb)
@@ -39,6 +41,18 @@ def get_graph(neo4jdb):
 
 
 def route_planner(neo4jdb, start, end, paths_count):
+    try:
+        start = int(start)
+    except:
+        start = MetroNeo4jDatabase().get_station_id(neo4jdb, start)
+    try:
+        end = int(end)
+    except:
+        end = MetroNeo4jDatabase().get_station_id(neo4jdb, end)
+    
+    if start is None or end is None:
+        return None
+        
     paths = MetroNeo4jDatabase().dijkstra(
         neo4jdb, start, end, paths_count
     )

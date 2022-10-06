@@ -1,4 +1,5 @@
-MATCH (s:Blocking {name:'$$start$$'} ), (e:Blocking{name:'$$end$$'})
+MATCH (s), (e)
+WHERE id(s)=$$start$$ AND id(e)=$$end$$
 CALL apoc.algo.dijkstra(
     s, e, 'ENTER>|EXIT>|TRANSFER>|RIDE>', 'time', $$defaultweight$$, $$paths_count$$
 )

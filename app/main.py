@@ -67,7 +67,8 @@ def main():
 
 
 @app.get("/planner")
-def planner(start: str, end: str, options: int = 1, neo4jdb = Depends(metro_neo4j)):
+def planner(start: str, end: str,
+            options: int = 1, neo4jdb = Depends(metro_neo4j)):
     return route_planner.route_planner(neo4jdb, start, end, options)
 
 

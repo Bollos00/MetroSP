@@ -1,12 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@0.0.0.0/db"
-# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@postgresdb/db"
+from . import credentials
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={}
+    credentials.SQLALCHEMY_DATABASE_URL, connect_args={}
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -2,14 +2,13 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
-from metro_neo4j.cypher.cypher_helper import CypherHelper
 from metro_sql import metro_sql_db, models, schemas, sql_helper
 import atexit
-from fastapi.middleware.cors import CORSMiddleware
 from route_planner import route_planner
 from fastapi_utils.tasks import repeat_every
 from helper import helper
 import uuid
+from indoor_nav import indoor_nav
 
 metro_sql = metro_sql_db.get_session
 metro_neo4j = MetroNeo4jDatabase.get_session
@@ -23,10 +22,11 @@ def startup_event():
     
     sqldb = metro_sql_db.SessionLocal()
     neo4jdb = MetroNeo4jDatabase().driver.session()
-    
+
+    sql_helper.initialize_valid_uuids_table(sqldb)
+    sql_helper.initialize_indoor_nav_tables(sqldb)    
     helper.initialize_stations_table(neo4jdb, sqldb)
     helper.initialize_trains_table(sqldb)
-    sql_helper.initialize_valid_uuids_table(sqldb)
     
     sqldb.close()
     neo4jdb.close()
@@ -34,8 +34,13 @@ def startup_event():
 
 @app.on_event("shutdown")
 def shutdown_event():
-    pass
-
+    sqldb = metro_sql_db.SessionLocal()
+    neo4jdb = MetroNeo4jDatabase().driver.session()
+    
+    sql_helper.backup_indoor_nav_tables(sqldb)
+    
+    sqldb.close()
+    neo4jdb.close()
 
 # TODO: Do this other way
 # @app.on_event("startup")
@@ -110,10 +115,11 @@ def get_indoor_nav_info(station_ids: list[int] = Query(default=[]),
 
 @app.get("/test")
 def test(db: Session = Depends(metro_sql)):
-    return route_planner.update_node_links_table(db)
+    return indoor_nav.get_json("Jabaquara")
+    # return route_planner.update_node_links_table(db)
 
 
 # Debugging
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

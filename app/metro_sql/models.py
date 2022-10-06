@@ -25,8 +25,8 @@ class Node(Base):
     node_id = Column(Integer)
     date_time = Column(DateTime(timezone=True))
 
-    owner_id = Column(UUIDType(), ForeignKey("users.id"))
-    # owner = relationship("User", back_populates="nodes")
+    # owner_id = Column(UUIDType(), ForeignKey("users.id"))
+    owner_id = Column(UUIDType())
     
     
 class NodeLink(Base):
@@ -64,7 +64,7 @@ class IndoorNavStationSubenvironment(Base):
     station_id = Column(Integer)
     # There should be something preventing two subenvironments of the same
     #  station being created with the same id.
-    subenvironment_id = Column(Integer)
+    subenvironment = Column(Integer)
 
     limit_points = Column(ARRAY(Float, dimensions=2))
 
@@ -129,8 +129,8 @@ class Station(Base):
     id = Column(Integer, primary_key=True, index=True)
     beacon_id_major = Column(Integer, index=True, autoincrement=True)
     name = Column(String, index=True)
-    subenvironments = Column(Integer, default=0)
-    lines = Column(Integer, default=MetroLine.L_INVALID)
+    subenvironments = Column(ARRAY(Integer))
+    lines = Column(ARRAY(Integer))
  
     
 class Train(Base):
@@ -140,11 +140,11 @@ class Train(Base):
     fleet = Column(Enum(MetroFleet)) # Frota
     beacon_id_major_begin = Column(Integer)
     beacon_id_major_end = Column(Integer)
-    lines = Column(Integer, default=MetroLine.L_INVALID)
+    lines = Column(ARRAY(Integer))
     cars = Column(Integer)
     doors = Column(Integer)
 
 
 class ValidUUID(Base):
     __tablename__ = "valid_uuids"
-    uuid = Column(UUIDType(), primary_key=True)
+    uuid = Column(UUIDType(), primary_key=True, index=True)

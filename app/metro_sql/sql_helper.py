@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 import uuid
 
 from . import models, schemas, enums
+from indoor_nav import indoor_nav
 
 
 def add_commit_refresh(db: Session, db_item):
@@ -59,18 +60,10 @@ def delete_nodes(db:Session, nodes: list[models.Node]):
     db.commit()
 
 
-def create_node_link(db: Session, node_link: schemas.NodeLinkCreate):
-    disp_time = int((
-        node_link.end_date_time - node_link.start_date_time
-    ).total_seconds())
-
-    db_node_link = models.NodeLink(
-        node_link_id=node_link.node_link_id, 
-        start_date_time=node_link.start_date_time,
-        end_date_time=node_link.end_date_time,
-        displacement_time_s=disp_time
-    )
-    return add_commit_refresh(db, db_node_link)
+def create_node_links(db: Session, node_links: list[models.NodeLink]):
+    for nl in node_links:
+        db.add(nl)
+    db.commit()
 
 
 def get_users_with_nodes(db: Session):
@@ -99,16 +92,19 @@ def check_train_registered(db: Session, fleet: enums.MetroFleet):
     return fleet_qr is not None
 
 
-def create_stations(db: Session, stations: list[schemas.StationCreate]):
+def clear_trains_table(db: Session):
+    db.query(models.Train).delete()
+    db.commit()
+
+
+def clear_stations_table(db: Session):
+    db.query(models.Station).delete()
+    db.commit()
+
+
+def create_stations(db: Session, stations: list[models.Station]):
     for s in stations:
-        db_s = models.Station(
-            id = s.id,
-            beacon_id_major = s.beacon_id_major,
-            name = s.name,
-            subenvironments = s.subenvironments,
-            lines = s.lines
-        )
-        db.add(db_s)
+        db.add(s)
     db.commit()
     
     
@@ -131,7 +127,120 @@ def initialize_valid_uuids_table(db: Session):
         if u not in valid_uuids_db:
             db.add(models.ValidUUID(uuid=u))
     db.commit()
+
+
+def _clear_indoor_nav_tables(db: Session):
+    for M in [
+        models.IndoorNavBeacon,
+        models.IndoorNavPoi,
+        models.IndoorNavStationCircleObstacle,
+        models.IndoorNavStationPolygonObstacle,
+        models.IndoorNavStationSubenvironment,
+        models.IndoorNavStationTransition
+    ]:
+        db.query(M).delete()
+    db.commit()
+
+
+def initialize_indoor_nav_tables(db: Session):
+    _clear_indoor_nav_tables(db)
+    
+    stations_json = indoor_nav.get_stations()
+    for station_info in stations_json:
+        station_id = station_info["station_id"]
+        _add_station_beacons(db, station_id, station_info["beacons"])
+        _add_station_circle_obstacles(db, station_id, station_info["circle_obstacles"])
+        _add_station_pois(db, station_id, station_info["pois"])
+        _add_station_polygon_obstacles(
+            db, station_id, station_info["polygon_obstacles"]
+        )
+        _add_station_subenvironments(db, station_id, station_info["subenvironments"])
+        _add_station_transitions(db, station_id, station_info["transitions"])
+    db.commit()
+
+
+def backup_indoor_nav_tables(db: Session):
+    station_ids = db.query(models.Station.id).distinct().all()
+    station_ids = [s.id for s in station_ids]
+    indoor_nav.backup()
+    indoor_nav_info = get_indoor_nav_info(db, station_ids)
+    for station_info in indoor_nav_info:
+        station_id = station_info["station_id"]
+        station = db.query(models.Station).filter(
+            models.Station.id == station_id
+        ).one_or_none()
+        if station is None:
+            continue
+        indoor_nav.save_station(station_info, station.name)
+
   
+def _add_station_subenvironments(db: Session, station_id, subenvs):
+    for subenv in subenvs:
+        db.add(models.IndoorNavStationSubenvironment(
+            station_id = station_id,
+            subenvironment = subenv["subenvironment"],
+            limit_points = subenv["limit_points"]
+        ))
+
+
+def _add_station_polygon_obstacles(db: Session, station_id, polygons):
+    for pol in polygons:
+        db.add(models.IndoorNavStationPolygonObstacle(
+            station_id = station_id,
+            subenvironment = pol["subenvironment"],
+            points = pol["points"]
+        ))
+
+    
+def _add_station_circle_obstacles(db: Session, station_id, circles):
+    for circle in circles:
+        db.add(models.IndoorNavStationPolygonObstacle(
+            station_id = station_id,
+            subenvironment = circle["subenvironment"],
+            c_x = circle["c_x"],
+            c_y = circle["c_y"],
+            r = circle["r"],
+        ))
+
+
+def _add_station_transitions(db: Session, station_id, transitions):
+    for transition in transitions:
+        db.add(models.IndoorNavStationTransition(
+            station_id = station_id,
+            directional = transition["directional"],
+            transition_type = transition["transition_type"],
+            subenvironment_start = transition["subenvironment_start"],
+            subenvironment_end = transition["subenvironment_end"],
+            start_x = transition["start_x"],
+            start_y = transition["start_y"],
+            end_x = transition["end_x"],
+            end_y = transition["end_y"],
+        ))
+
+    
+def _add_station_pois(db: Session, station_id, pois):
+    for poi in pois:
+        db.add(models.IndoorNavPoi(
+            station_id = station_id,
+            subenvironment = poi["subenvironment"],
+            poi_type = poi["poi_type"],
+            line_way = poi["line_way"],
+            x = poi["x"],
+            y = poi["y"],
+        ))
+    
+
+def _add_station_beacons(db: Session, station_id, beacons):
+    for beacon in beacons:
+        db.add(models.IndoorNavBeacon(
+            station_id = station_id,
+            subenvironment = beacon["subenvironment"],
+            beacon_id_minor = beacon["beacon_id_minor"],
+            x = beacon["x"],
+            y = beacon["y"],
+            z = beacon["z"]
+        ))
+
   
 def _get_station_subenvironments(db: Session, station_id):
     subenvs = db.query(models.IndoorNavStationSubenvironment).filter(
@@ -139,8 +248,8 @@ def _get_station_subenvironments(db: Session, station_id):
     )
     
     return [{
-        'subenvironment': a.subenvironment_id,
-        'points': a.points
+        'subenvironment': a.subenvironment,
+        'limit_points': a.limit_points
     } for a in subenvs]
 
 
@@ -162,7 +271,6 @@ def _get_station_circle_obstacles(db: Session, station_id):
     
     return [{
         'subenvironment': a.subenvironment,
-        'points': a.points,
         'c_x': a.c_x,
         'c_y': a.c_y,
         'r': a.r
@@ -176,7 +284,7 @@ def _get_station_transitions(db: Session, station_id):
     
     return [{
         'directional': a.directional,
-        'transition_type': a.transition_type,
+        'transition_type': a.transition_type.name,
         'subenvironment_start': a.subenvironment_start,
         'subenvironment_end': a.subenvironment_end,
         'start_x': a.start_x,
@@ -193,7 +301,7 @@ def _get_station_pois(db: Session, station_id):
     
     return [{
         'subenvironment': a.subenvironment,
-        'poi_type': a.poy_type,
+        'poi_type': a.poi_type.name,
         'line_way': a.line_way,
         'x': a.x,
         'y': a.y
@@ -207,7 +315,7 @@ def _get_station_beacons(db: Session, station_id):
     
     return [{
         'subenvironment': a.subenvironment,
-        'beacon_id_minor': a.beacon_id_major,
+        'beacon_id_minor': a.beacon_id_minor,
         'x': a.x,
         'y': a.y,
         'z': a.z

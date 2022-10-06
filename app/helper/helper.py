@@ -1,36 +1,35 @@
+from sqlite3 import dbapi2
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, schemas, enums, models
 
 
 def initialize_stations_table(neo4jdb, sqldb):
+    sql_helper.clear_stations_table(sqldb)
     stations = MetroNeo4jDatabase().get_stations(neo4jdb)
     for i, record in enumerate(stations):
         s = record[0]
-        if sql_helper.check_station_registered(sqldb, s.get("name")):
-            stations[i] = None
-            continue
-        lines_record = MetroNeo4jDatabase().get_station_lines(neo4jdb, s.get("name"))
-        lines = enums.MetroLine.L_INVALID
-        for r in lines_record:
-            lines |= enums.metro_line_from_value(r.get("b.l"))
+        lines = MetroNeo4jDatabase().get_station_lines(neo4jdb, s.get("name"))
+        lines = [l.get("b.l") for l in lines]
         major = s.id
-        stations[i] = schemas.StationCreate(
+        subenvs = sqldb.query(models.IndoorNavStationSubenvironment).filter(
+            models.IndoorNavStationSubenvironment.station_id == s.id
+        )
+        subenvs = [a.subenvironment for a in subenvs]
+        stations[i] = models.Station(
             id=s.id,
             beacon_id_major=major,
             name=s.get("name"),
-            subenvironments=0,
+            subenvironments=subenvs,
             lines=lines
         )
-    stations = [s for s in stations if s is not None]
     sql_helper.create_stations(sqldb, stations)
     
 
 def initialize_trains_table(sqldb):
+    sql_helper.clear_trains_table(sqldb)
     trains = list()
     for fleet in enums.MetroFleet:
-        if sql_helper.check_train_registered(sqldb, fleet):
-            continue
-        train = models.Train(fleet=fleet, cars=0, doors=0)
+        train = models.Train(fleet=fleet, lines=[], cars=0, doors=0)
         if fleet == enums.MetroFleet.FLEET_E:
             train.beacon_id_major_begin = 1001 
             train.beacon_id_major_end   = 2000

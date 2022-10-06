@@ -3,7 +3,7 @@ data
 logs
 plugins
 **/__pycache__
-app/metro_neo4j/credentials/credentials.py
 *.db
 .vscode
 Metrô.session.sql
+app/indoor_nav/stations/backup*

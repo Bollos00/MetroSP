@@ -1,7 +1,7 @@
 import neo4j
 import os
 import time
-from .credentials import credentials
+from . import credentials
 from .cypher.cypher_helper import CypherHelper
 
 class MetroNeo4jDatabase(object):

@@ -1,4 +1,9 @@
-NEO4J_URI = "bolt://0.0.0.0:7687"
-# NEO4J_URI = "bolt://neo4jdb:7687"
+
+NEO4J_PROTOCOL = "bolt"
+NEO4J_HOST = "neo4jdb"
+# NEO4J_HOST = "localhost"
+NEO4J_PORT = 7687
+
+NEO4J_URI = f"{NEO4J_PROTOCOL}://{NEO4J_HOST}:{NEO4J_PORT}"
 NEO4J_USER = "neo4j"
 NEO4J_PASSWORD = "password"

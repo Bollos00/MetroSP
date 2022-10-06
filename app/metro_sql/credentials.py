@@ -1,2 +1,18 @@
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@0.0.0.0/db"
-# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:password@postgresdb/db"
+from sqlalchemy.engine import URL
+
+DRIVERNAME = "postgresql"
+USERNAME = "postgres"
+PASSWORD = "password"
+HOST = "postgresdb"
+# HOST = "localhost"
+PORT = 5432
+DATABASE = "db"
+
+SQLALCHEMY_DATABASE_URL = URL.create(
+    drivername=DRIVERNAME,
+    username=USERNAME,
+    password=PASSWORD,
+    host=HOST,
+    port=PORT,
+    database=DATABASE
+)

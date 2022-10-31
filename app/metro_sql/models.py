@@ -104,8 +104,10 @@ class IndoorNavStationTransition(Base):
     subenvironment_start = Column(Integer)
     subenvironment_end = Column(Integer)
     
+    direction_angle_start = Column(Float)
     start_x = Column(Float)
     start_y = Column(Float)
+    direction_angle_end = Column(Float)
     end_x = Column(Float)
     end_y = Column(Float)
     

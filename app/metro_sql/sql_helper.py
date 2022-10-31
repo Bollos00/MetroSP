@@ -211,8 +211,10 @@ def _add_station_transitions(db: Session, station_id, transitions):
             transition_type = transition["transition_type"],
             subenvironment_start = transition["subenvironment_start"],
             subenvironment_end = transition["subenvironment_end"],
+            direction_angle_start = transition["direction_angle_start"],
             start_x = transition["start_x"],
             start_y = transition["start_y"],
+            direction_angle_end = transition["direction_angle_end"],
             end_x = transition["end_x"],
             end_y = transition["end_y"],
         ))
@@ -287,8 +289,10 @@ def _get_station_transitions(db: Session, station_id):
         'transition_type': a.transition_type.name,
         'subenvironment_start': a.subenvironment_start,
         'subenvironment_end': a.subenvironment_end,
+        'direction_angle_start': a.direction_angle_start,
         'start_x': a.start_x,
         'start_y': a.start_y,
+        'direction_angle_end': a.direction_angle_end,
         'end_x': a.end_x,
         'end_y': a.end_y
     } for a in transitions]

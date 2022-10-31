@@ -30,7 +30,7 @@
         ],
         [
           -0.85,
-          7.25
+          -7.25
         ],
         [
           -0.85,
@@ -83,7 +83,7 @@
         ],
         [
           -0.85,
-          7.25
+          -7.25
         ],
         [
           -0.85,
@@ -176,15 +176,43 @@
       ]
     }
   ],
-  "circle_obstacles": [],
+  "circle_obstacles": [
+
+  ],
   "transitions": [
     {
       "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 0,
+      "subenvironment_end": 1,
+      "direction_angle_start": 270,
+      "start_x": -3.3,
+      "start_y": -2.0,
+      "direction_angle_end": 0,
+      "end_x": -3.0,
+      "end_y": -6.0
+    },
+    {
+      "directional": true,
       "transition_type": "COMMON_STAIR",
       "subenvironment_start": 0,
       "subenvironment_end": 1,
-      "start_x": -3.35,
-      "start_y": -2.0,
+      "direction_angle_start": 90,
+      "start_x": -1.44,
+      "start_y": -3,
+      "direction_angle_end": 90,
+      "end_x": -1.55,
+      "end_y": 4.5
+    },
+    {
+      "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 1,
+      "subenvironment_end": 0,
+      "direction_angle_start": 180,
+      "start_x": -3.3,
+      "start_y": 2.0,
+      "direction_angle_end": 90,
       "end_x": -3.0,
       "end_y": -6.0
     }
@@ -194,17 +222,31 @@
       "subenvironment": 0,
       "poi_type": "BLOCKING",
       "line_way": 0,
-      "x": 7.2,
-      "y": -2.5
+      "x": -3,
+      "y": 3
     }
   ],
   "beacons": [
     {
       "subenvironment": 0,
-      "beacon_id_minor": 1,
-      "x": 1.1,
-      "y": 2.5,
-      "z": 5.0
+      "beacon_id_minor": 65530,
+      "x": -3,
+      "y": 3,
+      "z": 0.4
+    },
+    {
+      "subenvironment": 0,
+      "beacon_id_minor": 10000,
+      "x": -3.5,
+      "y": -0.7,
+      "z": 1.2
+    },
+    {
+      "subenvironment": 0,
+      "beacon_id_minor": 10001,
+      "x": 0.3,
+      "y": -1.1,
+      "z": 1.8
     }
   ]
 }

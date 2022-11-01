@@ -143,6 +143,7 @@ def get_indoor_nav_info(station_ids: list[int] = Query(default=[]),
 @app.get("/test")
 def test(sqldb: Session = Depends(metro_sql),
          neo4jdb = Depends(metro_neo4j)):
+    global update_node_links_timer
     update_node_links_timer.cancel()
     NodeLinkUpdater.update_node_links_graph(neo4jdb, sqldb)
     update_node_links_timer = update_node_links_timer_default()

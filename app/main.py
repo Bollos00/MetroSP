@@ -3,18 +3,40 @@ from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import metro_sql_db, models, schemas, sql_helper
-import atexit
 from route_planner import route_planner
 from fastapi_utils.tasks import repeat_every
 from helper import helper
 import uuid
-from indoor_nav import indoor_nav
+from route_planner.node_link_updater import NodeLinkUpdater
+from threading import Timer
 
 metro_sql = metro_sql_db.get_session
 metro_neo4j = MetroNeo4jDatabase.get_session
 
 models.Base.metadata.create_all(bind=metro_sql_db.engine)
 app = FastAPI()
+
+
+def update_node_links():
+    global update_node_links_timer
+    update_node_links_timer.cancel()
+
+    sqldb = metro_sql_db.SessionLocal()
+    neo4jdb = MetroNeo4jDatabase().driver.session()
+
+    NodeLinkUpdater.update_node_links_graph(neo4jdb, sqldb)
+    
+    sqldb.close()
+    neo4jdb.close()
+    
+    update_node_links_timer = update_node_links_timer_default()
+    update_node_links_timer.start()
+
+
+def update_node_links_timer_default(time = NodeLinkUpdater.UPDATE_PERIOD.seconds):
+    return Timer(time, update_node_links)
+
+update_node_links_timer = update_node_links_timer_default(NodeLinkUpdater.INITIAL_DELAY)
 
 @app.on_event("startup")
 def startup_event():
@@ -30,6 +52,8 @@ def startup_event():
     
     sqldb.close()
     neo4jdb.close()
+    
+    update_node_links_timer.start()
 
 
 @app.on_event("shutdown")
@@ -41,6 +65,8 @@ def shutdown_event():
     
     sqldb.close()
     neo4jdb.close()
+    
+    update_node_links_timer.cancel()
 
 # TODO: Do this other way
 # @app.on_event("startup")
@@ -115,9 +141,13 @@ def get_indoor_nav_info(station_ids: list[int] = Query(default=[]),
 
 
 @app.get("/test")
-def test(db: Session = Depends(metro_sql)):
-    return indoor_nav.get_json("Jabaquara")
-    # return route_planner.update_node_links_table(db)
+def test(sqldb: Session = Depends(metro_sql),
+         neo4jdb = Depends(metro_neo4j)):
+    update_node_links_timer.cancel()
+    NodeLinkUpdater.update_node_links_graph(neo4jdb, sqldb)
+    update_node_links_timer = update_node_links_timer_default()
+    update_node_links_timer.start()
+    return {"result": "ok"}
 
 
 # Debugging

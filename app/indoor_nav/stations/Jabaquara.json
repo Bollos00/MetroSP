@@ -176,19 +176,17 @@
       ]
     }
   ],
-  "circle_obstacles": [
-
-  ],
+  "circle_obstacles": [],
   "transitions": [
     {
       "directional": false,
       "transition_type": "AUTOMATIC_STAIR",
       "subenvironment_start": 0,
       "subenvironment_end": 1,
-      "direction_angle_start": 270,
+      "direction_angle_start": 270.0,
       "start_x": -3.3,
       "start_y": -2.0,
-      "direction_angle_end": 0,
+      "direction_angle_end": 0.0,
       "end_x": -3.0,
       "end_y": -6.0
     },
@@ -197,10 +195,10 @@
       "transition_type": "COMMON_STAIR",
       "subenvironment_start": 0,
       "subenvironment_end": 1,
-      "direction_angle_start": 90,
+      "direction_angle_start": 90.0,
       "start_x": -1.44,
-      "start_y": -3,
-      "direction_angle_end": 90,
+      "start_y": -3.0,
+      "direction_angle_end": 90.0,
       "end_x": -1.55,
       "end_y": 4.5
     },
@@ -209,10 +207,10 @@
       "transition_type": "AUTOMATIC_STAIR",
       "subenvironment_start": 1,
       "subenvironment_end": 0,
-      "direction_angle_start": 180,
+      "direction_angle_start": 180.0,
       "start_x": -3.3,
       "start_y": 2.0,
-      "direction_angle_end": 90,
+      "direction_angle_end": 90.0,
       "end_x": -3.0,
       "end_y": -6.0
     }
@@ -222,16 +220,16 @@
       "subenvironment": 0,
       "poi_type": "BLOCKING",
       "line_way": 0,
-      "x": -3,
-      "y": 3
+      "x": -3.0,
+      "y": 3.0
     }
   ],
   "beacons": [
     {
       "subenvironment": 0,
       "beacon_id_minor": 65530,
-      "x": -3,
-      "y": 3,
+      "x": -3.0,
+      "y": 3.0,
       "z": 0.4
     },
     {

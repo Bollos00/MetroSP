@@ -1,7 +1,6 @@
 from scipy import stats
 import numpy
 from matplotlib import pyplot
-import seaborn
 
 def _remove_outfiles_single(s):
     N = 1
@@ -28,7 +27,8 @@ def linear_regression_origin_intercept(samples):
 def linear_regression_point_intercept(sample0, samples):
     # Retorna os coefiecientes da regressão linear que passa por sample0
     norm_samples = samples - sample0
-    a =  linear_regression_origin_intercept(norm_samples)
+    a = linear_regression_origin_intercept(norm_samples)
+    a *= numpy.min([samples.shape[0]/20, 1])
     b = sample0[1] - a*sample0[0]
     return a, b
 
@@ -55,7 +55,7 @@ def sort_samples(samples):
     return numpy.array(sorted(samples, key=lambda s: s[0]))
 
 if __name__ == "__main__":
-    N_SAMPLES = 500
+    N_SAMPLES = 20
     TIME_NOISE = 200
     VALUE_NOISE = 200
     DISPLACEMENT_VALUE0 = 0

@@ -4,6 +4,7 @@ import uuid
 import requests
 import json
 import datetime
+import numpy
 
 ADDRES = "http://127.0.0.1:8000"
 
@@ -12,9 +13,15 @@ def random_password(length=8):
     return "".join(secrets.choice(chars) for i in range(length))
 
 class UserClient:
+    class Node:
+        def __init__(self, id, time):
+            self.id = id
+            self.time = time
+        
     def __init__(self):
         self.id = uuid.uuid4()
         self.password = random_password()
+        self.deviation_time_rand = 30
         
     def register(self):
         url = ADDRES + "/create_user"
@@ -34,19 +41,28 @@ class UserClient:
         }, indent=2)
         
         r = requests.post(url, data=payload)
+
+    def pre_process_nodes(self, nodes):
         
-        
-    def route_sacoma_sao_lucas(self):
-        nodes = [110, 112, 115, 118, 120, 242, 245, 243]
-        url = ADDRES + "/create_nodes"
         nodes.reverse()
-        dates = [datetime.datetime.now() for i in nodes]
-        for i, d in enumerate(dates):
-            dates[i] = d - datetime.timedelta(minutes=2*i)
+        total_time = 0
+        for i, n in enumerate(nodes):
+            node_time = numpy.random.normal(n.time, self.deviation_time_rand)
+            nodes[i].time = datetime.timedelta(seconds=total_time)
+            total_time -= node_time
+        nodes.reverse()
+        return nodes
+        
+    def route(self, nodes):
+        nodes = self.pre_process_nodes(nodes)
+        now = datetime.datetime.now()
+        
+        for i, n in enumerate(nodes):
             nodes[i] = {
-                "node_id": nodes[i],
-                "date_time": str(dates[i])
+                "node_id": n.id,
+                "date_time": str(now + n.time)
             }
+            
         payload = json.dumps({
             "nodes": nodes,
             "user": {
@@ -54,18 +70,27 @@ class UserClient:
                 'password': self.password
             }
         }, indent=2)
-        
+        url = ADDRES + "/create_nodes"
+
         r = requests.post(url, data=payload)
         print(r.json())
-        
-        
-    # def route(self, )
+
 
         
         
 if __name__ == "__main__":
-    for i in range(1):
+    
+    for i in range(5):
+        nodes_tucuruvi_santana = [
+            UserClient.Node(76, 0),
+            UserClient.Node(78, 400),
+            UserClient.Node(75, 200),
+            UserClient.Node(72, 300),
+            UserClient.Node(69, 350),
+            UserClient.Node(67, 500),
+        ]       
+        
         u = UserClient()
         u.register()
-        u.route_sacoma_sao_lucas()
-        u.unregister()
+        u.route(nodes_tucuruvi_santana)
+        # u.unregister()

@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy.orm import Session
 import uuid
 
@@ -76,6 +77,22 @@ def get_users_with_nodes(db: Session):
         ).all()
         nodes[u] = sorted(user_nodes, key=lambda n: n.date_time)
     return nodes
+
+
+def get_users_with_node_links(db: Session, limit_time: datetime.timedelta):
+    then = datetime.datetime.now() - limit_time
+    node_links = db.query(models.NodeLink).filter(
+        models.NodeLink.end_date_time > then
+    )
+    
+    node_link_ids = set([n.node_link_id for n in node_links])
+    
+    elements = dict()
+    for nl_id in node_link_ids:
+        nl = node_links.filter(models.NodeLink.node_link_id == nl_id)
+        nl = [[x.start_date_time.timestamp(), x.displacement_time_s] for x in nl]
+        elements[nl_id] = nl
+    return elements
 
 
 def check_station_registered(db: Session, station_name: str):

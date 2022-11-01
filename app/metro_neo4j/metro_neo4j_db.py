@@ -77,6 +77,15 @@ class MetroNeo4jDatabase(object):
                 start_id, end_id
             )
         )
+        
+    def get_rl_time_from_ids(self,session, ids):
+        ids_str = '[{}]'.format(','.join([str(id) for id in ids]))
+        rls = self.query(session, self.helper.get_rls_from_ids(ids_str))
+        rl_times = dict()
+        for record in rls:
+            rl = record[0]
+            rl_times[rl.id] = rl.get("time")
+        return rl_times
 
     def get_stations(self, session):
         return self.query(session, self.helper.get_stations())
@@ -91,7 +100,11 @@ class MetroNeo4jDatabase(object):
         return self.query(session, self.helper.get_station_lines(station))
     
     def update_rl_time_from_id(self, session, rl_id, rl_time):
-        return self.query(session, self.helper.update_rl_time_from_id(rl_id, rl_time))
+        return self.query(session, self.helper.get_update_rl_time_from_id(rl_id, rl_time))
+    
+    def update_rl_time_from_ids(self, session, id_times):
+        for rl_id, rl_time in id_times.items():
+            self.query(session, self.helper.get_update_rl_time_from_id(rl_id, rl_time))
     
     def get_graph_nodes(self, session):
         return self.query(session, "MATCH (n) RETURN n")

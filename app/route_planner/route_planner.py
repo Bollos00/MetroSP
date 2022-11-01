@@ -1,4 +1,3 @@
-from tkinter import N
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, models
 
@@ -78,35 +77,3 @@ def route_planner(neo4jdb, start, end, paths_count):
         response.append({"path": path, "time": paths[i][1]})
     
     return response
-
-
-def update_node_links_table(neo4jdb, sqldb):
-    nodes = sql_helper.get_users_with_nodes(sqldb)
-    node_links = list()
-    nodes_to_delete = list()
-    for u in nodes.keys():
-        user_nodes = nodes[u]
-        for i in range(len(user_nodes)-1):
-            start_node = user_nodes[i]
-            nodes_to_delete.append(start_node)
-            end_node = user_nodes[i+1]
-            rl = MetroNeo4jDatabase().get_relationship_id_from_nodes_ids(
-                neo4jdb, start_node.node_id, end_node.node_id
-            )
-            if len(rl) != 1:
-                continue
-            rl_id = rl[0][0].id
-            disp_time = int((
-                end_node.date_time - start_node.date_time
-            ).total_seconds())
-            node_links.append(models.NodeLink(
-                node_link_id=rl_id,
-                start_date_time=start_node.date_time,
-                end_date_time=end_node.date_time,
-                displacement_time_s = disp_time             
-            ))
-    sql_helper.delete_nodes(sqldb, nodes_to_delete)
-    sql_helper.create_node_links(sqldb, node_links)
-    
-def update_node_links_graph(neo4jdb, sqldb):
-    pass

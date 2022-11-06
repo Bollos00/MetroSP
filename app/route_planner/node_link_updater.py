@@ -54,7 +54,6 @@ class NodeLinkUpdater:
         
     @staticmethod
     def update_node_links_graph(neo4jdb, sqldb):
-        print('update_node_links_graph')
         # Inicialmente atualiza a tabela com os tempos de deslocamento
         NodeLinkUpdater.update_node_links_table(neo4jdb, sqldb)
         

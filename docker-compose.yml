@@ -2,12 +2,12 @@ services:
   app:
     build: ./app
     ports:
-      - "8000:8000"
+      - "8080:8080"
     # volumes:
     depends_on:
       - neo4jdb
       - postgresdb
-    restart: on-failure
+    restart: always
     networks:
       - postgres_net
       - neo4j_net
@@ -16,10 +16,11 @@ services:
 
   neo4jdb:
     image: neo4j:4.4.0-enterprise
-    restart: unless-stopped
+    restart: always
     ports:
-      - 7474:7474
-      - 7687:7687
+      # - "7473:7473" # HTTPS
+      - "7474:7474" # HTTP
+      - "7687:7687" # BOLT
     # volumes:
     environment:
       - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
@@ -68,3 +69,15 @@ volumes:
 networks:
   neo4j_net:
   postgres_net:
+
+endpoints:
+  web:
+    - path: /
+      service: app
+      port: 8080
+    # - path: /neo4jbrowser
+    #   service: neo4jdb
+    #   port: 7473
+    - path: /pgadmin
+      service: pgadmin
+      port: 5050

@@ -9,3 +9,4 @@ Metrô.session.sql
 app/indoor_nav/stations/backup*
 # app/metro_neo4j/credentials.py
 # app/metro_sql/credentials.py
+app/.stignore

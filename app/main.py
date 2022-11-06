@@ -68,24 +68,6 @@ def shutdown_event():
     
     update_node_links_timer.cancel()
 
-# TODO: Do this other way
-# @app.on_event("startup")
-# @repeat_every(seconds=1*60) # 1 minute
-# def periodic_db_updates():
-#     sqldb = metro_sql_db.SessionLocal()
-#     route_planner.update_node_links_table(sqldb)
-#     sqldb.close()
-
-
-# @app.on_event("startup")
-# @repeat_every(seconds=4*60) # 4 minutes
-# def periodic_db_updates():
-#     sqldb = metro_sql_db.SessionLocal()
-#     neo4jdb = MetroNeo4jDatabase().driver.session()
-#     route_planner.update_node_links_graph(neo4jdb, sqldb)
-#     sqldb.close()
-#     neo4jdb.close()
-
 
 @app.get("/")
 def main():
@@ -140,18 +122,18 @@ def get_indoor_nav_info(station_ids: list[int] = Query(default=[]),
     return sql_helper.get_indoor_nav_info(sqldb, station_ids)
 
 
-@app.get("/test")
-def test(sqldb: Session = Depends(metro_sql),
-         neo4jdb = Depends(metro_neo4j)):
-    global update_node_links_timer
-    update_node_links_timer.cancel()
-    NodeLinkUpdater.update_node_links_graph(neo4jdb, sqldb)
-    update_node_links_timer = update_node_links_timer_default()
-    update_node_links_timer.start()
-    return {"result": "ok"}
+# @app.get("/test")
+# def test(sqldb: Session = Depends(metro_sql),
+#          neo4jdb = Depends(metro_neo4j)):
+#     global update_node_links_timer
+#     update_node_links_timer.cancel()
+#     NodeLinkUpdater.update_node_links_graph(neo4jdb, sqldb)
+#     update_node_links_timer = update_node_links_timer_default()
+#     update_node_links_timer.start()
+#     return {"result": "ok"}
 
 
 # Debugging
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)

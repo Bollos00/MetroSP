@@ -2,15 +2,18 @@ services:
   app:
     build: ./app
     ports:
-      - "80:80"
+      - "8000:8000"
     # volumes:
     depends_on:
       - neo4jdb
       - postgresdb
     restart: on-failure
     networks:
-      - postgress_net
+      - postgres_net
       - neo4j_net
+    volumes:
+      - ./app:/app
+
   neo4jdb:
     image: neo4j:4.4.0-enterprise
     restart: unless-stopped
@@ -24,6 +27,9 @@ services:
       - NEO4JLABS_PLUGINS=["apoc"]
     networks:
       - neo4j_net
+    volumes:
+      - neo4jdb:/data
+
   postgresdb:
     image: postgres
     restart: on-failure
@@ -35,7 +41,10 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgress_net
+      - postgres_net
+    volumes:
+      - postgresdb:/data
+
   pgadmin:
     image: dpage/pgadmin4
     depends_on:
@@ -47,8 +56,15 @@ services:
     ports:
       - "5050:5050"
     networks:
-      - postgress_net
+      - postgres_net
+    volumes:
+      - pgadmin:/data
+
+volumes:
+  neo4jdb:
+  postgresdb:
+  pgadmin:
 
 networks:
   neo4j_net:
-  postgress_net:
+  postgres_net:

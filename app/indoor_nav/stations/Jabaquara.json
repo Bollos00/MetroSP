@@ -234,17 +234,24 @@
     },
     {
       "subenvironment": 0,
-      "beacon_id_minor": 10000,
+      "beacon_id_minor": 50000,
       "x": -3.5,
       "y": -0.7,
       "z": 1.2
     },
     {
       "subenvironment": 0,
-      "beacon_id_minor": 10001,
+      "beacon_id_minor": 50001,
       "x": 0.3,
       "y": -1.1,
       "z": 1.8
+    },
+    {
+      "subenvironment": 0,
+      "beacon_id_minor": 50002,
+      "x": -0.4,
+      "y": 1.7,
+      "z": 1
     }
   ]
 }

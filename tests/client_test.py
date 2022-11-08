@@ -6,7 +6,7 @@ import json
 import datetime
 import numpy
 
-ADDRES = "http://127.0.0.1:8000"
+ADDRES = "http://127.0.0.1:8080"
 
 def random_password(length=8):
     chars = string.ascii_letters + string.digits + string.punctuation
@@ -75,22 +75,30 @@ class UserClient:
         r = requests.post(url, data=payload)
         print(r.json())
 
-
-        
         
 if __name__ == "__main__":
     
     for i in range(5):
-        nodes_tucuruvi_santana = [
-            UserClient.Node(76, 0),
-            UserClient.Node(78, 400),
-            UserClient.Node(75, 200),
-            UserClient.Node(72, 300),
-            UserClient.Node(69, 350),
-            UserClient.Node(67, 500),
-        ]       
+        # nodes_tucuruvi_santana = [
+        #     UserClient.Node(76, 0),
+        #     UserClient.Node(78, 400),
+        #     UserClient.Node(75, 200),
+        #     UserClient.Node(72, 300),
+        #     UserClient.Node(69, 350),
+        #     UserClient.Node(67, 500),
+        # ]       
+        
+        nodes_sacoma_oratorio = [
+            UserClient.Node(110, 0),
+            UserClient.Node(112, 300),
+            UserClient.Node(115, 200),
+            UserClient.Node(118, 220),
+            UserClient.Node(120, 500),
+            UserClient.Node(242, 150),
+            UserClient.Node(240, 60),
+        ]
         
         u = UserClient()
         u.register()
-        u.route(nodes_tucuruvi_santana)
+        u.route(nodes_sacoma_oratorio)
         # u.unregister()

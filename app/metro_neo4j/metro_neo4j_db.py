@@ -72,11 +72,14 @@ class MetroNeo4jDatabase(object):
         )
     
     def get_relationship_id_from_nodes_ids(self, session, start_id, end_id):
-        return self.query(
+        rl = self.query(
             session, self.helper.get_relationship_id_from_nodes_ids(
                 start_id, end_id
             )
         )
+        
+        return None if len(rl) != 1 else rl[0][0].id
+
         
     def get_rl_time_from_ids(self,session, ids):
         ids_str = '[{}]'.format(','.join([str(id) for id in ids]))
@@ -97,7 +100,8 @@ class MetroNeo4jDatabase(object):
         return id[0].get('id(n)')
 
     def get_station_lines(self, session, station):
-        return self.query(session, self.helper.get_station_lines(station))
+        lines = self.query(session, self.helper.get_station_lines(station))
+        return [l.get("b.l") for l in lines]
     
     def update_rl_time_from_id(self, session, rl_id, rl_time):
         return self.query(session, self.helper.get_update_rl_time_from_id(rl_id, rl_time))

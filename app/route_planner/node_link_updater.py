@@ -7,8 +7,8 @@ from metro_sql import sql_helper, models
 
 class NodeLinkUpdater:
     INITIAL_DELAY = datetime.timedelta(seconds=5).seconds
-    UPDATE_PERIOD = datetime.timedelta(seconds=10)
-    UPDATE_LIMIT_TIME = datetime.timedelta(minutes=30, seconds=30)
+    UPDATE_PERIOD = datetime.timedelta(seconds=60)
+    UPDATE_LIMIT_TIME = datetime.timedelta(minutes=2, seconds=30)
 
     OUTLIER_FILTER_N = 1.5
     OUTLIER_FILTER_SAMPLES_PER_SPLIT = 10
@@ -36,14 +36,13 @@ class NodeLinkUpdater:
                 rl = MetroNeo4jDatabase().get_relationship_id_from_nodes_ids(
                     neo4jdb, start_node.node_id, end_node.node_id
                 )
-                if len(rl) != 1:
+                if rl is None:
                     continue
-                rl_id = rl[0][0].id
                 disp_time = int((
                     end_node.date_time - start_node.date_time
                 ).total_seconds())
                 node_links.append(models.NodeLink(
-                    node_link_id=rl_id,
+                    node_link_id=rl,
                     start_date_time=start_node.date_time,
                     end_date_time=end_node.date_time,
                     displacement_time_s = disp_time             
@@ -63,7 +62,8 @@ class NodeLinkUpdater:
 
         t_end = datetime.datetime.now()
         t_begin = (t_end - NodeLinkUpdater.UPDATE_LIMIT_TIME).timestamp()
-        time0 = (t_end - NodeLinkUpdater.UPDATE_PERIOD).timestamp()
+        # t_0 = (t_end - NodeLinkUpdater.UPDATE_PERIOD).timestamp()
+        # t_0 -= t_begin
         t_end = t_end.timestamp() - t_begin
         
         current_nl_times = MetroNeo4jDatabase().get_rl_time_from_ids(
@@ -74,7 +74,8 @@ class NodeLinkUpdater:
         
         for nl_id, samples in node_links.items():
             disp_time0 = current_nl_times.get(nl_id, 250)
-            sample0 = (time0, disp_time0)
+            # sample0 = (t_0, disp_time0)
+            sample0 = (0, disp_time0)
             samples = numpy.array(samples)
             samples[:, 0] -= t_begin
             updated_time = int(.5 + NodeLinkUpdater.solve(sample0, samples, t_end))
@@ -130,12 +131,15 @@ class NodeLinkUpdater:
     def solve(sample0, samples, t_end):
         samples = NodeLinkUpdater.sort_samples(samples)
         samples = NodeLinkUpdater.remove_outliers(samples)
+        if samples.size == 0:
+            return sample0[1]
         # sample0 é o par de coordenadas da predição anterior (em t=t0)
         # As amostras são normalizados para plotar uma reta que passa
         #  por sample0 
         a, b = NodeLinkUpdater.linear_regression_point_intercept(sample0, samples)
         # return a, b, samples
-        return NodeLinkUpdater._linear_regression_predict(a, b, t_end)
+        result = NodeLinkUpdater._linear_regression_predict(a, b, t_end)
+        return sample0[1] if numpy.isnan(result) else result
 
 
     @staticmethod

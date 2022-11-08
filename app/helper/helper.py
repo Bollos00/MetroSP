@@ -8,7 +8,6 @@ def initialize_stations_table(neo4jdb, sqldb):
     for i, record in enumerate(stations):
         s = record[0]
         lines = MetroNeo4jDatabase().get_station_lines(neo4jdb, s.get("name"))
-        lines = [l.get("b.l") for l in lines]
         major = s.id
         subenvs = sqldb.query(models.IndoorNavStationSubenvironment).filter(
             models.IndoorNavStationSubenvironment.station_id == s.id

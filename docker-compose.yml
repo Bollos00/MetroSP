@@ -70,6 +70,7 @@ networks:
   neo4j_net:
   postgres_net:
 
+# This is to be used with okteto. On docker-compose, comment the lines bellow.
 endpoints:
   web:
     - path: /
@@ -77,7 +78,7 @@ endpoints:
       port: 8080
     # - path: /neo4jbrowser
     #   service: neo4jdb
-    #   port: 7473
+    #   port: 7474
     - path: /pgadmin
       service: pgadmin
       port: 5050

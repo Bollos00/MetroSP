@@ -1,6 +1,7 @@
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, models
-
+import neo4j
+from neo4j import graph
 
 def get_graph(neo4jdb):
     nodes = MetroNeo4jDatabase().get_graph_nodes(neo4jdb)
@@ -39,6 +40,15 @@ def get_graph(neo4jdb):
     }
 
 
+def check_path(path: graph.Path):
+    for i in range(1, len(path.nodes) - 1):
+        node = path.nodes[i]
+        if "Blocking" in node.labels:
+            return False
+
+    return True
+    
+
 def route_planner(neo4jdb, start, end, paths_count):
     try:
         start = int(start)
@@ -52,28 +62,39 @@ def route_planner(neo4jdb, start, end, paths_count):
     if start is None or end is None:
         return None
         
-    paths = MetroNeo4jDatabase().dijkstra(
+    records: list[neo4j.Record] = MetroNeo4jDatabase().dijkstra(
         neo4jdb, start, end, paths_count
     )
     
-    if len(paths) != paths_count:
-        return None
+    if records is None or len(records) == 0:
+        return []
 
     response = list()
-    for i in range(paths_count):
-        path = list()
-        for j, n in enumerate(paths[i][0].nodes):
-            if j==0:
-                path.append({
-                    "id": n.id,
-                    "time": 0
+    for record in records:
+        path: graph.Path = record[0]
+        if not check_path(path):
+            continue
+        nodes: tuple[graph.Node] = path.nodes
+        relationships: tuple[graph.Relationship] = path.relationships
+        if len(nodes) != len(relationships) + 1:
+            continue
+        total_time = record[1]
+        path_json = []
+        for j, n in enumerate(nodes):
+            path_json.append({
+                "node": {
+                    "id": n.id
+                }
+            })
+            if j != len(nodes) - 1:
+                rl = relationships[j]
+                path_json.append({
+                    "relationship": {
+                        "id": rl.id,
+                        "time": rl.get("time")
+                    }
                 })
-            else:
-                time = paths[i][0].relationships[j-1].get("time", 0)
-                path.append({
-                    "id": n.id,
-                    "time": time
-                })
-        response.append({"path": path, "time": paths[i][1]})
+
+        response.append({"path": path_json, "time": total_time})
     
     return response

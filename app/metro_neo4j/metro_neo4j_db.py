@@ -81,14 +81,25 @@ class MetroNeo4jDatabase(object):
         return None if len(rl) != 1 else rl[0][0].id
 
         
-    def get_rl_time_from_ids(self,session, ids):
+    def get_rl_time_from_ids(self, session, ids):
         ids_str = '[{}]'.format(','.join([str(id) for id in ids]))
-        rls = self.query(session, self.helper.get_rls_from_ids(ids_str))
+        records = self.query(session, self.helper.get_rls_from_ids(ids_str))
         rl_times = dict()
-        for record in rls:
+        for record in records:
             rl = record[0]
             rl_times[rl.id] = rl.get("time")
         return rl_times
+    
+    def get_rl_time_from_node_ids(self, session, node_ids):
+        rl_ids = dict()
+        for n in node_ids:
+            rl = self.get_relationship_id_from_nodes_ids(
+                session, n[0], n[1]
+            )
+            if rl is not None:
+                rl_ids[rl] = n
+        times = self.get_rl_time_from_ids(session, rl_ids.keys())
+        return {rl_ids[rl]: times[rl] for rl in rl_ids.keys()}
 
     def get_stations(self, session):
         return self.query(session, self.helper.get_stations())
@@ -106,9 +117,11 @@ class MetroNeo4jDatabase(object):
     def update_rl_time_from_id(self, session, rl_id, rl_time):
         return self.query(session, self.helper.get_update_rl_time_from_id(rl_id, rl_time))
     
-    def update_rl_time_from_ids(self, session, id_times):
+    def update_rl_time_from_node_ids(self, session, id_times):
         for rl_id, rl_time in id_times.items():
-            self.query(session, self.helper.get_update_rl_time_from_id(rl_id, rl_time))
+            self.query(session, self.helper.get_update_rl_time_from_node_ids(
+                rl_id[0], rl_id[1], rl_time
+            ))
     
     def get_graph_nodes(self, session):
         return self.query(session, "MATCH (n) RETURN n")

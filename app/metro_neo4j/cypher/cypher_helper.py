@@ -34,6 +34,8 @@ class CypherHelper:
 
         with open(f'{abs_dir_path}/update_rl_time_from_id.cypher', 'r') as f:
             self.update_rl_time_from_id = CypherHelper.cypher_optimized(f.read())
+        with open(f'{abs_dir_path}/update_rl_time_from_node_ids.cypher', 'r') as f:
+            self.update_rl_time_from_node_ids = CypherHelper.cypher_optimized(f.read())
 
         with open(f'{abs_dir_path}/get_rls_from_ids.cypher', 'r') as f:
             self.rls_from_ids = CypherHelper.cypher_optimized(f.read())
@@ -97,6 +99,15 @@ class CypherHelper:
     def get_update_rl_time_from_id(self, rl_id, rl_time):
         return self.update_rl_time_from_id.replace(
             "$$id$$", str(rl_id)
+        ).replace(
+            "$$time$$", str(rl_time)
+        )
+
+    def get_update_rl_time_from_node_ids(self, start_node, end_node, rl_time):
+        return self.update_rl_time_from_node_ids.replace(
+            "$$start_node$$", str(start_node)
+        ).replace(
+            "$$end_node$$", str(end_node)
         ).replace(
             "$$time$$", str(rl_time)
         )

@@ -42,7 +42,8 @@ class NodeLinkUpdater:
                     end_node.date_time - start_node.date_time
                 ).total_seconds())
                 node_links.append(models.NodeLink(
-                    node_link_id=rl,
+                    start_node_id=start_node.node_id,
+                    end_node_id=end_node.node_id,
                     start_date_time=start_node.date_time,
                     end_date_time=end_node.date_time,
                     displacement_time_s = disp_time             
@@ -66,7 +67,7 @@ class NodeLinkUpdater:
         # t_0 -= t_begin
         t_end = t_end.timestamp() - t_begin
         
-        current_nl_times = MetroNeo4jDatabase().get_rl_time_from_ids(
+        current_nl_times = MetroNeo4jDatabase().get_rl_time_from_node_ids(
             neo4jdb, node_links.keys()
         )
         
@@ -82,7 +83,9 @@ class NodeLinkUpdater:
             if not numpy.isnan(updated_time):
                 ids_times[nl_id] = updated_time
             
-        MetroNeo4jDatabase().update_rl_time_from_ids(neo4jdb, ids_times)
+        print('Graph NodeLink times updated:')
+        print(ids_times)
+        MetroNeo4jDatabase().update_rl_time_from_node_ids(neo4jdb, ids_times)
 
 
     @staticmethod
@@ -137,12 +140,12 @@ class NodeLinkUpdater:
         # As amostras são normalizados para plotar uma reta que passa
         #  por sample0 
         lr = linregress(samples)
-        result = NodeLinkUpdater._linear_regression_predict(lr.slope, lr.intercept)
+        result = NodeLinkUpdater._linear_regression_predict(lr.slope, lr.intercept, t_end)
         # a, b = NodeLinkUpdater.linear_regression_point_intercept(sample0, samples)
-        a, b = NodeLinkUpdater.linear_regression_point_intercept(
-            sample0, [t_end, result]
-        )
-        result = NodeLinkUpdater._linear_regression_predict(a, b, t_end)
+        diff = (result - sample0[1])
+        if samples.shape[0] < NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT:
+            diff *= samples.shape[0]/NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT
+
         return sample0[1] if numpy.isnan(result) else result
 
 

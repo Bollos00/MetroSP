@@ -34,7 +34,8 @@ class NodeLink(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     
-    node_link_id = Column(Integer)
+    start_node_id = Column(Integer)
+    end_node_id = Column(Integer)
     
     start_date_time = Column(DateTime(timezone=True))
     end_date_time = Column(DateTime(timezone=True))
@@ -56,8 +57,8 @@ class IndoorNavBeacon(Base):
     z = Column(Float, default=0)
 
 
-class IndoorNavStationSubenvironment(Base):
-    __tablename__ = "indoor_nav_station_subenvironments"
+class IndoorNavSubenvironment(Base):
+    __tablename__ = "indoor_nav_subenvironments"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -65,12 +66,13 @@ class IndoorNavStationSubenvironment(Base):
     # There should be something preventing two subenvironments of the same
     #  station being created with the same id.
     subenvironment = Column(Integer)
+    name = Column(String)
 
     limit_points = Column(ARRAY(Float, dimensions=2))
 
     
-class IndoorNavStationPolygonObstacle(Base):
-    __tablename__ = "indoor_nav_station_polygon_obstacles"
+class IndoorNavPolygonObstacle(Base):
+    __tablename__ = "indoor_nav_polygon_obstacles"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -80,8 +82,8 @@ class IndoorNavStationPolygonObstacle(Base):
     points = Column(ARRAY(Float, dimensions=2))
 
     
-class IndoorNavStationCircleObstacle(Base):
-    __tablename__ = "indoor_nav_station_circle_obstacles"
+class IndoorNavCircleObstacle(Base):
+    __tablename__ = "indoor_nav_circle_obstacles"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -93,8 +95,8 @@ class IndoorNavStationCircleObstacle(Base):
     r = Column(Float)
     
   
-class IndoorNavStationTransition(Base):
-    __tablename__ = "indoor_nav_station_transitions"
+class IndoorNavTransition(Base):
+    __tablename__ = "indoor_nav_transitions"
 
     id = Column(Integer, primary_key=True, index=True)
 

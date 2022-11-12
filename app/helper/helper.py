@@ -9,8 +9,8 @@ def initialize_stations_table(neo4jdb, sqldb):
         s = record[0]
         lines = MetroNeo4jDatabase().get_station_lines(neo4jdb, s.get("name"))
         major = s.id
-        subenvs = sqldb.query(models.IndoorNavStationSubenvironment).filter(
-            models.IndoorNavStationSubenvironment.station_id == s.id
+        subenvs = sqldb.query(models.IndoorNavSubenvironment).filter(
+            models.IndoorNavSubenvironment.station_id == s.id
         )
         subenvs = [a.subenvironment for a in subenvs]
         stations[i] = models.Station(

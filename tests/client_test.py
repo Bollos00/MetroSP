@@ -7,6 +7,7 @@ import datetime
 import numpy
 
 ADDRES = "https://app-bollos00.cloud.okteto.net"
+ADDRES = "http://0.0.0.0:8080"
 
 def random_password(length=8):
     chars = string.ascii_letters + string.digits + string.punctuation

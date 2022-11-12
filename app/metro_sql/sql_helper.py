@@ -88,12 +88,15 @@ def get_users_with_node_links(db: Session, limit_time: datetime.timedelta):
         models.NodeLink.end_date_time > then
     )
     
-    node_link_ids = set([n.node_link_id for n in node_links])
+    node_link_ids = set([(n.start_node_id, n.end_node_id) for n in node_links])
     
     elements = dict()
     for nl_id in node_link_ids:
-        nl = node_links.filter(models.NodeLink.node_link_id == nl_id)
-        nl = [[x.start_date_time.timestamp(), x.displacement_time_s] for x in nl]
+        nl = node_links.filter(
+            models.NodeLink.start_node_id == nl_id[0] and
+            models.NodeLink.end_node_id == nl_id[1]
+        )
+        nl = [[x.end_date_time.timestamp(), x.displacement_time_s] for x in nl]
         elements[nl_id] = nl
     return elements
 
@@ -153,10 +156,10 @@ def _clear_indoor_nav_tables(db: Session):
     for M in [
         models.IndoorNavBeacon,
         models.IndoorNavPoi,
-        models.IndoorNavStationCircleObstacle,
-        models.IndoorNavStationPolygonObstacle,
-        models.IndoorNavStationSubenvironment,
-        models.IndoorNavStationTransition
+        models.IndoorNavCircleObstacle,
+        models.IndoorNavPolygonObstacle,
+        models.IndoorNavSubenvironment,
+        models.IndoorNavTransition
     ]:
         db.query(M).delete()
     db.commit()
@@ -196,7 +199,7 @@ def backup_indoor_nav_tables(db: Session):
   
 def _add_station_subenvironments(db: Session, station_id, subenvs):
     for subenv in subenvs:
-        db.add(models.IndoorNavStationSubenvironment(
+        db.add(models.IndoorNavSubenvironment(
             station_id = station_id,
             subenvironment = subenv["subenvironment"],
             limit_points = subenv["limit_points"]
@@ -205,7 +208,7 @@ def _add_station_subenvironments(db: Session, station_id, subenvs):
 
 def _add_station_polygon_obstacles(db: Session, station_id, polygons):
     for pol in polygons:
-        db.add(models.IndoorNavStationPolygonObstacle(
+        db.add(models.IndoorNavPolygonObstacle(
             station_id = station_id,
             subenvironment = pol["subenvironment"],
             points = pol["points"]
@@ -214,7 +217,7 @@ def _add_station_polygon_obstacles(db: Session, station_id, polygons):
     
 def _add_station_circle_obstacles(db: Session, station_id, circles):
     for circle in circles:
-        db.add(models.IndoorNavStationPolygonObstacle(
+        db.add(models.IndoorNavPolygonObstacle(
             station_id = station_id,
             subenvironment = circle["subenvironment"],
             c_x = circle["c_x"],
@@ -225,7 +228,7 @@ def _add_station_circle_obstacles(db: Session, station_id, circles):
 
 def _add_station_transitions(db: Session, station_id, transitions):
     for transition in transitions:
-        db.add(models.IndoorNavStationTransition(
+        db.add(models.IndoorNavTransition(
             station_id = station_id,
             directional = transition["directional"],
             transition_type = transition["transition_type"],
@@ -265,8 +268,8 @@ def _add_station_beacons(db: Session, station_id, beacons):
 
   
 def _get_station_subenvironments(db: Session, station_id):
-    subenvs = db.query(models.IndoorNavStationSubenvironment).filter(
-        models.IndoorNavStationSubenvironment.station_id == station_id
+    subenvs = db.query(models.IndoorNavSubenvironment).filter(
+        models.IndoorNavSubenvironment.station_id == station_id
     )
     
     return [{
@@ -276,8 +279,8 @@ def _get_station_subenvironments(db: Session, station_id):
 
 
 def _get_station_polygon_obstacles(db: Session, station_id):
-    obstacles = db.query(models.IndoorNavStationPolygonObstacle).filter(
-        models.IndoorNavStationPolygonObstacle.station_id == station_id
+    obstacles = db.query(models.IndoorNavPolygonObstacle).filter(
+        models.IndoorNavPolygonObstacle.station_id == station_id
     )
     
     return [{
@@ -287,8 +290,8 @@ def _get_station_polygon_obstacles(db: Session, station_id):
 
     
 def _get_station_circle_obstacles(db: Session, station_id):
-    obstacles = db.query(models.IndoorNavStationCircleObstacle).filter(
-        models.IndoorNavStationCircleObstacle.station_id == station_id
+    obstacles = db.query(models.IndoorNavCircleObstacle).filter(
+        models.IndoorNavCircleObstacle.station_id == station_id
     )
     
     return [{
@@ -300,8 +303,8 @@ def _get_station_circle_obstacles(db: Session, station_id):
 
 
 def _get_station_transitions(db: Session, station_id):
-    transitions = db.query(models.IndoorNavStationTransition).filter(
-        models.IndoorNavStationTransition.station_id == station_id
+    transitions = db.query(models.IndoorNavTransition).filter(
+        models.IndoorNavTransition.station_id == station_id
     )
     
     return [{

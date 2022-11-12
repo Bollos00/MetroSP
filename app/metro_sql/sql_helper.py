@@ -49,6 +49,9 @@ def create_nodes(db: Session, nodes: list[schemas.NodeCreate], user_id: uuid.UUI
         db_node = models.Node(
             node_id=n.node_id, date_time=n.date_time, owner_id=user_id
         )
+        print("New node recorded!")
+        print({"node_id": n.node_id, "date_time": n.date_time, "owner_id": user_id})
+        
         db.add(db_node)
     db.commit()
     

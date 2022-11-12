@@ -2,7 +2,7 @@ import numpy
 import datetime
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, models
-
+from scipy.stats import linregress
 
 
 class NodeLinkUpdater:
@@ -14,7 +14,7 @@ class NodeLinkUpdater:
     OUTLIER_FILTER_SAMPLES_PER_SPLIT = 10
     OUTLIER_FILTER_MAX_SPLITS = 4
     
-    CONFIDENCE_SAMPLES_COUNT = 10
+    CONFIDENCE_SAMPLES_COUNT = 20
 
     # def __init__(self, sample0, samples, t_end):
     #     self.sample0 = sample0
@@ -136,8 +136,12 @@ class NodeLinkUpdater:
         # sample0 é o par de coordenadas da predição anterior (em t=t0)
         # As amostras são normalizados para plotar uma reta que passa
         #  por sample0 
-        a, b = NodeLinkUpdater.linear_regression_point_intercept(sample0, samples)
-        # return a, b, samples
+        lr = linregress(samples)
+        result = NodeLinkUpdater._linear_regression_predict(lr.slope, lr.intercept)
+        # a, b = NodeLinkUpdater.linear_regression_point_intercept(sample0, samples)
+        a, b = NodeLinkUpdater.linear_regression_point_intercept(
+            sample0, [t_end, result]
+        )
         result = NodeLinkUpdater._linear_regression_predict(a, b, t_end)
         return sample0[1] if numpy.isnan(result) else result
 

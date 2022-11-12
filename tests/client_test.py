@@ -6,22 +6,35 @@ import json
 import datetime
 import numpy
 
-ADDRES = "http://127.0.0.1:8080"
+ADDRES = "https://app-bollos00.cloud.okteto.net"
 
 def random_password(length=8):
     chars = string.ascii_letters + string.digits + string.punctuation
     return "".join(secrets.choice(chars) for i in range(length))
 
+class Relationship:
+    def __init__(self, start, end, time):
+        self.start = start
+        self.end = end
+        self.time = time
+
+class Node:
+    def __init__(self, id, time):
+        self.id = id
+        self.time = time
+    
+def relationships_from_nodes(nodes: list[Node]):
+    rls = list()
+    for i in range(len(nodes) - 1):
+        rls.append(Relationship(nodes[i].id, nodes[i+1].id, nodes[i+1].time))
+    return rls
+
 class UserClient:
-    class Node:
-        def __init__(self, id, time):
-            self.id = id
-            self.time = time
-        
+           
     def __init__(self):
         self.id = uuid.uuid4()
         self.password = random_password()
-        self.deviation_time_rand = 30
+        self.deviation_time_rand = .3
         
     def register(self):
         url = ADDRES + "/create_user"
@@ -43,19 +56,22 @@ class UserClient:
         r = requests.post(url, data=payload)
 
     def pre_process_nodes(self, nodes):
-        
         nodes.reverse()
         total_time = 0
         for i, n in enumerate(nodes):
-            node_time = numpy.random.normal(n.time, self.deviation_time_rand)
+            node_time = n.time*numpy.random.normal(1, self.deviation_time_rand)
             nodes[i].time = datetime.timedelta(seconds=total_time)
             total_time -= node_time
         nodes.reverse()
         return nodes
-        
+    
+    def relationship(self, rl: Relationship):
+        nodes = [Node(rl.start, 0), Node(rl.end, rl.time)]
+        return self.route(nodes)
+    
     def route(self, nodes):
         nodes = self.pre_process_nodes(nodes)
-        now = datetime.datetime.now()
+        now = datetime.datetime.utcnow()
         
         for i, n in enumerate(nodes):
             nodes[i] = {
@@ -73,32 +89,25 @@ class UserClient:
         url = ADDRES + "/create_nodes"
 
         r = requests.post(url, data=payload)
-        print(r.json())
+        print(payload)
 
         
 if __name__ == "__main__":
-    
-    for i in range(5):
-        # nodes_tucuruvi_santana = [
-        #     UserClient.Node(76, 0),
-        #     UserClient.Node(78, 400),
-        #     UserClient.Node(75, 200),
-        #     UserClient.Node(72, 300),
-        #     UserClient.Node(69, 350),
-        #     UserClient.Node(67, 500),
-        # ]       
-        
-        nodes_sacoma_oratorio = [
-            UserClient.Node(110, 0),
-            UserClient.Node(112, 300),
-            UserClient.Node(115, 200),
-            UserClient.Node(118, 220),
-            UserClient.Node(120, 500),
-            UserClient.Node(242, 150),
-            UserClient.Node(240, 60),
+    def nodes_sacoma_oratorio():
+        return [
+            Node(110, 0),
+            Node(112, 300),
+            Node(115, 200),
+            Node(118, 220),
+            Node(120, 500),
+            Node(242, 150),
+            Node(240, 60),
         ]
-        
-        u = UserClient()
-        u.register()
-        u.route(nodes_sacoma_oratorio)
-        # u.unregister()
+
+    for i in range(2):
+        rls = relationships_from_nodes(nodes_sacoma_oratorio())
+        for rl in rls:
+            u = UserClient()
+            u.register()
+            u.relationship(rl)
+            # u.unregister()

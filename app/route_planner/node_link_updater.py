@@ -15,6 +15,7 @@ class NodeLinkUpdater:
     OUTLIER_FILTER_MAX_SPLITS = 4
     
     CONFIDENCE_SAMPLES_COUNT = 20
+    MAXIMUM_DIFF = 40
 
     # def __init__(self, sample0, samples, t_end):
     #     self.sample0 = sample0
@@ -65,7 +66,7 @@ class NodeLinkUpdater:
         t_begin = (t_end - NodeLinkUpdater.UPDATE_LIMIT_TIME).timestamp()
         # t_0 = (t_end - NodeLinkUpdater.UPDATE_PERIOD).timestamp()
         # t_0 -= t_begin
-        t_end = t_end.timestamp() - t_begin
+        t_end = t_end.timestamp()
         
         current_nl_times = MetroNeo4jDatabase().get_rl_time_from_node_ids(
             neo4jdb, node_links.keys()
@@ -75,10 +76,8 @@ class NodeLinkUpdater:
         
         for nl_id, samples in node_links.items():
             disp_time0 = current_nl_times.get(nl_id, 250)
-            # sample0 = (t_0, disp_time0)
-            sample0 = (0, disp_time0)
+            sample0 = (t_begin, disp_time0)
             samples = numpy.array(samples)
-            samples[:, 0] -= t_begin
             updated_time = int(.5 + NodeLinkUpdater.solve(sample0, samples, t_end))
             if not numpy.isnan(updated_time):
                 ids_times[nl_id] = updated_time
@@ -145,8 +144,15 @@ class NodeLinkUpdater:
         diff = (result - sample0[1])
         if samples.shape[0] < NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT:
             diff *= samples.shape[0]/NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT
+            
+        if diff < 0 and diff < -NodeLinkUpdater.MAXIMUM_DIFF:
+            diff = -NodeLinkUpdater.MAXIMUM_DIFF
+        elif diff > 0 and diff > NodeLinkUpdater.MAXIMUM_DIFF:
+            diff = NodeLinkUpdater.MAXIMUM_DIFF
 
-        return sample0[1] if numpy.isnan(result) else result
+        result = sample0[1] + diff
+
+        return result
 
 
     @staticmethod

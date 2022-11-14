@@ -3,7 +3,7 @@
   "subenvironments": [
     {
       "subenvironment": 0,
-      "name": null,
+      "name": "Região 0",
       "limit_points": [
         [
           8.1,
@@ -57,7 +57,7 @@
     },
     {
       "subenvironment": 1,
-      "name": null,
+      "name": "Região 1",
       "limit_points": [
         [
           8.1,

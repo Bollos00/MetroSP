@@ -2,6 +2,7 @@ import numpy
 import datetime
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import sql_helper, models
+from metro_timezone.app_timezone import APP_TIMEZONE
 from scipy.stats import linregress
 
 
@@ -16,6 +17,7 @@ class NodeLinkUpdater:
     
     CONFIDENCE_SAMPLES_COUNT = 20
     MAXIMUM_DIFF = 40
+    MINIMUM_UPDATED_TIME = 30
 
     # def __init__(self, sample0, samples, t_end):
     #     self.sample0 = sample0
@@ -49,24 +51,21 @@ class NodeLinkUpdater:
                     end_date_time=end_node.date_time,
                     displacement_time_s = disp_time             
                 ))
-        sql_helper.delete_nodes(sqldb, nodes_to_delete)
         sql_helper.create_node_links(sqldb, node_links)
         
         
-    @staticmethod
-    def update_node_links_graph(neo4jdb, sqldb):
+    @classmethod
+    def update_node_links_graph(cls, neo4jdb, sqldb):
         # Inicialmente atualiza a tabela com os tempos de deslocamento
-        NodeLinkUpdater.update_node_links_table(neo4jdb, sqldb)
+        cls.update_node_links_table(neo4jdb, sqldb)
         
         node_links = sql_helper.get_users_with_node_links(
-            sqldb, NodeLinkUpdater.UPDATE_LIMIT_TIME
+            sqldb, cls.UPDATE_LIMIT_TIME
         )
 
-        t_end = datetime.datetime.now()
-        t_begin = (t_end - NodeLinkUpdater.UPDATE_LIMIT_TIME).timestamp()
-        # t_0 = (t_end - NodeLinkUpdater.UPDATE_PERIOD).timestamp()
-        # t_0 -= t_begin
-        t_end = t_end.timestamp()
+        t_end = datetime.datetime.now(APP_TIMEZONE)
+        t_begin = (t_end - cls.UPDATE_LIMIT_TIME).timestamp()
+        t_end = t_end.timestamp() - t_begin
         
         current_nl_times = MetroNeo4jDatabase().get_rl_time_from_node_ids(
             neo4jdb, node_links.keys()
@@ -76,83 +75,80 @@ class NodeLinkUpdater:
         
         for nl_id, samples in node_links.items():
             disp_time0 = current_nl_times.get(nl_id, 250)
-            sample0 = (t_begin, disp_time0)
+            sample0 = (0, disp_time0)
             samples = numpy.array(samples)
-            updated_time = int(.5 + NodeLinkUpdater.solve(sample0, samples, t_end))
-            if not numpy.isnan(updated_time):
+            samples[:, 0] -= t_begin
+            updated_time = cls.solve(sample0, samples, t_end)
+            if not numpy.isnan(updated_time) and disp_time0 != updated_time:
                 ids_times[nl_id] = updated_time
-            
+        
         print('Graph NodeLink times updated:')
         print(ids_times)
         MetroNeo4jDatabase().update_rl_time_from_node_ids(neo4jdb, ids_times)
 
 
-    @staticmethod
-    def _remove_outfiles_single(s):
+    @classmethod
+    def _remove_outfiles_single(cls, s):
         values = s[:, 1]
         avg_values = numpy.average(values)
         std_values = numpy.std(values)
-        return s[numpy.abs(s[:, 1] - avg_values) < NodeLinkUpdater.OUTLIER_FILTER_N*std_values]
+        return s[numpy.abs(s[:, 1] - avg_values) < cls.OUTLIER_FILTER_N*std_values]
 
 
-    @staticmethod
-    def remove_outliers(samples):
+    @classmethod
+    def remove_outliers(cls, samples):
         # quantidade de subamostras
-        splits = int(numpy.min(
-            [
-                1 + samples.shape[0]/NodeLinkUpdater.OUTLIER_FILTER_SAMPLES_PER_SPLIT,
-                NodeLinkUpdater.OUTLIER_FILTER_MAX_SPLITS
-            ]
-        ))
+        splits = int(numpy.min([
+            1 + samples.shape[0]/cls.OUTLIER_FILTER_SAMPLES_PER_SPLIT,
+            cls.OUTLIER_FILTER_MAX_SPLITS
+        ]))
         subsamples = numpy.array_split(samples, splits)
         for i, s in enumerate(subsamples):
-            subsamples[i] = NodeLinkUpdater._remove_outfiles_single(s)
+            subsamples[i] = cls._remove_outfiles_single(s)
         return numpy.vstack(subsamples)
 
 
-    @staticmethod
-    def linear_regression_origin_intercept(samples):
-        # Retorna o coefieciente da regressão linear que passa pela origem
-        x = samples[:, 0]
-        y = samples[:, 1]
-        return numpy.sum(x*y)/numpy.sum(x*x)
+    # @staticmethod
+    # def linear_regression_origin_intercept(samples):
+    #     # Retorna o coefieciente da regressão linear que passa pela origem
+    #     x = samples[:, 0]
+    #     y = samples[:, 1]
+    #     return numpy.sum(x*y)/numpy.sum(x*x)
 
 
-    @staticmethod
-    def linear_regression_point_intercept(sample0, samples):
-        # Retorna os coefiecientes da regressão linear que passa por sample0
-        norm_samples = samples - sample0
-        a = NodeLinkUpdater.linear_regression_origin_intercept(norm_samples)
-        if samples.shape[0] < NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT:
-            a *= samples.shape[0]/NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT
-        b = sample0[1] - a*sample0[0]
-        return a, b
+    # @staticmethod
+    # def linear_regression_point_intercept(sample0, samples):
+    #     # Retorna os coefiecientes da regressão linear que passa por sample0
+    #     norm_samples = samples - sample0
+    #     a = NodeLinkUpdater.linear_regression_origin_intercept(norm_samples)
+    #     if samples.shape[0] < NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT:
+    #         a *= samples.shape[0]/NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT
+    #     b = sample0[1] - a*sample0[0]
+    #     return a, b
 
 
-    @staticmethod
-    def solve(sample0, samples, t_end):
-        samples = NodeLinkUpdater.sort_samples(samples)
-        samples = NodeLinkUpdater.remove_outliers(samples)
+    @classmethod
+    def solve(cls, sample0, samples, t_end):
+        samples = cls.sort_samples(samples)
+        samples = cls.remove_outliers(samples)
         if samples.size == 0:
             return sample0[1]
-        # sample0 é o par de coordenadas da predição anterior (em t=t0)
-        # As amostras são normalizados para plotar uma reta que passa
-        #  por sample0 
+        
         lr = linregress(samples)
-        result = NodeLinkUpdater._linear_regression_predict(lr.slope, lr.intercept, t_end)
-        # a, b = NodeLinkUpdater.linear_regression_point_intercept(sample0, samples)
-        diff = (result - sample0[1])
-        if samples.shape[0] < NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT:
-            diff *= samples.shape[0]/NodeLinkUpdater.CONFIDENCE_SAMPLES_COUNT
+        result = cls._linear_regression_predict(lr.slope, lr.intercept, t_end)
+        diff = result - sample0[1]
             
-        if diff < 0 and diff < -NodeLinkUpdater.MAXIMUM_DIFF:
-            diff = -NodeLinkUpdater.MAXIMUM_DIFF
-        elif diff > 0 and diff > NodeLinkUpdater.MAXIMUM_DIFF:
-            diff = NodeLinkUpdater.MAXIMUM_DIFF
+        if diff < 0 and diff < -cls.MAXIMUM_DIFF:
+            diff = -cls.MAXIMUM_DIFF
+        elif diff > 0 and diff > cls.MAXIMUM_DIFF:
+            diff = cls.MAXIMUM_DIFF
 
-        result = sample0[1] + diff
+        if samples.shape[0] < cls.CONFIDENCE_SAMPLES_COUNT:
+            diff *= samples.shape[0]/cls.CONFIDENCE_SAMPLES_COUNT
 
-        return result
+        result = int(sample0[1] + diff + .5)
+
+        return numpy.max([result, cls.MINIMUM_UPDATED_TIME])
 
 
     @staticmethod
@@ -162,5 +158,5 @@ class NodeLinkUpdater:
 
     @staticmethod
     def sort_samples(samples):
-        # Sort array by time (dimensions 0)
+        # Sort array by timestamp (dimensions 0)
         return numpy.array(sorted(samples, key=lambda s: s[0]))

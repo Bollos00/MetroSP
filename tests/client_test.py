@@ -105,7 +105,7 @@ if __name__ == "__main__":
             Node(240, 60),
         ]
 
-    N = 10
+    N = 2
     for i in range(N):
         rls = relationships_from_nodes(nodes_sacoma_oratorio())
         for rl in rls:

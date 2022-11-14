@@ -4,6 +4,7 @@ import uuid
 
 from . import models, schemas, enums
 from indoor_nav import indoor_nav
+from metro_timezone.app_timezone import convert_date_time, APP_TIMEZONE
 
 
 def add_commit_refresh(db: Session, db_item):
@@ -47,10 +48,14 @@ def auth_user(db: Session, user: schemas.UserAuth):
 def create_nodes(db: Session, nodes: list[schemas.NodeCreate], user_id: uuid.UUID):
     for n in nodes:
         db_node = models.Node(
-            node_id=n.node_id, date_time=n.date_time, owner_id=user_id
+            node_id=n.node_id,
+            date_time=convert_date_time(n.date_time),
+            owner_id=user_id
         )
         print("New node recorded!")
-        print({"node_id": n.node_id, "date_time": n.date_time, "owner_id": user_id})
+        print({"node_id": db_node.node_id,
+               "date_time": db_node.date_time,
+               "owner_id": user_id})
         
         db.add(db_node)
     db.commit()
@@ -83,7 +88,7 @@ def get_users_with_nodes(db: Session):
 
 
 def get_users_with_node_links(db: Session, limit_time: datetime.timedelta):
-    then = datetime.datetime.now() - limit_time
+    then = datetime.datetime.now(APP_TIMEZONE) - limit_time
     node_links = db.query(models.NodeLink).filter(
         models.NodeLink.end_date_time > then
     )
@@ -118,6 +123,38 @@ def check_train_registered(db: Session, fleet: enums.MetroFleet):
 def clear_trains_table(db: Session):
     db.query(models.Train).delete()
     db.commit()
+
+def initialize_trains_table(sqldb):
+    clear_trains_table(sqldb)
+    trains = list()
+    for fleet in enums.MetroFleet:
+        train = models.Train(fleet=fleet, lines=[], cars=0, doors=0)
+        if fleet == enums.MetroFleet.FLEET_E:
+            train.beacon_id_major_begin = 1001 
+            train.beacon_id_major_end   = 2000
+        elif fleet == enums.MetroFleet.FLEET_G:
+            train.beacon_id_major_begin = 3001 
+            train.beacon_id_major_end   = 4000
+        elif fleet == enums.MetroFleet.FLEET_H:
+            train.beacon_id_major_begin = 5001 
+            train.beacon_id_major_end   = 6000
+        elif fleet == enums.MetroFleet.FLEET_I:
+            train.beacon_id_major_begin = 7001 
+            train.beacon_id_major_end   = 8000
+        elif fleet == enums.MetroFleet.FLEET_J:
+            train.beacon_id_major_begin = 9001 
+            train.beacon_id_major_end   = 10000
+        elif fleet == enums.MetroFleet.FLEET_K:
+            train.beacon_id_major_begin = 11001 
+            train.beacon_id_major_end   = 12000
+        elif fleet == enums.MetroFleet.FLEET_L:
+            train.beacon_id_major_begin = 13001 
+            train.beacon_id_major_end   = 14000
+        elif fleet == enums.MetroFleet.FLEET_M:
+            train.beacon_id_major_begin = 15001 
+            train.beacon_id_major_end   = 16000
+        trains.append(train)
+    create_trains(sqldb, trains)
 
 
 def clear_stations_table(db: Session):
@@ -202,6 +239,7 @@ def _add_station_subenvironments(db: Session, station_id, subenvs):
         db.add(models.IndoorNavSubenvironment(
             station_id = station_id,
             subenvironment = subenv["subenvironment"],
+            name = subenv["name"],
             limit_points = subenv["limit_points"]
         ))
 
@@ -274,6 +312,7 @@ def _get_station_subenvironments(db: Session, station_id):
     
     return [{
         'subenvironment': a.subenvironment,
+        'name': a.name,
         'limit_points': a.limit_points
     } for a in subenvs]
 

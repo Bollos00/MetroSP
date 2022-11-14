@@ -3,7 +3,8 @@ services:
     build: ./app
     ports:
       - "8080:8080"
-    # volumes:
+    environment:
+      PYTHONUNBUFFERED: 1
     depends_on:
       - neo4jdb
       - postgresdb
@@ -71,14 +72,14 @@ networks:
   postgres_net:
 
 # This is to be used with okteto. On docker-compose, comment the lines bellow.
-# endpoints:
-#   web:
-#     - path: /
-#       service: app
-#       port: 8080
-#     # - path: /neo4jbrowser
-#     #   service: neo4jdb
-#     #   port: 7474
-#     - path: /pgadmin
-#       service: pgadmin
-#       port: 5050
+endpoints:
+  web:
+    - path: /
+      service: app
+      port: 8080
+    # - path: /neo4jbrowser
+    #   service: neo4jdb
+    #   port: 7474
+    - path: /pgadmin
+      service: pgadmin
+      port: 5050

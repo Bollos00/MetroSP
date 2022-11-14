@@ -4,6 +4,28 @@ import neo4j
 from neo4j import graph
 from itertools import combinations
 
+
+def initialize_stations_table(neo4jdb, sqldb):
+    sql_helper.clear_stations_table(sqldb)
+    stations = MetroNeo4jDatabase().get_stations(neo4jdb)
+    for i, record in enumerate(stations):
+        s = record[0]
+        lines = MetroNeo4jDatabase().get_station_lines(neo4jdb, s.get("name"))
+        major = s.id
+        subenvs = sqldb.query(models.IndoorNavSubenvironment).filter(
+            models.IndoorNavSubenvironment.station_id == s.id
+        )
+        subenvs = [a.subenvironment for a in subenvs]
+        stations[i] = models.Station(
+            id=s.id,
+            beacon_id_major=major,
+            name=s.get("name"),
+            subenvironments=subenvs,
+            lines=lines
+        )
+    sql_helper.create_stations(sqldb, stations)
+    
+
 graph_backup = None
 
 def get_graph(neo4jdb):

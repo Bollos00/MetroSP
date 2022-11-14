@@ -4,8 +4,6 @@ from sqlalchemy.orm import Session
 from metro_neo4j.metro_neo4j_db import MetroNeo4jDatabase
 from metro_sql import metro_sql_db, models, schemas, sql_helper
 from route_planner import route_planner
-from fastapi_utils.tasks import repeat_every
-from helper import helper
 import uuid
 from route_planner.node_link_updater import NodeLinkUpdater
 from threading import Timer
@@ -47,12 +45,12 @@ def startup_event():
 
     sql_helper.initialize_valid_uuids_table(sqldb)
     sql_helper.initialize_indoor_nav_tables(sqldb)    
-    helper.initialize_stations_table(neo4jdb, sqldb)
-    helper.initialize_trains_table(sqldb)
-    
+    route_planner.initialize_stations_table(neo4jdb, sqldb)
+    sql_helper.initialize_trains_table(sqldb)
+
     sqldb.close()
     neo4jdb.close()
-    
+
     update_node_links_timer.start()
 
 

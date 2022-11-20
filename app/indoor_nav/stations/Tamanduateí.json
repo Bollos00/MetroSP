@@ -1,9 +1,40 @@
 {
   "station_id": 113,
-  "subenvironments": [],
+  "subenvironments": [
+    {
+      "subenvironment": 2,
+      "name": "Embarque: 2 (+)",
+      "limit_points": [
+        [
+          0,
+          10
+        ],
+        [
+          50, 
+          10
+        ],
+        [
+          50,
+          5
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    }
+  ],
   "polygon_obstacles": [],
   "circle_obstacles": [],
   "transitions": [],
   "pois": [],
-  "beacons": []
+  "beacons": [
+    {
+      "subenvironment": 2,
+      "beacon_id_minor": 250,
+      "x": 30,
+      "y": 5,
+      "z": 2
+    }
+  ]
 }

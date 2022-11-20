@@ -1,9 +1,91 @@
 {
   "station_id": 110,
-  "subenvironments": [],
+  "subenvironments": [
+    {
+      "subenvironment": 0,
+      "name": "Mezanino principal",
+      "limit_points": [
+        [
+          0,
+          10
+        ],
+        [
+          50, 
+          10
+        ],
+        [
+          50,
+          -10
+        ],
+        [
+          0,
+          -10
+        ]
+      ]
+    },
+    {
+      "subenvironment": 1,
+      "name": "Embarque: 2 (-)",
+      "limit_points": [
+        [
+          0,
+          -5
+        ],
+        [
+          50, 
+          -5
+        ],
+        [
+          50,
+          -10
+        ],
+        [
+          0,
+          -10
+        ]
+      ]
+    },
+    {
+      "subenvironment": 2,
+      "name": "Embarque: 2 (+)",
+      "limit_points": [
+        [
+          0,
+          10
+        ],
+        [
+          50, 
+          10
+        ],
+        [
+          50,
+          5
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    }
+  ],
   "polygon_obstacles": [],
   "circle_obstacles": [],
   "transitions": [],
   "pois": [],
-  "beacons": []
+  "beacons": [
+    {
+      "subenvironment": 0,
+      "beacon_id_minor": 65530,
+      "x": 2,
+      "y": 0,
+      "z": 1
+    },
+    {
+      "subenvironment": 2,
+      "beacon_id_minor": 250,
+      "x": 30,
+      "y": 5,
+      "z": 2
+    }
+  ]
 }

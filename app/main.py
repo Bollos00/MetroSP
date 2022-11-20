@@ -59,7 +59,7 @@ def shutdown_event():
     sqldb = metro_sql_db.SessionLocal()
     neo4jdb = MetroNeo4jDatabase().driver.session()
     
-    sql_helper.backup_indoor_nav_tables(sqldb)
+    # sql_helper.backup_indoor_nav_tables(sqldb)
     
     sqldb.close()
     neo4jdb.close()

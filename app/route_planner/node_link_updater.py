@@ -135,7 +135,7 @@ class NodeLinkUpdater:
             return sample0[1]
         
         lr = linregress(samples)
-        result = cls._linear_regression_predict(lr.slope, lr.intercept, t_end)
+        result = cls.lr_predict(lr, t_end)
         diff = result - sample0[1]
             
         if diff < 0 and diff < -cls.MAXIMUM_DIFF:
@@ -151,8 +151,12 @@ class NodeLinkUpdater:
         return numpy.max([result, cls.MINIMUM_UPDATED_TIME])
 
 
+    @classmethod
+    def lr_predict(cls, lr, x):
+        return cls._lr_predict(lr.slope, lr.intercept, x)
+
     @staticmethod
-    def _linear_regression_predict(a, b, x):
+    def _lr_predict(a, b, x):
         return b + a*x
 
 

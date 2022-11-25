@@ -1,9 +1,750 @@
 {
   "station_id": 23,
-  "subenvironments": [],
-  "polygon_obstacles": [],
-  "circle_obstacles": [],
-  "transitions": [],
-  "pois": [],
-  "beacons": []
+  "subenvironments": [
+    {
+      "subenvironment": 0,
+      "name": "Mezanino Principal",
+      "limit_points": [
+        [
+          -40,
+          0
+        ],
+        [
+          -40,
+          35.7
+        ],
+        [
+          51.22,
+          35.7
+        ],
+        [
+          52.49,
+          56.44
+        ],
+        [
+          59.68,
+          56.44
+        ],
+        [
+          58.41,
+          35.7
+        ],
+        [
+          66.93,
+          35.7
+        ],
+        [
+          66.93,
+          0
+        ]
+      ]
+    },
+    {
+      "subenvironment": 1,
+      "name": "Plataforma - Linha 2",
+      "limit_points": [
+        [
+          -70.66,
+          3.17
+        ],
+        [
+          66.85,
+          3.17
+        ],
+        [
+          66.85,
+          15.43
+        ],
+        [
+          -70.66,
+          15.43
+        ]
+      ]
+    },
+    {
+      "subenvironment": 2,
+      "name": "Plataforma - Linha 1",
+      "limit_points": [
+        [
+          -70.66,
+          22.02
+        ],
+        [
+          66.85,
+          22.02
+        ],
+        [
+          66.85,
+          33.75
+        ],
+        [
+          -70.66,
+          33.75
+        ]
+      ]
+    }
+  ],
+  "polygon_obstacles": [
+    {
+      "comments": "Escada convencional 0 para Plataforma linha 2",
+      "subenvironment": 0,
+      "points": [
+        [
+          3.17,
+          6.64
+        ],
+        [
+          3.17,
+          11.03
+        ],
+        [
+          12.17,
+          11.03
+        ],
+        [
+          12.17,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments": "Escada convencional 0 para Mezanino principal",
+      "subenvironment": 1,
+      "points": [
+        [
+          3.17,
+          6.64
+        ],
+        [
+          3.17,
+          11.03
+        ],
+        [
+          12.17,
+          11.03
+        ],
+        [
+          12.17,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments": "Escada convencional 1 para Plataforma linha 2",
+      "subenvironment": 0,
+      "points": [
+        [
+          -24.34,
+          6.64
+        ],
+        [
+          -24.34,
+          11.03
+        ],
+        [
+          -15.34,
+          11.03
+        ],
+        [
+          -15.34,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments": "Escada convencional 1 para Mezanino",
+      "subenvironment": 1,
+      "points": [
+        [
+          -24.34,
+          6.64
+        ],
+        [
+          -24.34,
+          11.03
+        ],
+        [
+          -15.34,
+          11.03
+        ],
+        [
+          -15.34,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments": "Escada convencional 2 para Plataforma linha 2",
+      "subenvironment": 0,
+      "points": [
+        [
+          -43.8,
+          6.64
+        ],
+        [
+          -43.8,
+          11.03
+        ],
+        [
+          -34.8,
+          11.03
+        ],
+        [
+          -34.8,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments": "Escada convencional 2 para Mezanino",
+      "subenvironment": 1,
+      "points": [
+        [
+          -43.8,
+          6.64
+        ],
+        [
+          -43.8,
+          11.03
+        ],
+        [
+          -34.8,
+          11.03
+        ],
+        [
+          -34.8,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments": "Escadas Rolantes 0 para Plataforma linha 1",
+      "subenvironment": 0,
+      "points": [
+        [
+          3.17,
+          25.69
+        ],
+        [
+          3.17,
+          30.08
+        ],
+        [
+          12.17,
+          30.08
+        ],
+        [
+          12.17,
+          25.69
+        ]
+      ]
+    },
+    {
+      "comments": "Escadas Rolantes 0 para Mezanino Principal",
+      "subenvironment": 2,
+      "points": [
+        [
+          3.17,
+          25.69
+        ],
+        [
+          3.17,
+          30.08
+        ],
+        [
+          12.17,
+          30.08
+        ],
+        [
+          12.17,
+          25.69
+        ]
+      ]
+    },
+    {
+      "comments": "Escadas Rolantes 1 para Plataforma linha 1",
+      "subenvironment": 0,
+      "points": [
+        [
+          -24.34,
+          25.69
+        ],
+        [
+          -24.34,
+          30.08
+        ],
+        [
+          -15.34,
+          30.08
+        ],
+        [
+          -15.34,
+          25.69
+        ]
+      ]
+    },
+    {
+      "comments": "Escadas Rolantes 1 para Mezanino Principal",
+      "subenvironment": 2,
+      "points": [
+        [
+          -24.34,
+          26.78
+        ],
+        [
+          -24.34,
+          28.98
+        ],
+        [
+          -15.34,
+          28.98
+        ],
+        [
+          -15.34,
+          26.78
+        ]
+      ]
+    },
+    {
+      "comments": "Escadas Rolantes 2 para Plataforma linha 1",
+      "subenvironment": 0,
+      "points": [
+        [
+          -43.8,
+          26.78
+        ],
+        [
+          -43.8,
+          28.98
+        ],
+        [
+          -34.8,
+          28.98
+        ],
+        [
+          -34.8,
+          26.78
+        ]
+      ]
+    },
+    {
+      "comments": "Escadas Rolantes 2 para Mezanino Principal",
+      "subenvironment": 2,
+      "points": [
+        [
+          -43.8,
+          25.69
+        ],
+        [
+          -43.8,
+          30.08
+        ],
+        [
+          -34.8,
+          30.08
+        ],
+        [
+          -34.8,
+          25.69
+        ]
+      ]
+    },
+    {
+      "subenvironment": 0,
+      "points": [
+        [
+          30.15,
+          35.7
+        ],
+        [
+          30.15,
+          29.15
+        ],
+        [
+          48.04,
+          29.15
+        ],
+        [
+          48.04,
+          35.7
+        ]
+      ]
+    },
+    {
+      "subenvironment": 0,
+      "points": [
+        [
+          30.15,
+          24.92
+        ],
+        [
+          58.41,
+          24.92
+        ],
+        [
+          58.41,
+          35.7
+        ],
+        [
+          66.93,
+          35.7
+        ],
+        [
+          66.93,
+          12.48
+        ],
+        [
+          30.15,
+          12.48
+        ]
+      ]
+    },
+    {
+      "subenvironment": 0,
+      "points": [
+        [
+          30.15,
+          0
+        ],
+        [
+          30.15,
+          10.37
+        ],
+        [
+          66.93,
+          10.37
+        ],
+        [
+          66.93,
+          0
+        ]
+      ]
+    }
+  ],
+  "circle_obstacles": [
+    {
+        "subenvironment": 0,
+        "c_x": 19.67,
+        "c_y": 6.64,
+        "r": 0.5
+    },
+    {
+        "subenvironment": 0,
+        "c_x": 19.67,
+        "c_y": 11.03,
+        "r": 0.5
+    },
+    {
+        "subenvironment": 0,
+        "c_x": 19.67,
+        "c_y": 25.69,
+        "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": 19.67,
+      "c_y": 30.08,
+      "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": 19.67,
+      "c_y": 18.52,
+      "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": 11.67,
+      "c_y": 18.52,
+      "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": 3.67,
+      "c_y": 18.52,
+      "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": -4.33,
+      "c_y": 18.52,
+      "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": -12.33,
+      "c_y": 18.52,
+      "r": 0.5
+    },
+    {
+      "subenvironment": 0,
+      "c_x": -16.33,
+      "c_y": 18.52,
+      "r": 0.5
+    }
+  ],
+  "transitions": [
+    {
+      "comments": "Escada rolante 0",
+      "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 0,
+      "subenvironment_end": 2,
+      "direction_angle_start": 0.0,
+      "start_x": 3.17,
+      "start_y": 26.82,
+      "direction_angle_end": 0.0,
+      "end_x": 12.17,
+      "end_y": 26.82
+    },
+    {
+      "comments": "Escada rolante 0",
+      "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 2,
+      "subenvironment_end": 0,
+      "direction_angle_start": 180.0,
+      "start_x": 12.17,
+      "start_y": 28.94,
+      "direction_angle_end": 180.0,
+      "end_x": 3.17,
+      "end_y": 28.94
+    },
+    {
+      "comments": "Escada rolante 1",
+      "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 0,
+      "subenvironment_end": 2,
+      "direction_angle_start": 0.0,
+      "start_x": -24.34,
+      "start_y": 26.82,
+      "direction_angle_end": 0.0,
+      "end_x": -15.34,
+      "end_y": 26.82
+    },
+    {
+      "comments": "Escada rolante 1",
+      "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 2,
+      "subenvironment_end": 0,
+      "direction_angle_start": 180.0,
+      "start_x": -15.34,
+      "start_y": 28.94,
+      "direction_angle_end": 180.0,
+      "end_x": -24.34,
+      "end_y": 28.94
+    },
+    {
+      "comments": "Escada rolante 2",
+      "directional": false,
+      "transition_type": "AUTOMATIC_STAIR",
+      "subenvironment_start": 2,
+      "subenvironment_end": 0,
+      "direction_angle_start": 0.0,
+      "start_x": -43.8,
+      "start_y": 27.88,
+      "direction_angle_end": 0.0,
+      "end_x": -34.8,
+      "end_y": 27.88
+    },
+    {
+      "comments": "Escada convencional 0",
+      "directional": true,
+      "transition_type": "COMMON_STAIR",
+      "subenvironment_start": 0,
+      "subenvironment_end": 1,
+      "direction_angle_start": 0.0,
+      "start_x": 3.17,
+      "start_y": 8.83,
+      "direction_angle_end": 0.0,
+      "end_x": 12.17,
+      "end_y": 8.83
+    },
+    {
+      "comments": "Escada convencional 1",
+      "directional": true,
+      "transition_type": "COMMON_STAIR",
+      "subenvironment_start": 0,
+      "subenvironment_end": 1,
+      "direction_angle_start": 0.0,
+      "start_x": -15.34,
+      "start_y": 8.83,
+      "direction_angle_end": 0.0,
+      "end_x": -24.34,
+      "end_y": 8.83
+    },
+    {
+      "comments": "Escada convencional 2",
+      "directional": true,
+      "transition_type": "COMMON_STAIR",
+      "subenvironment_start": 0,
+      "subenvironment_end": 1,
+      "direction_angle_start": 0.0,
+      "start_x": -34.8,
+      "start_y": 8.83,
+      "direction_angle_end": 0.0,
+      "end_x": -43.8,
+      "end_y": 8.83
+    }
+  ],
+  "pois": [
+    {
+      "subenvironment": 0,
+      "poi_type": "BLOCKING",
+      "line_way": 0,
+      "x": 7.3,
+      "y": 18.52
+    },
+    {
+      "subenvironment": 0,
+      "poi_type": "BLOCKING",
+      "line_way": 0,
+      "x": 7.3,
+      "y": 32.8
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": 2,
+      "x": -43.16,
+      "y": 3.67
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": 2,
+      "x": -15.66,
+      "y": 3.67
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": 2,
+      "x": 11.85,
+      "y": 3.67
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": 2,
+      "x": 39.35,
+      "y": 3.67
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": -2,
+      "x": -43.16,
+      "y": 14.93
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": -2,
+      "x": -15.66,
+      "y": 14.93
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": -2,
+      "x": 11.85,
+      "y": 14.93
+    },
+    {
+      "subenvironment": 1,
+      "poi_type": "BOARDING",
+      "line_way": -2,
+      "x": 39.35,
+      "y": 14.93
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": 1,
+      "x": -43.16,
+      "y": 22.52
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": 1,
+      "x": -15.66,
+      "y": 22.52
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": 1,
+      "x": 11.85,
+      "y": 22.52
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": 1,
+      "x": 39.35,
+      "y": 22.52
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": -1,
+      "x": -43.16,
+      "y": 33.25
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": -1,
+      "x": -15.66,
+      "y": 33.25
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": -1,
+      "x": 11.85,
+      "y": 33.25
+    },
+    {
+      "subenvironment": 2,
+      "poi_type": "BOARDING",
+      "line_way": -1,
+      "x": 39.35,
+      "y": 33.25
+    }
+  ],
+  "beacons": [
+    {
+      "subenvironment": 0,
+      "beacon_id_minor": 65530,
+      "x": 7.3,
+      "y": 20.5,
+      "z": 0.0
+    },
+    {
+      "subenvironment": 0,
+      "beacon_id_minor": 65531,
+      "x": 7.3,
+      "y": 34.5,
+      "z": 0.0
+    },
+    {
+      "subenvironment": 1,
+      "beacon_id_minor": 50000,
+      "x": -3.5,
+      "y": 24.9,
+      "z": 0.0
+    },
+    {
+      "subenvironment": 2,
+      "beacon_id_minor": 50001,
+      "x": 30,
+      "y": 28.0,
+      "z": 1.8
+    }
+  ]
 }

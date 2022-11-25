@@ -26,12 +26,13 @@ def solve(value0, samples, t_end):
     result = int(value0 + diff + .5)
 
     
-    pyplot.plot(samples[:, 0], samples[:, 1], 'ro', label='amostras')
-    # pyplot.plot(samples_out_r[:, 0], samples_out_r[:, 1], 'bo', label='amostras')
+    pyplot.plot(samples[:, 0], samples[:, 1], 'ro', label='outliers')
+    pyplot.plot(samples_out_r[:, 0], samples_out_r[:, 1], 'bo', label='amostras')
     pyplot.plot(0, value0, '*c', markersize=22, label=f'tempo ligação inicial ({value0})')
-    # pyplot.plot(t_end, result, '*m', markersize=15, label=f'tempo ligação final ({result})')
-    # pyplot.plot(time_x, NodeLinkUpdater.lr_predict(lr, time_x), 'g', label='reta tendência')
-    # pyplot.plot([0, t_end], [value0, result], '--', linewidth=.5, color='black')
+    pyplot.plot(t_end, result, '*m', markersize=22, label=f'tempo ligação final ({result})')
+    pyplot.plot(time_x, NodeLinkUpdater.lr_predict(lr, time_x), 'g', label='reta tendência')
+    pyplot.plot([0, t_end], [value0, value0], '--', linewidth=.5, color='black')
+    pyplot.plot([t_end, t_end], [value0, result], '--', linewidth=.5, color='black')
     pyplot.xlabel('Timestamp (s)')
     pyplot.ylabel('Tempo da ligação (s)')
     pyplot.legend()
@@ -40,14 +41,14 @@ def solve(value0, samples, t_end):
 
 
 if __name__ == "__main__":
-    N_SAMPLES = 500
+    N_SAMPLES = 20
     TIME_NOISE = 20
     VALUE_NOISE = 100
     value0 = 300
     t_end = NodeLinkUpdater.UPDATE_LIMIT_TIME.seconds
     
     expected_value0 = 400
-    expcted_value_end = 460
+    expcted_value_end = 500
     lr = linregress(
         x=[0, t_end], y=[expected_value0, expcted_value_end]
     )

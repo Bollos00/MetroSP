@@ -52,6 +52,7 @@ class NodeLinkUpdater:
                     displacement_time_s = disp_time             
                 ))
         sql_helper.create_node_links(sqldb, node_links)
+        sql_helper.delete_nodes(sqldb, nodes_to_delete)
         
         
     @classmethod

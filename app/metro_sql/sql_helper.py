@@ -255,7 +255,7 @@ def _add_station_polygon_obstacles(db: Session, station_id, polygons):
     
 def _add_station_circle_obstacles(db: Session, station_id, circles):
     for circle in circles:
-        db.add(models.IndoorNavPolygonObstacle(
+        db.add(models.IndoorNavCircleObstacle(
             station_id = station_id,
             subenvironment = circle["subenvironment"],
             c_x = circle["c_x"],

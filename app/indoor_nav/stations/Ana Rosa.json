@@ -1,10 +1,10 @@
 {
-  "station_id": 23,
-  "subenvironments": [
+  "station_id":23,
+  "subenvironments":[
     {
-      "subenvironment": 0,
-      "name": "Mezanino Principal",
-      "limit_points": [
+      "subenvironment":0,
+      "name":"Mezanino Principal",
+      "limit_points":[
         [
           -40,
           0
@@ -40,318 +40,318 @@
       ]
     },
     {
-      "subenvironment": 1,
-      "name": "Plataforma - Linha 2",
-      "limit_points": [
+      "subenvironment":1,
+      "name":"Plataforma - Linha 2",
+      "limit_points":[
         [
-          -70.66,
-          3.17
+          -81.0,
+          4.45
         ],
         [
-          66.85,
-          3.17
+          70.0,
+          4.45
         ],
         [
-          66.85,
-          15.43
+          70.0,
+          13.21
         ],
         [
-          -70.66,
-          15.43
+          -81.0,
+          13.21
         ]
       ]
     },
     {
-      "subenvironment": 2,
-      "name": "Plataforma - Linha 1",
-      "limit_points": [
+      "subenvironment":2,
+      "name":"Plataforma - Linha 1",
+      "limit_points":[
         [
-          -70.66,
-          22.02
+          -81.0,
+          23.5
         ],
         [
-          66.85,
-          22.02
+          70.0,
+          23.5
         ],
         [
-          66.85,
-          33.75
+          70.0,
+          32.26
         ],
         [
-          -70.66,
-          33.75
+          -81.0,
+          32.26
         ]
       ]
     }
   ],
-  "polygon_obstacles": [
+  "polygon_obstacles":[
     {
-      "comments": "Escada convencional 0 para Plataforma linha 2",
-      "subenvironment": 0,
-      "points": [
+      "comments":"Escada convencional 0 para Plataforma linha 2",
+      "subenvironment":0,
+      "points":[
         [
-          3.17,
+          3.78,
           6.64
         ],
         [
-          3.17,
+          3.78,
           11.03
         ],
         [
-          12.17,
+          13.02,
           11.03
         ],
         [
-          12.17,
+          13.02,
           6.64
         ]
       ]
     },
     {
-      "comments": "Escada convencional 0 para Mezanino principal",
-      "subenvironment": 1,
-      "points": [
+      "comments":"Escada convencional 0 para Mezanino principal",
+      "subenvironment":1,
+      "points":[
         [
-          3.17,
+          3.78,
           6.64
         ],
         [
-          3.17,
+          3.78,
           11.03
         ],
         [
-          12.17,
+          13.02,
           11.03
         ],
         [
-          12.17,
-          6.64
-        ]
-      ]
-    },
-    {
-      "comments": "Escada convencional 1 para Plataforma linha 2",
-      "subenvironment": 0,
-      "points": [
-        [
-          -24.34,
-          6.64
-        ],
-        [
-          -24.34,
-          11.03
-        ],
-        [
-          -15.34,
-          11.03
-        ],
-        [
-          -15.34,
+          13.02,
           6.64
         ]
       ]
     },
     {
-      "comments": "Escada convencional 1 para Mezanino",
-      "subenvironment": 1,
-      "points": [
+      "comments":"Escada convencional 1 para Plataforma linha 2",
+      "subenvironment":0,
+      "points":[
         [
-          -24.34,
+          -23.94,
           6.64
         ],
         [
-          -24.34,
+          -23.94,
           11.03
         ],
         [
-          -15.34,
+          -14.7,
           11.03
         ],
         [
-          -15.34,
-          6.64
-        ]
-      ]
-    },
-    {
-      "comments": "Escada convencional 2 para Plataforma linha 2",
-      "subenvironment": 0,
-      "points": [
-        [
-          -43.8,
-          6.64
-        ],
-        [
-          -43.8,
-          11.03
-        ],
-        [
-          -34.8,
-          11.03
-        ],
-        [
-          -34.8,
+          -14.7,
           6.64
         ]
       ]
     },
     {
-      "comments": "Escada convencional 2 para Mezanino",
-      "subenvironment": 1,
-      "points": [
+      "comments":"Escada convencional 1 para Mezanino",
+      "subenvironment":1,
+      "points":[
         [
-          -43.8,
+          -23.94,
           6.64
         ],
         [
-          -43.8,
+          -23.94,
           11.03
         ],
         [
-          -34.8,
+          -14.7,
           11.03
         ],
         [
-          -34.8,
+          -14.7,
           6.64
         ]
       ]
     },
     {
-      "comments": "Escadas Rolantes 0 para Plataforma linha 1",
-      "subenvironment": 0,
-      "points": [
+      "comments":"Escada convencional 2 para Plataforma linha 2",
+      "subenvironment":0,
+      "points":[
         [
-          3.17,
+          -42.42,
+          6.64
+        ],
+        [
+          -42.42,
+          11.03
+        ],
+        [
+          -33.18,
+          11.03
+        ],
+        [
+          -33.18,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments":"Escada convencional 2 para Mezanino",
+      "subenvironment":1,
+      "points":[
+        [
+          -42.42,
+          6.64
+        ],
+        [
+          -42.42,
+          11.03
+        ],
+        [
+          -33.18,
+          11.03
+        ],
+        [
+          -33.18,
+          6.64
+        ]
+      ]
+    },
+    {
+      "comments":"Escadas Rolantes 0 para Plataforma linha 1",
+      "subenvironment":0,
+      "points":[
+        [
+          3.78,
           25.69
         ],
         [
-          3.17,
+          3.78,
           30.08
         ],
         [
-          12.17,
+          13.02,
           30.08
         ],
         [
-          12.17,
-          25.69
-        ]
-      ]
-    },
-    {
-      "comments": "Escadas Rolantes 0 para Mezanino Principal",
-      "subenvironment": 2,
-      "points": [
-        [
-          3.17,
-          25.69
-        ],
-        [
-          3.17,
-          30.08
-        ],
-        [
-          12.17,
-          30.08
-        ],
-        [
-          12.17,
+          13.02,
           25.69
         ]
       ]
     },
     {
-      "comments": "Escadas Rolantes 1 para Plataforma linha 1",
-      "subenvironment": 0,
-      "points": [
+      "comments":"Escadas Rolantes 0 para Mezanino Principal",
+      "subenvironment":2,
+      "points":[
         [
-          -24.34,
+          3.78,
           25.69
         ],
         [
-          -24.34,
+          3.78,
           30.08
         ],
         [
-          -15.34,
+          13.02,
           30.08
         ],
         [
-          -15.34,
-          25.69
-        ]
-      ]
-    },
-    {
-      "comments": "Escadas Rolantes 1 para Mezanino Principal",
-      "subenvironment": 2,
-      "points": [
-        [
-          -24.34,
-          25.69
-        ],
-        [
-          -24.34,
-          30.08
-        ],
-        [
-          -15.34,
-          30.08
-        ],
-        [
-          -15.34,
+          13.02,
           25.69
         ]
       ]
     },
     {
-      "comments": "Escadas Rolantes 2 para Plataforma linha 1",
-      "subenvironment": 0,
-      "points": [
+      "comments":"Escadas Rolantes 1 para Plataforma linha 1",
+      "subenvironment":0,
+      "points":[
         [
-          -43.8,
+          -23.94,
+          25.69
+        ],
+        [
+          -23.94,
+          30.08
+        ],
+        [
+          -14.7,
+          30.08
+        ],
+        [
+          -14.7,
+          25.69
+        ]
+      ]
+    },
+    {
+      "comments":"Escadas Rolantes 1 para Mezanino Principal",
+      "subenvironment":2,
+      "points":[
+        [
+          -23.94,
+          25.69
+        ],
+        [
+          -23.94,
+          30.08
+        ],
+        [
+          -14.7,
+          30.08
+        ],
+        [
+          -14.7,
+          25.69
+        ]
+      ]
+    },
+    {
+      "comments":"Escadas Rolantes 2 para Plataforma linha 1",
+      "subenvironment":0,
+      "points":[
+        [
+          -42.42,
           26.78
         ],
         [
-          -43.8,
+          -42.42,
           28.98
         ],
         [
-          -34.8,
+          -33.18,
           28.98
         ],
         [
-          -34.8,
-          26.78
-        ]
-      ]
-    },
-    {
-      "comments": "Escadas Rolantes 2 para Mezanino Principal",
-      "subenvironment": 2,
-      "points": [
-        [
-          -43.8,
-          26.78
-        ],
-        [
-          -43.8,
-          28.98
-        ],
-        [
-          -34.8,
-          28.98
-        ],
-        [
-          -34.8,
+          -33.18,
           26.78
         ]
       ]
     },
     {
-      "subenvironment": 0,
-      "points": [
+      "comments":"Escadas Rolantes 2 para Mezanino Principal",
+      "subenvironment":2,
+      "points":[
+        [
+          -42.42,
+          26.78
+        ],
+        [
+          -42.42,
+          28.98
+        ],
+        [
+          -33.18,
+          28.98
+        ],
+        [
+          -33.18,
+          26.78
+        ]
+      ]
+    },
+    {
+      "subenvironment":0,
+      "points":[
         [
           30.15,
           35.7
@@ -371,8 +371,8 @@
       ]
     },
     {
-      "subenvironment": 0,
-      "points": [
+      "subenvironment":0,
+      "points":[
         [
           30.15,
           24.92
@@ -400,8 +400,8 @@
       ]
     },
     {
-      "subenvironment": 0,
-      "points": [
+      "subenvironment":0,
+      "points":[
         [
           30.15,
           0
@@ -421,330 +421,741 @@
       ]
     }
   ],
-  "circle_obstacles": [
+  "circle_obstacles":[
     {
-        "subenvironment": 0,
-        "c_x": 19.67,
-        "c_y": 6.64,
-        "r": 0.5
+      "subenvironment":1,
+      "c_x":-79.38,
+      "c_y":6.64,
+      "r":0.62
     },
     {
-        "subenvironment": 0,
-        "c_x": 19.67,
-        "c_y": 11.03,
-        "r": 0.5
+      "subenvironment":1,
+      "c_x":-79.38,
+      "c_y":11.03,
+      "r":0.62
     },
     {
-        "subenvironment": 0,
-        "c_x": 19.67,
-        "c_y": 25.69,
-        "r": 0.5
+      "subenvironment":1,
+      "c_x":-70.14,
+      "c_y":6.64,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": 19.67,
-      "c_y": 30.08,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-70.14,
+      "c_y":11.03,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": 19.67,
-      "c_y": 18.52,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-60.9,
+      "c_y":6.64,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": 11.67,
-      "c_y": 18.52,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-60.9,
+      "c_y":11.03,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": 3.67,
-      "c_y": 18.52,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-51.66,
+      "c_y":6.64,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": -4.33,
-      "c_y": 18.52,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-51.66,
+      "c_y":11.03,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": -12.33,
-      "c_y": 18.52,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-42.42,
+      "c_y":6.64,
+      "r":0.62
     },
     {
-      "subenvironment": 0,
-      "c_x": -16.33,
-      "c_y": 18.52,
-      "r": 0.5
+      "subenvironment":1,
+      "c_x":-42.42,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-33.18,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-33.18,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-23.94,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-23.94,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-14.7,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-14.7,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-5.46,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":-5.46,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":3.78,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":3.78,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":13.02,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":13.02,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":22.26,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":22.26,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":31.5,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":31.5,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":40.74,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":40.74,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":49.98,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":49.98,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":59.22,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":59.22,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":68.46,
+      "c_y":6.64,
+      "r":0.62
+    },
+    {
+      "subenvironment":1,
+      "c_x":68.46,
+      "c_y":11.03,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-79.38,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-79.38,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-70.14,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-70.14,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-60.9,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-60.9,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-51.66,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-51.66,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-42.42,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-42.42,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-33.18,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-33.18,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-23.94,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-23.94,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-14.7,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-14.7,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-5.46,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":-5.46,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":3.78,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":3.78,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":13.02,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":13.02,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":22.26,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":22.26,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":31.5,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":31.5,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":40.74,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":40.74,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":49.98,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":49.98,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":59.22,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":59.22,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":68.46,
+      "c_y":25.67,
+      "r":0.62
+    },
+    {
+      "subenvironment":2,
+      "c_x":68.46,
+      "c_y":30.08,
+      "r":0.62
+    },
+    {
+      "subenvironment":0,
+      "c_x":-33.18,
+      "c_y":18.52,
+      "r":1.24
+    },
+    {
+      "subenvironment":0,
+      "c_x":-23.94,
+      "c_y":18.52,
+      "r":1.24
+    },
+    {
+      "subenvironment":0,
+      "c_x":-14.7,
+      "c_y":18.52,
+      "r":1.24
+    },
+    {
+      "subenvironment":0,
+      "c_x":-5.46,
+      "c_y":18.52,
+      "r":1.24
+    },
+    {
+      "subenvironment":0,
+      "c_x":3.78,
+      "c_y":18.52,
+      "r":1.24
+    },
+    {
+      "subenvironment":0,
+      "c_x":13.02,
+      "c_y":18.52,
+      "r":1.24
+    },
+    {
+      "subenvironment":0,
+      "c_x":22.26,
+      "c_y":18.52,
+      "r":1.24
     }
   ],
-  "transitions": [
+  "transitions":[
     {
-      "comments": "Escada rolante 0",
-      "directional": false,
-      "transition_type": "AUTOMATIC_STAIR",
-      "subenvironment_start": 0,
-      "subenvironment_end": 2,
-      "direction_angle_start": 0.0,
-      "start_x": 3.17,
-      "start_y": 26.82,
-      "direction_angle_end": 0.0,
-      "end_x": 12.17,
-      "end_y": 26.82
+      "comments":"Escada rolante 0",
+      "directional":false,
+      "transition_type":"AUTOMATIC_STAIR",
+      "subenvironment_start":0,
+      "subenvironment_end":2,
+      "direction_angle_start":0.0,
+      "start_x":3.78,
+      "start_y":26.82,
+      "direction_angle_end":0.0,
+      "end_x":13.02,
+      "end_y":26.82
     },
     {
-      "comments": "Escada rolante 0",
-      "directional": false,
-      "transition_type": "AUTOMATIC_STAIR",
-      "subenvironment_start": 2,
-      "subenvironment_end": 0,
-      "direction_angle_start": 180.0,
-      "start_x": 12.17,
-      "start_y": 28.94,
-      "direction_angle_end": 180.0,
-      "end_x": 3.17,
-      "end_y": 28.94
+      "comments":"Escada rolante 0",
+      "directional":false,
+      "transition_type":"AUTOMATIC_STAIR",
+      "subenvironment_start":2,
+      "subenvironment_end":0,
+      "direction_angle_start":180.0,
+      "start_x":13.02,
+      "start_y":28.94,
+      "direction_angle_end":180.0,
+      "end_x":3.78,
+      "end_y":28.94
     },
     {
-      "comments": "Escada rolante 1",
-      "directional": false,
-      "transition_type": "AUTOMATIC_STAIR",
-      "subenvironment_start": 0,
-      "subenvironment_end": 2,
-      "direction_angle_start": 0.0,
-      "start_x": -24.34,
-      "start_y": 26.82,
-      "direction_angle_end": 0.0,
-      "end_x": -15.34,
-      "end_y": 26.82
+      "comments":"Escada rolante 1",
+      "directional":false,
+      "transition_type":"AUTOMATIC_STAIR",
+      "subenvironment_start":0,
+      "subenvironment_end":2,
+      "direction_angle_start":0.0,
+      "start_x":-23.94,
+      "start_y":26.82,
+      "direction_angle_end":0.0,
+      "end_x":-14.7,
+      "end_y":26.82
     },
     {
-      "comments": "Escada rolante 1",
-      "directional": false,
-      "transition_type": "AUTOMATIC_STAIR",
-      "subenvironment_start": 2,
-      "subenvironment_end": 0,
-      "direction_angle_start": 180.0,
-      "start_x": -15.34,
-      "start_y": 28.94,
-      "direction_angle_end": 180.0,
-      "end_x": -24.34,
-      "end_y": 28.94
+      "comments":"Escada rolante 1",
+      "directional":false,
+      "transition_type":"AUTOMATIC_STAIR",
+      "subenvironment_start":2,
+      "subenvironment_end":0,
+      "direction_angle_start":180.0,
+      "start_x":-14.7,
+      "start_y":28.94,
+      "direction_angle_end":180.0,
+      "end_x":-23.94,
+      "end_y":28.94
     },
     {
-      "comments": "Escada rolante 2",
-      "directional": false,
-      "transition_type": "AUTOMATIC_STAIR",
-      "subenvironment_start": 2,
-      "subenvironment_end": 0,
-      "direction_angle_start": 0.0,
-      "start_x": -43.8,
-      "start_y": 27.88,
-      "direction_angle_end": 0.0,
-      "end_x": -34.8,
-      "end_y": 27.88
+      "comments":"Escada rolante 2",
+      "directional":false,
+      "transition_type":"AUTOMATIC_STAIR",
+      "subenvironment_start":2,
+      "subenvironment_end":0,
+      "direction_angle_start":0.0,
+      "start_x":-42.42,
+      "start_y":27.88,
+      "direction_angle_end":0.0,
+      "end_x":-33.18,
+      "end_y":27.88
     },
     {
-      "comments": "Escada convencional 0",
-      "directional": true,
-      "transition_type": "COMMON_STAIR",
-      "subenvironment_start": 0,
-      "subenvironment_end": 1,
-      "direction_angle_start": 0.0,
-      "start_x": 3.17,
-      "start_y": 8.83,
-      "direction_angle_end": 0.0,
-      "end_x": 12.17,
-      "end_y": 8.83
+      "comments":"Escada convencional 0",
+      "directional":true,
+      "transition_type":"COMMON_STAIR",
+      "subenvironment_start":0,
+      "subenvironment_end":1,
+      "direction_angle_start":0.0,
+      "start_x":3.78,
+      "start_y":8.83,
+      "direction_angle_end":0.0,
+      "end_x":13.02,
+      "end_y":8.83
     },
     {
-      "comments": "Escada convencional 1",
-      "directional": true,
-      "transition_type": "COMMON_STAIR",
-      "subenvironment_start": 0,
-      "subenvironment_end": 1,
-      "direction_angle_start": 0.0,
-      "start_x": -15.34,
-      "start_y": 8.83,
-      "direction_angle_end": 0.0,
-      "end_x": -24.34,
-      "end_y": 8.83
+      "comments":"Escada convencional 1",
+      "directional":true,
+      "transition_type":"COMMON_STAIR",
+      "subenvironment_start":0,
+      "subenvironment_end":1,
+      "direction_angle_start":0.0,
+      "start_x":-14.7,
+      "start_y":8.83,
+      "direction_angle_end":0.0,
+      "end_x":-23.94,
+      "end_y":8.83
     },
     {
-      "comments": "Escada convencional 2",
-      "directional": true,
-      "transition_type": "COMMON_STAIR",
-      "subenvironment_start": 0,
-      "subenvironment_end": 1,
-      "direction_angle_start": 0.0,
-      "start_x": -34.8,
-      "start_y": 8.83,
-      "direction_angle_end": 0.0,
-      "end_x": -43.8,
-      "end_y": 8.83
+      "comments":"Escada convencional 2",
+      "directional":true,
+      "transition_type":"COMMON_STAIR",
+      "subenvironment_start":0,
+      "subenvironment_end":1,
+      "direction_angle_start":0.0,
+      "start_x":-33.18,
+      "start_y":8.83,
+      "direction_angle_end":0.0,
+      "end_x":-42.42,
+      "end_y":8.83
     }
   ],
-  "pois": [
+  "pois":[
     {
-      "subenvironment": 0,
-      "poi_type": "BLOCKING",
-      "line_way": 0,
-      "x": 7.3,
-      "y": 18.52
+      "subenvironment":0,
+      "poi_type":"BLOCKING",
+      "line_way":0,
+      "x":7.3,
+      "y":18.52
     },
     {
-      "subenvironment": 0,
-      "poi_type": "BLOCKING",
-      "line_way": 0,
-      "x": 7.3,
-      "y": 32.8
+      "subenvironment":0,
+      "poi_type":"BLOCKING",
+      "line_way":0,
+      "x":7.3,
+      "y":32.8
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": 2,
-      "x": -43.16,
-      "y": 3.67
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":2,
+      "x":-37.6,
+      "y":4.95
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": 2,
-      "x": -15.66,
-      "y": 3.67
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":2,
+      "x":-13.2,
+      "y":4.95
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": 2,
-      "x": 11.85,
-      "y": 3.67
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":2,
+      "x":11.2,
+      "y":4.95
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": 2,
-      "x": 39.35,
-      "y": 3.67
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":2,
+      "x":35.6,
+      "y":4.95
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": -2,
-      "x": -43.16,
-      "y": 14.93
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":-2,
+      "x":-37.6,
+      "y":12.71
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": -2,
-      "x": -15.66,
-      "y": 14.93
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":-2,
+      "x":-13.2,
+      "y":12.71
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": -2,
-      "x": 11.85,
-      "y": 14.93
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":-2,
+      "x":11.3,
+      "y":12.71
     },
     {
-      "subenvironment": 1,
-      "poi_type": "BOARDING",
-      "line_way": -2,
-      "x": 39.35,
-      "y": 14.93
+      "subenvironment":1,
+      "poi_type":"BOARDING",
+      "line_way":-2,
+      "x":35.6,
+      "y":12.71
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": 1,
-      "x": -43.16,
-      "y": 22.52
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":1,
+      "x":-37.6,
+      "y":22.52
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": 1,
-      "x": -15.66,
-      "y": 22.52
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":1,
+      "x":-13.2,
+      "y":22.52
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": 1,
-      "x": 11.85,
-      "y": 22.52
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":1,
+      "x":11.2,
+      "y":22.52
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": 1,
-      "x": 39.35,
-      "y": 22.52
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":1,
+      "x":35.6,
+      "y":22.52
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": -1,
-      "x": -43.16,
-      "y": 33.25
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":-1,
+      "x":-37.6,
+      "y":33.25
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": -1,
-      "x": -15.66,
-      "y": 33.25
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":-1,
+      "x":-13.2,
+      "y":33.25
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": -1,
-      "x": 11.85,
-      "y": 33.25
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":-1,
+      "x":11.2,
+      "y":33.25
     },
     {
-      "subenvironment": 2,
-      "poi_type": "BOARDING",
-      "line_way": -1,
-      "x": 39.35,
-      "y": 33.25
+      "subenvironment":2,
+      "poi_type":"BOARDING",
+      "line_way":-1,
+      "x":35.6,
+      "y":33.25
     }
   ],
-  "beacons": [
+  "beacons":[
     {
-      "subenvironment": 0,
-      "beacon_id_minor": 65530,
-      "x": 7.3,
-      "y": 20.5,
-      "z": 0.0
+      "subenvironment":0,
+      "beacon_id_minor":65530,
+      "x":7.3,
+      "y":17.0,
+      "z":0.0
     },
     {
-      "subenvironment": 0,
-      "beacon_id_minor": 65531,
-      "x": 7.3,
-      "y": 34.5,
-      "z": 0.0
+      "subenvironment":0,
+      "beacon_id_minor":50000,
+      "x":-4,
+      "y":18.0,
+      "z":0.0
     },
     {
-      "subenvironment": 1,
-      "beacon_id_minor": 50000,
-      "x": -3.5,
-      "y": 24.9,
-      "z": 0.0
+      "subenvironment":0,
+      "beacon_id_minor":50001,
+      "x":18.0,
+      "y":2.0,
+      "z":0.0
     },
     {
-      "subenvironment": 2,
-      "beacon_id_minor": 50001,
-      "x": 30,
-      "y": 28.0,
-      "z": 1.8
+      "subenvironment":1,
+      "beacon_id_minor":50002,
+      "x":13.02,
+      "y":6.64,
+      "z":1.0
+    },
+    {
+      "subenvironment":1,
+      "beacon_id_minor":250,
+      "x":23.0,
+      "y":6.64,
+      "z":0.0
+    },
+    {
+      "subenvironment":1,
+      "beacon_id_minor":251,
+      "x":31.0,
+      "y":6.64,
+      "z":0.0
+    },
+    {
+      "subenvironment":2,
+      "beacon_id_minor":100,
+      "x":31.0,
+      "y":30,
+      "z":0.0
     }
   ]
 }

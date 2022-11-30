@@ -97,11 +97,11 @@ def get_users_with_node_links(db: Session, limit_time: datetime.timedelta):
     
     elements = dict()
     for nl_id in node_link_ids:
-        nl = node_links.filter(
-            models.NodeLink.start_node_id == nl_id[0] and
-            models.NodeLink.end_node_id == nl_id[1]
-        )
-        nl = [[x.end_date_time.timestamp(), x.displacement_time_s] for x in nl]
+        # nl = node_links.filter(
+        #     models.NodeLink.start_node_id == nl_id[0] and
+        #     models.NodeLink.end_node_id == nl_id[1]
+        # )
+        nl = [[x.end_date_time.timestamp(), x.displacement_time_s] for x in node_links if x.start_node_id == nl_id[0] and x.end_node_id == nl_id[1]]
         elements[nl_id] = nl
     return elements
 

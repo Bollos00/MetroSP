@@ -35,7 +35,7 @@ class UserClient:
     def __init__(self):
         self.id = uuid.uuid4()
         self.password = random_password()
-        self.deviation_time_rand = .3
+        self.deviation_time_rand = .01
         
     def register(self):
         url = ADDRES + "/create_user"
@@ -104,12 +104,32 @@ if __name__ == "__main__":
             Node(242, 150),
             Node(240, 60),
         ]
+        
+    def nodes_ana_rosa_paraiso_verde():
+        return [
+            Node(23, 0),
+            Node(26, 200),
+            # Node(31, 70),
+            # Node(28, 40)
+        ]
 
-    N = 2
+    def nodes_ana_rosa_paraiso_azul():
+        return [
+            Node(23, 0),
+            Node(24, 300),
+            # Node(19, 70),
+            # Node(28, 60)
+        ]
+
+    N = 8
     for i in range(N):
-        rls = relationships_from_nodes(nodes_sacoma_oratorio())
+        rls = relationships_from_nodes(nodes_ana_rosa_paraiso_verde())
         for rl in rls:
             u = UserClient()
             u.register()
             u.relationship(rl)
-            # u.unregister()
+        rls = relationships_from_nodes(nodes_ana_rosa_paraiso_azul())
+        for rl in rls:
+            u = UserClient()
+            u.register()
+            u.relationship(rl)

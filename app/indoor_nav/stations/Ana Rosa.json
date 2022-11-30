@@ -1109,53 +1109,47 @@
   ],
   "beacons":[
     {
-      "subenvironment":0,
-      "beacon_id_minor":65530,
-      "x":7.3,
-      "y":17.0,
-      "z":0.0
+      "subenvironment":1,
+      "beacon_id_minor":250,
+      "x":22.26,
+      "y":7.0,
+      "z":1.8
     },
     {
-      "subenvironment":0,
+      "subenvironment":1,
       "beacon_id_minor":50000,
-      "x":-4,
-      "y":18.0,
+      "x":13.5,
+      "y":6.1,
       "z":0.0
+    },
+
+    {
+      "subenvironment":0,
+      "beacon_id_minor":65530,
+      "x":3.78,
+      "y":17.52,
+      "z":2.0
     },
     {
       "subenvironment":0,
       "beacon_id_minor":50001,
-      "x":18.0,
-      "y":2.0,
-      "z":0.0
+      "x":-5.46,
+      "y":17.52,
+      "z":2.0
     },
     {
-      "subenvironment":1,
+      "subenvironment":0,
       "beacon_id_minor":50002,
-      "x":13.02,
-      "y":6.64,
-      "z":1.0
+      "x":-14.7,
+      "y":17.52,
+      "z":2.0
     },
     {
-      "subenvironment":1,
-      "beacon_id_minor":250,
-      "x":23.0,
-      "y":6.64,
-      "z":0.0
-    },
-    {
-      "subenvironment":1,
-      "beacon_id_minor":251,
-      "x":31.0,
-      "y":6.64,
-      "z":0.0
-    },
-    {
-      "subenvironment":2,
-      "beacon_id_minor":100,
-      "x":31.0,
-      "y":30,
-      "z":0.0
+      "subenvironment":0,
+      "beacon_id_minor":50004,
+      "x":3.73,
+      "y":11.03,
+      "z":2.0
     }
   ]
 }
